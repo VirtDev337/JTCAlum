@@ -15,8 +15,8 @@ class Profile(models.Model):
     
     enrolled = models.BooleanField(default = False)
     alumn = models.BooleanField(default = False)
-    graduation_date_month = models.DateField()
-    graduation_date_year = models.DateField()
+    graduation_date_month = models.DateField(blank = True, null = True)
+    graduation_date_year = models.DateField(blank = True, null = True)
     
     location = models.CharField(max_length = 200, blank = True, null = True)
     
