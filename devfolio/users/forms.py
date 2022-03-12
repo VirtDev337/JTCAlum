@@ -22,11 +22,11 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class ProfileForm(ModelForm):
-    Months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    Years = [str(year) for year in range(2015, int(dt.now().year))]
+    # Months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    # Years = [str(year) for year in range(2015, int(dt.now().year))]
     
-    graduation_date_month = forms.DateField(widget = forms.SelectDateWidget(months = Months), required = False)
-    graduation_date_year = forms.DateField(widget = forms.SelectDateWidget(years = Years), required = False)
+    # graduation_date_month = forms.DateField(widget = forms.SelectDateWidget(months = Months), required = False)
+    # graduation_date_year = forms.DateField(widget = forms.SelectDateWidget(years = Years), required = False)
     
     class Meta:
         model = Profile
