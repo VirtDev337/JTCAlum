@@ -13,9 +13,8 @@ Partners and affiliates are provided the ability to search past, present and fut
 * 2 - create a virtual environment and activate
 *  - python3 -m venv [envname]
 *  - [envname]\scripts\activate
-* 3 - cd into project "cd devfolio"
-* 4 - pip install -r requirements.txt
-* 5 - python manage.py runserver
+* 3 - pip install -r requirements.txt
+* 4 - python manage.py runserver
 
 
 
