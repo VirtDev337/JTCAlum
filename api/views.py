@@ -58,8 +58,8 @@ def removeTag(request):
     tagId = request.data['tag']
     projectId = request.data['project']
 
-    project = Project.objects.get(id=projectId)
-    tag = Tag.objects.get(id=tagId)
+    project = Project.objects.get(id = projectId)
+    tag = Tag.objects.get(id = tagId)
 
     project.tags.remove(tag)
 
