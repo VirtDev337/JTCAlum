@@ -12,18 +12,17 @@ def projects(request):
     projects, search_query = searchProjects(request)
     custom_range, projects = paginateProjects(request, projects, 6)
 
-    context = {'projects': projects,
-               'search_query': search_query, 'custom_range': custom_range}
+    context = {'projects': projects, 'search_query': search_query, 'custom_range': custom_range}
     return render(request, 'projects/projects.html', context)
 
 
-def project(request, pk):
-    projectObj = Project.objects.get(id=pk)
+def project(request, slug, pk):
+    projectObj = Project.objects.get(id = pk)
     form = ReviewForm()
 
     if request.method == 'POST':
         form = ReviewForm(request.POST)
-        review = form.save(commit=False)
+        review = form.save(commit = False)
         review.project = projectObj
         review.owner = request.user.profile
         review.save()
@@ -31,12 +30,12 @@ def project(request, pk):
         projectObj.getVoteCount
 
         messages.success(request, 'Your review was successfully submitted!')
-        return redirect('project', pk=projectObj.id)
+        return redirect('project', pk = projectObj.id)
 
     return render(request, 'projects/single-project.html', {'project': projectObj, 'form': form})
 
 
-@login_required(login_url="login")
+@login_required(login_url = "login")
 def createProject(request):
     profile = request.user.profile
     form = ProjectForm()
@@ -45,12 +44,12 @@ def createProject(request):
         newtags = request.POST.get('newtags').replace(',',  " ").split()
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
-            project = form.save(commit=False)
+            project = form.save(commit = False)
             project.owner = profile
             project.save()
 
             for tag in newtags:
-                tag, created = Tag.objects.get_or_create(name=tag)
+                tag, created = Tag.objects.get_or_create(name = tag)
                 project.tags.add(tag)
             return redirect('account')
 
@@ -58,20 +57,20 @@ def createProject(request):
     return render(request, "projects/project_form.html", context)
 
 
-@login_required(login_url="login")
-def updateProject(request, pk):
+@login_required(login_url = "login")
+def updateProject(request, slug, pk):
     profile = request.user.profile
-    project = profile.project_set.get(id=pk)
-    form = ProjectForm(instance=project)
+    project = profile.project_set.get(id = pk)
+    form = ProjectForm(instance = project)
 
     if request.method == 'POST':
         newtags = request.POST.get('newtags').replace(',',  " ").split()
 
-        form = ProjectForm(request.POST, request.FILES, instance=project)
+        form = ProjectForm(request.POST, request.FILES, instance = project)
         if form.is_valid():
             project = form.save()
             for tag in newtags:
-                tag, created = Tag.objects.get_or_create(name=tag)
+                tag, created = Tag.objects.get_or_create(name = tag)
                 project.tags.add(tag)
 
             return redirect('account')
@@ -80,10 +79,10 @@ def updateProject(request, pk):
     return render(request, "projects/project_form.html", context)
 
 
-@login_required(login_url="login")
-def deleteProject(request, pk):
+@login_required(login_url = "login")
+def deleteProject(request, slug, pk):
     profile = request.user.profile
-    project = profile.project_set.get(id=pk)
+    project = profile.project_set.get(id = pk)
     if request.method == 'POST':
         project.delete()
         return redirect('projects')

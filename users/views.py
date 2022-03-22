@@ -13,7 +13,7 @@ from .utils import searchProfiles, paginateProfiles
 
 def loginUser(request):
     page = 'login'
-
+    
     if request.user.is_authenticated:
         return redirect('profiles')
 
@@ -22,11 +22,11 @@ def loginUser(request):
         password = request.POST['password']
 
         try:
-            user = User.objects.get(username=username)
+            user = User.objects.get(username = username)
         except:
             messages.error(request, 'Username does not exist')
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username = username, password = password)
 
         if user is not None:
             login(request, user)
@@ -51,7 +51,7 @@ def registerUser(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
+            user = form.save(commit = False)
             user.username = user.username.lower()
             user.save()
 
@@ -73,22 +73,22 @@ def profiles(request):
 
     custom_range, profiles = paginateProfiles(request, profiles, 3)
     context = {'profiles': profiles, 'search_query': search_query,
-               'custom_range': custom_range}
+                'custom_range': custom_range}
     return render(request, 'users/profiles.html', context)
 
 
-def userProfile(request, pk):
-    profile = Profile.objects.get(id=pk)
+def userProfile(request, slug, pk):
+    profile = Profile.objects.get(id = pk)
 
-    topSkills = profile.skill_set.exclude(description__exact="")
-    otherSkills = profile.skill_set.filter(description="")
+    topSkills = profile.skill_set.exclude(description__exact = "")
+    otherSkills = profile.skill_set.filter(description = "")
 
     context = {'profile': profile, 'topSkills': topSkills,
-               "otherSkills": otherSkills}
+                "otherSkills": otherSkills}
     return render(request, 'users/user-profile.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url = 'login')
 def userAccount(request):
     profile = request.user.profile
 
@@ -99,13 +99,13 @@ def userAccount(request):
     return render(request, 'users/account.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url = 'login')
 def editAccount(request):
     profile = request.user.profile
-    form = ProfileForm(instance=profile)
+    form = ProfileForm(instance = profile)
 
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        form = ProfileForm(request.POST, request.FILES, instance = profile)
         if form.is_valid():
             form.save()
 
@@ -115,7 +115,7 @@ def editAccount(request):
     return render(request, 'users/profile_form.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url = 'login')
 def createSkill(request):
     profile = request.user.profile
     form = SkillForm()
@@ -123,7 +123,7 @@ def createSkill(request):
     if request.method == 'POST':
         form = SkillForm(request.POST)
         if form.is_valid():
-            skill = form.save(commit=False)
+            skill = form.save(commit = False)
             skill.owner = profile
             skill.save()
             messages.success(request, 'Skill was added successfully!')
@@ -133,14 +133,14 @@ def createSkill(request):
     return render(request, 'users/skill_form.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url = 'login')
 def updateSkill(request, pk):
     profile = request.user.profile
-    skill = profile.skill_set.get(id=pk)
-    form = SkillForm(instance=skill)
+    skill = profile.skill_set.get(id = pk)
+    form = SkillForm(instance = skill)
 
     if request.method == 'POST':
-        form = SkillForm(request.POST, instance=skill)
+        form = SkillForm(request.POST, instance = skill)
         if form.is_valid():
             form.save()
             messages.success(request, 'Skill was updated successfully!')
@@ -150,10 +150,10 @@ def updateSkill(request, pk):
     return render(request, 'users/skill_form.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url = 'login')
 def deleteSkill(request, pk):
     profile = request.user.profile
-    skill = profile.skill_set.get(id=pk)
+    skill = profile.skill_set.get(id = pk)
     if request.method == 'POST':
         skill.delete()
         messages.success(request, 'Skill was deleted successfully!')
@@ -163,19 +163,19 @@ def deleteSkill(request, pk):
     return render(request, 'delete_template.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url = 'login')
 def inbox(request):
     profile = request.user.profile
     messageRequests = profile.messages.all()
-    unreadCount = messageRequests.filter(is_read=False).count()
+    unreadCount = messageRequests.filter(is_read = False).count()
     context = {'messageRequests': messageRequests, 'unreadCount': unreadCount}
     return render(request, 'users/inbox.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url = 'login')
 def viewMessage(request, pk):
     profile = request.user.profile
-    message = profile.messages.get(id=pk)
+    message = profile.messages.get(id = pk)
     if message.is_read == False:
         message.is_read = True
         message.save()
@@ -184,7 +184,7 @@ def viewMessage(request, pk):
 
 
 def createMessage(request, pk):
-    recipient = Profile.objects.get(id=pk)
+    recipient = Profile.objects.get(id = pk)
     form = MessageForm()
 
     try:
@@ -195,7 +195,7 @@ def createMessage(request, pk):
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
-            message = form.save(commit=False)
+            message = form.save(commit = False)
             message.sender = sender
             message.recipient = recipient
 
@@ -205,7 +205,7 @@ def createMessage(request, pk):
             message.save()
 
             messages.success(request, 'Your message was successfully sent!')
-            return redirect('user-profile', pk=recipient.id)
+            return redirect('user-profile', pk = recipient.id)
 
     context = {'recipient': recipient, 'form': form}
     return render(request, 'users/message_form.html', context)

@@ -1,26 +1,32 @@
 from django.db import models
 import uuid
-
 from django.db.models.deletion import CASCADE
+from django.template.defaultfilters import slugify
 from users.models import Profile
+from django.urls import reverse
 # Create your models here.
 
 
 class Project(models.Model):
-    owner = models.ForeignKey(
-        Profile, null=True, blank=True, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    description = models.TextField(null=True, blank=True)
-    featured_image = models.ImageField(
-        null=True, blank=True, default="default.jpg")
-    demo_link = models.CharField(max_length=2000, null=True, blank=True)
-    source_link = models.CharField(max_length=2000, null=True, blank=True)
-    tags = models.ManyToManyField('Tag', blank=True)
-    vote_total = models.IntegerField(default=0, null=True, blank=True)
-    vote_ratio = models.IntegerField(default=0, null=True, blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    id = models.UUIDField(default=uuid.uuid4, unique=True,
-                          primary_key=True, editable=False)
+    owner = models.ForeignKey(Profile, null = True, blank = True, on_delete = models.CASCADE)
+    title = models.CharField(max_length = 200)
+    description = models.TextField(null = True, blank = True)
+    featured_image = models.ImageField(null = True, blank = True, 
+                                        upload_to = 'projects/', default = "projects/default.jpg")
+    
+    demo_link = models.CharField(max_length = 2000, null = True, blank = True)
+    source_link = models.CharField(max_length = 2000, null = True, blank = True)
+    
+    tags = models.ManyToManyField('Tag', blank = True)
+    
+    vote_total = models.IntegerField(default = 0, null = True, blank = True)
+    vote_ratio = models.IntegerField(default = 0, null = True, blank = True)
+    
+    created = models.DateTimeField(auto_now_add = True)
+    
+    slug = models.SlugField(default = '', editable = False, max_length = 200, null = False)
+    
+    id = models.UUIDField(default = uuid.uuid4, unique = True, primary_key = True, editable = False)
 
     def __str__(self):
         return self.title
@@ -38,13 +44,13 @@ class Project(models.Model):
 
     @property
     def reviewers(self):
-        queryset = self.review_set.all().values_list('owner__id', flat=True)
+        queryset = self.review_set.all().values_list('owner__id', flat = True)
         return queryset
 
     @property
     def getVoteCount(self):
         reviews = self.review_set.all()
-        upVotes = reviews.filter(value='up').count()
+        upVotes = reviews.filter(value = 'up').count()
         totalVotes = reviews.count()
 
         ratio = (upVotes / totalVotes) * 100
@@ -52,6 +58,18 @@ class Project(models.Model):
         self.vote_ratio = ratio
 
         self.save()
+    
+    def get_absolute_url(self):
+        kwargs = {
+            'slug' : self.slug,
+            'pk' : self.id,
+        }
+        
+        return reverse('user-profile', kwargs = kwargs)
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
 
 class Review(models.Model):
@@ -59,13 +77,17 @@ class Review(models.Model):
         ('up', 'Up Vote'),
         ('down', 'Down Vote'),
     )
-    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    body = models.TextField(null=True, blank=True)
-    value = models.CharField(max_length=200, choices=VOTE_TYPE)
-    created = models.DateTimeField(auto_now_add=True)
-    id = models.UUIDField(default=uuid.uuid4, unique=True,
-                          primary_key=True, editable=False)
+    
+    owner = models.ForeignKey(Profile, on_delete = models.CASCADE, null = True)
+    
+    project = models.ForeignKey(Project, on_delete = models.CASCADE)
+    body = models.TextField(null = True, blank = True)
+    
+    value = models.CharField(max_length = 200, choices = VOTE_TYPE)
+    
+    created = models.DateTimeField(auto_now_add = True)
+    
+    id = models.UUIDField(default = uuid.uuid4, unique = True, primary_key = True, editable = False)
 
     class Meta:
         unique_together = [['owner', 'project']]
@@ -75,10 +97,11 @@ class Review(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=200)
-    created = models.DateTimeField(auto_now_add=True)
-    id = models.UUIDField(default=uuid.uuid4, unique=True,
-                          primary_key=True, editable=False)
+    name = models.CharField(max_length = 200)
+    
+    created = models.DateTimeField(auto_now_add = True)
+    
+    id = models.UUIDField(default = uuid.uuid4, unique = True, primary_key = True, editable = False)
 
     def __str__(self):
         return self.name

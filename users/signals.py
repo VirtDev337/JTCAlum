@@ -7,17 +7,17 @@ from .models import Profile
 from django.core.mail import send_mail
 from django.conf import settings
 
-# @receiver(post_save, sender=Profile)
+# @receiver(post_save, sender = Profile)
 
 
 def createProfile(sender, instance, created, **kwargs):
     if created:
         user = instance
         profile = Profile.objects.create(
-            user=user,
-            username=user.username,
-            email=user.email,
-            name=user.first_name,
+            user = user,
+            username = user.username,
+            email = user.email,
+            name = user.first_name,
         )
 
         subject = 'Welcome to DevSearch'
@@ -28,7 +28,7 @@ def createProfile(sender, instance, created, **kwargs):
             message,
             settings.EMAIL_HOST_USER,
             [profile.email],
-            fail_silently=False,
+            fail_silently = False,
         )
 
 
@@ -51,6 +51,6 @@ def deleteUser(sender, instance, **kwargs):
         pass
 
 
-post_save.connect(createProfile, sender=User)
-post_save.connect(updateUser, sender=Profile)
-post_delete.connect(deleteUser, sender=Profile)
+post_save.connect(createProfile, sender = User)
+post_save.connect(updateUser, sender = Profile)
+post_delete.connect(deleteUser, sender = Profile)
