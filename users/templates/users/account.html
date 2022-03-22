@@ -18,30 +18,30 @@
 
             <ul class="dev__social">
               {% if profile.social_github %}
-              <li>
-                <a title="Github" href="{{profile.social_github}}" target="_blank"><i class="im im-github"></i></a>
-              </li>
+                <li>
+                  <a title="Github" href="{{profile.social_github}}" target="_blank"><i class="im im-github"></i></a>
+                </li>
               {% endif %}
 
 
               {% if profile.social_twitter %}
-              <li>
-                <a title="Twitter" href="{{profile.social_twitter}}" target="_blank"><i class="im im-twitter"></i></a>
-              </li>
+                <li>
+                  <a title="Twitter" href="{{profile.social_twitter}}" target="_blank"><i class="im im-twitter"></i></a>
+                </li>
               {% endif %}
 
               {% if profile.social_linkedin %}
-              <li>
-                <a title="LinkedIn" href="{{profile.social_linkedin}}" target="_blank"><i
-                    class="im im-linkedin"></i></a>
-              </li>
+                <li>
+                  <a title="LinkedIn" href="{{profile.social_linkedin}}" target="_blank"><i
+                      class="im im-linkedin"></i></a>
+                </li>
               {% endif %}
 
               {% if profile.social_website %}
-              <li>
-                <a title="Personal Website" href="{{profile.social_website}}" target="_blank"><i
-                    class="im im-globe"></i></a>
-              </li>
+                <li>
+                  <a title="Personal Website" href="{{profile.social_website}}" target="_blank"><i
+                      class="im im-globe"></i></a>
+                </li>
               {% endif %}
 
             </ul>
@@ -63,21 +63,21 @@
 
         <table class="settings__table">
           {% for skill in skills %}
-          <tr>
-            <td class="settings__tableInfo">
-              <h4>{{skill.name}}</h4>
-              <p>
-                {{skill.description}}
-              </p>
-            </td>
-            <td class="settings__tableActions">
-              <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-skill' skill.id %}"><i
-                  class="im im-edit"></i> Edit</a>
-              <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-skill' skill.id %}?next=/account"><i
-                  class="im im-x-mark-circle-o"></i>
-                Delete</a>
-            </td>
-          </tr>
+            <tr>
+              <td class="settings__tableInfo">
+                <h4>{{skill.name}}</h4>
+                <p>
+                  {{skill.description}}
+                </p>
+              </td>
+              <td class="settings__tableActions">
+                <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-skill' pk=skill.id %}"><i
+                    class="im im-edit"></i> Edit</a>
+                <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-skill' pk=skill.id %}?next=/account"><i
+                    class="im im-x-mark-circle-o"></i>
+                  Delete</a>
+              </td>
+            </tr>
           {% endfor %}
         </table>
 
@@ -89,22 +89,22 @@
 
         <table class="settings__table">
           {% for project in projects %}
-          <tr>
-            <td class="settings__thumbnail">
-              <a href="{% url 'project' project.id %}"><img src="{{project.imageURL}}" alt="Project Thumbnail" /></a>
-            </td>
-            <td class="settings__tableInfo">
-              <a href="{% url 'project' project.id %}">{{project.title}}</a>
-              <p>{{project.description|slice:"150"}}</p>
-            </td>
-            <td class="settings__tableActions">
-              <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-project' project.id %}"><i
-                  class="im im-edit"></i> Edit</a>
-              <a class="tag tag--pill tag--main settings__btn"
-                href="{% url 'delete-project'  project.id %}?next=/account"><i class="im im-x-mark-circle-o"></i>
-                Delete</a>
-            </td>
-          </tr>
+            <tr>
+              <td class="settings__thumbnail">
+                <a href="{% url 'project' slug=project.slug pk=project.id %}"><img src="{{project.imageURL}}" alt="Project Thumbnail" /></a>
+              </td>
+              <td class="settings__tableInfo">
+                <a href="{% url 'project' slug=project.slug pk=project.id %}">{{project.title}}</a>
+                <p>{{project.description|slice:"150"}}</p>
+              </td>
+              <td class="settings__tableActions">
+                <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-project' slug=project.slug pk=project.id %}"><i
+                    class="im im-edit"></i> Edit</a>
+                <a class="tag tag--pill tag--main settings__btn"
+                  href="{% url 'delete-project'  slug=project.slug pk=project.id %}?next=/account"><i class="im im-x-mark-circle-o"></i>
+                  Delete</a>
+              </td>
+            </tr>
           {% endfor %}
 
         </table>
