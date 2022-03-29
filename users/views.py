@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.urls import conf
 from django.db.models import Q
 from .models import Profile, Message
-from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm
+from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm, SocialForm
 from .utils import searchProfiles, paginateProfiles
 
 
@@ -77,14 +77,15 @@ def profiles(request):
     return render(request, 'users/profiles.html', context)
 
 
-def userProfile(request, slug, pk):
-    profile = Profile.objects.get(id = pk)
+def userProfile(request, slug):
+    profile = Profile.objects.get(slug = slug)
 
     topSkills = profile.skill_set.exclude(description__exact = "")
     otherSkills = profile.skill_set.filter(description = "")
-
+    social = profile.social_set.all()
+    
     context = {'profile': profile, 'topSkills': topSkills,
-                "otherSkills": otherSkills}
+                'otherSkills': otherSkills, 'social': social}
     return render(request, 'users/user-profile.html', context)
 
 
@@ -93,9 +94,10 @@ def userAccount(request):
     profile = request.user.profile
 
     skills = profile.skill_set.all()
+    social = profile.social_set.all()
     projects = profile.project_set.all()
 
-    context = {'profile': profile, 'skills': skills, 'projects': projects}
+    context = {'profile': profile, 'skills': skills, 'projects': projects, 'social': social}
     return render(request, 'users/account.html', context)
 
 
@@ -113,6 +115,9 @@ def editAccount(request):
 
     context = {'form': form}
     return render(request, 'users/profile_form.html', context)
+
+
+#--------Skills--------
 
 
 @login_required(login_url = 'login')
@@ -161,6 +166,60 @@ def deleteSkill(request, pk):
 
     context = {'object': skill}
     return render(request, 'delete_template.html', context)
+
+
+#----------Social----------
+
+
+@login_required(login_url = 'login')
+def createSocial(request):
+    profile = request.user.profile
+    form = SocialForm()
+
+    if request.method == 'POST':
+        form = SocialForm(request.POST)
+        if form.is_valid():
+            social = form.save(commit = False)
+            social.owner = profile
+            social.save()
+            messages.success(request, 'Site was added successfully!')
+            return redirect('account')
+
+    context = {'form': form}
+    return render(request, 'users/social_form.html', context)
+
+
+@login_required(login_url = 'login')
+def updateSocial(request, pk):
+    profile = request.user.profile
+    social = profile.social_set.get(id = pk)
+    form = SocialForm(instance = social)
+
+    if request.method == 'POST':
+        form = SocialForm(request.POST, instance = social)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Site was updated successfully!')
+            return redirect('account')
+
+    context = {'form': form}
+    return render(request, 'users/social_form.html', context)
+
+
+@login_required(login_url = 'login')
+def deleteSocial(request, pk):
+    profile = request.user.profile
+    social = profile.social_set.get(id = pk)
+    if request.method == 'POST':
+        social.delete()
+        messages.success(request, 'Site was deleted successfully!')
+        return redirect('account')
+
+    context = {'object': social}
+    return render(request, 'delete_template.html', context)
+
+
+#--------Messages----------
 
 
 @login_required(login_url = 'login')

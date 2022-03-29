@@ -353,7 +353,9 @@ img {
 .dev__social {
   margin: 3rem 0;
   list-style: none;
+  size: 30%;
   display: flex;
+  wrap: break-word;
   justify-content: center;
   gap: 1.5rem;
 }
