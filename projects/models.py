@@ -33,6 +33,7 @@ class Project(models.Model):
 
     class Meta:
         ordering = ['-vote_ratio', '-vote_total', 'title']
+        unique_together = [['slug', 'owner']]
 
     @property
     def imageURL(self):
@@ -62,13 +63,13 @@ class Project(models.Model):
     def get_absolute_url(self):
         kwargs = {
             'slug' : self.slug,
-            'pk' : self.id,
+            'name' : self.owner.slug,
         }
         
         return reverse('user-profile', kwargs = kwargs)
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        self.slug = slugify(f"{self.owner}/{self.title}")
         super().save(*args, **kwargs)
 
 
