@@ -62,13 +62,13 @@
                         {% for project in profile.project_set.all %}
                         <div class="column">
                             <div class="card project">
-                                <a href="{% url 'project' slug=project.slug pk=project.id %}" class="project">
+                                <a href="{% url 'project' slug=project.slug%}" class="project">
                                     <img class="project__thumbnail" src="{{project.imageURL}}"
                                         alt="project thumbnail" />
                                     <div class="card__body">
                                         <h3 class="project__title">{{project.title}}</h3>
                                         <p><a class="project__author"
-                                                href="{% url 'user-profile' slug=project.owner.slug pk=project.owner.id %}">
+                                                href="{% url 'user-profile' slug=project.owner.slug %}">
                                                 By {{project.owner.name}}
                                             </a>
                                         </p>

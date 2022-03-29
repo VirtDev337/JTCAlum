@@ -68,10 +68,6 @@ class Skill(models.Model):
 
     def __str__(self):
         return str(self.name)
-    
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
 
 
 class Social(models.Model):    
@@ -95,7 +91,7 @@ class Social(models.Model):
     def save(self, *args, **kwargs):
         css = self.name.lower()
         self.name = css
-        if self.name in ['github','linkedin', 'twitter']:
+        if self.name in ['github','linkedin', 'twitter', 'stackoverflow']:
             css = f'im im-{self.name}'
         else:
             css = 'im im-globe' 
@@ -134,6 +130,7 @@ class Social(models.Model):
     
     # def __str__(self):
     #     return str(self.name)
+
 
 class Message(models.Model):
     sender = models.ForeignKey(Profile, on_delete = models.SET_NULL, 
