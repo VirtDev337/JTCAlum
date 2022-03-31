@@ -12,10 +12,10 @@ class CustomUserCreationForm(UserCreationForm):
         labels = {
             'first_name': 'Name',
         }
-
+    
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
-
+        
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'input'})
 
@@ -23,14 +23,12 @@ class CustomUserCreationForm(UserCreationForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ['name', 'email', 'username',
-                    'location', 'bio', 'short_intro', 'profile_image',
-                    'social_github', 'social_linkedin', 'social_twitter',
-                    'social_youtube', 'social_website']
-
+        
+        fields = ['name', 'email', 'username', 'location', 'bio', 'short_intro', 'profile_image']
+    
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
-
+        
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'input'})
 
@@ -40,10 +38,10 @@ class SkillForm(ModelForm):
         model = Skill
         fields = '__all__'
         exclude = ['owner']
-
+    
     def __init__(self, *args, **kwargs):
         super(SkillForm, self).__init__(*args, **kwargs)
-
+        
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'input'})
 
@@ -52,10 +50,10 @@ class MessageForm(ModelForm):
     class Meta:
         model = Message
         fields = ['name', 'email', 'subject', 'body']
-
+    
     def __init__(self, *args, **kwargs):
         super(MessageForm, self).__init__(*args, **kwargs)
-
+        
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'input'})
 
@@ -68,6 +66,6 @@ class SocialForm(ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(SocialForm, self).__init__(*args, **kwargs)
-
+        
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'input'})
