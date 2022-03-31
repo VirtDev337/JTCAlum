@@ -20,7 +20,9 @@ urlpatterns = [
     path('update-site/<str:pk>/', views.updateSocial, name = "update-site"),
     path('delete-site/<str:pk>/', views.deleteSocial, name = "delete-site"),
     
-    path('inbox/', views.inbox, name = "inbox"),
+    path('<str:slug>/inbox/', views.inbox, name = "inbox"),
     path('message/<str:pk>/', views.viewMessage, name = "message"),
-    path('create-message/<str:pk>/', views.createMessage, name = "create-message"),
+    path('message/create/<str:slug>/', views.createMessage, name = "create-message"),
+    path('message/reply/<str:slug>/', views.replyMessage, name = "reply-message"),
+    path('message/delete/<str:pk>/', views.deleteMessage, name = "delete-message"),
 ]
