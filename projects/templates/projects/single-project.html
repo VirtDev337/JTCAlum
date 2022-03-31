@@ -55,7 +55,7 @@
                         <p>You cannot review your own work</p>
 
                     {% elif request.user.is_authenticated %}
-                        <form class="form" action="{% url 'project' slug=project.slug pk=project.id %}" method="POST">
+                        <form class="form" action="{% url 'project' slug=project.slug %}" method="POST">
                             {% csrf_token %}
                             {% for field in form %}
                                 <div class="form__field">

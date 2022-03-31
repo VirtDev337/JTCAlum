@@ -30,7 +30,7 @@ def project(request, slug):
         projectObj.getVoteCount
 
         messages.success(request, 'Your review was successfully submitted!')
-        return redirect('project', pk = projectObj.id)
+        return redirect('project', projectObj.slug)
 
     return render(request, 'projects/single-project.html', {'project': projectObj, 'form': form})
 

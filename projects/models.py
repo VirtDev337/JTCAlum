@@ -69,7 +69,7 @@ class Project(models.Model):
         return reverse('user-profile', kwargs = kwargs)
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(f"{self.owner}/{self.title}")
+        self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
 
