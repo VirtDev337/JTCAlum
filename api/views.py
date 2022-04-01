@@ -10,11 +10,11 @@ def getRoutes(request):
 
     routes = [
         {'GET': '/api/projects'},
-        {'GET': '/api/projects/id'},
-        {'POST': '/api/projects/id/vote'},
+        {'GET': '/api/projects/slug'},
+        {'POST': '/api/projects/slug/vote'},
 
-        {'POST': '/api/users/token'},
-        {'POST': '/api/users/token/refresh'},
+        {'POST': '/api/users/slug'},
+        {'POST': '/api/users/slug/refresh'},
     ]
     return Response(routes)
 
