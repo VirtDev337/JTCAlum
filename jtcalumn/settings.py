@@ -183,7 +183,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'devfolio.virtdev@gmail.com'
-EMAIL_HOST_PASSWORD = 'DevFolio_VirtDev_1080'
+EMAIL_HOST_PASSWORD = 'DevFolio_VirtDev'
 
 
 # Static files (CSS, JavaScript, Images)
