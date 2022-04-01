@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 from django.contrib.auth.models import User
 import uuid
 from django.template.defaultfilters import slugify
@@ -21,28 +22,21 @@ class Profile(models.Model):
                             upload_to = 'profiles/', 
                             default = "profiles/user-default.png")
     
-    collaborators = models.ForeignKey('Profile', on_delete = models.CASCADE, 
-                                        null = True, blank = True)
+    organization_name = models.CharField(default = '', max_length = 200, blank = True, null = True)
     
-    social_github = models.CharField(default = '', max_length = 200, blank = True, null = True)
-    social_twitter = models.CharField(default = '', max_length = 200, blank = True, null = True)
-    social_linkedin = models.CharField(default = '', max_length = 200, blank = True, null = True)
-    social_youtube = models.CharField(default = '', max_length = 200, blank = True, null = True)
-    social_website = models.CharField(default = '', max_length = 200, blank = True, null = True)
-
     created = models.DateTimeField(auto_now_add = True)
     
     slug = models.SlugField(default = '', editable = False, max_length = 200, null = False)
     
     id = models.UUIDField(default = uuid.uuid4, unique = True, 
                         primary_key = True, editable = False)
-
+    
     def __str__(self):
-        return str(self.username)
-
+        return str(self.name)
+    
     class Meta:
         ordering = ['created']
-
+    
     @property
     def imageURL(self):
         try:
@@ -67,29 +61,71 @@ class Skill(models.Model):
     
     id = models.UUIDField(default = uuid.uuid4, unique = True, 
                         primary_key = True, editable = False)
-
+    
     def __str__(self):
         return str(self.name)
-    
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
 
 
-class Social(models.Model):
+class Social(models.Model):    
     id = models.UUIDField(default = uuid.uuid4, unique = True, 
                         primary_key = True, editable = False)
     
     account = models.ForeignKey(Profile, on_delete = models.CASCADE, null = True, blank = True)
     
-    github = models.CharField(default = '', max_length = 200, blank = True, null = True)
-    twitter = models.CharField(default = '', max_length = 200, blank = True, null = True)
-    linkedin = models.CharField(default = '', max_length = 200, blank = True, null = True)
-    youtube = models.CharField(default = '', max_length = 200, blank = True, null = True)
-    website = models.CharField(default = '', max_length = 200, blank = True, null = True)
+    name = models.CharField(default = 'github', max_length = 200, blank = True, null = True)
+    
+    url = models.URLField(default = '', max_length = 300, blank = True, null = True)
+    
+    css = models.CharField(default = '', max_length = 50, editable = True, blank = True, null = True)
+    
+    class Meta:
+        ordering = ['account', 'name']
     
     def __str__(self):
-        return str(self.account)
+        return str(self.name)
+    
+    def save(self, *args, **kwargs):
+        css = self.name.lower()
+        self.name = css
+        if self.name in ['github','linkedin', 'twitter', 'stackoverflow']:
+            css = f'im im-{self.name}'
+        else:
+            css = 'im im-globe' 
+        
+        self.css = css
+        super().save(*args, **kwargs)
+
+
+# class Collaborator(models.Model):
+#     id = models.UUIDField(default = uuid.uuid4, unique = True, 
+#                         primary_key = True, editable = False)
+    
+#     developer = models.ForeignKey(Profile, on_delete = models.CASCADE, null = True, blank = True)
+    
+    # try:
+    #     student = models.Student.objects.get(name="abc")
+    # except:
+    #     student = None  
+    
+    # students = models.Student.objects.filter(name="abc")
+    
+    # if student:
+    #     print student.id
+    # else:
+    #     if students:
+    #         print "There are multiple users with this name"
+    #     else:
+    #         print "The user doesn't exist"
+    
+    
+    # people = []
+    # for person in Profile.objects.exclude(user = developer.name).orderby('name'):
+    #     people.append(person.name)
+    
+    # name = models.CharField(widget = CheckboxSelectMultiple(), choices = people, default = '', max_length = 300, blank = True, null = True)
+    
+    # def __str__(self):
+    #     return str(self.name)
 
 
 class Message(models.Model):
@@ -110,9 +146,9 @@ class Message(models.Model):
     
     id = models.UUIDField(default = uuid.uuid4, unique = True,
                         primary_key = True, editable = False)
-
+    
     def __str__(self):
         return self.subject
-
+    
     class Meta:
         ordering = ['is_read', '-created']
