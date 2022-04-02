@@ -9,6 +9,8 @@ urlpatterns = [
     path('', views.profiles, name = "profiles"),
     path('profile/<str:slug>/<str:pk>/', views.userProfile, name = "user-profile"),
     path('account/', views.userAccount, name = "account"),
+    path('affiliates/', views.affiliates, name='affiliates'),
+    path('affiliate-profile/<str:slug>/<str:pk>/', views.affiliateProfile, name='affiliate-profile'),
 
     path('account/update', views.editAccount, name = "edit-account"),
 

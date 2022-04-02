@@ -2,6 +2,8 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile, Skill, Message
+from django.forms.widgets import RadioSelect
+from django import forms
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -20,12 +22,15 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class ProfileForm(ModelForm):
+    # radio buttons to choose profile type
+    PROFILE_CHOICES = [('alum','JTC Alum'),('affiliate','Affiliate Organization')]
+    profile_type = forms.CharField(label='Profile Type', required=True, widget=forms.RadioSelect(choices=PROFILE_CHOICES))
     class Meta:
         model = Profile
         fields = ['name', 'email', 'username',
-                    'location', 'bio', 'short_intro', 'profile_image',
-                    'social_github', 'social_linkedin', 'social_twitter',
-                    'social_youtube', 'social_website']
+                    'location', 'bio', 'short_intro', 'profile_image', 
+                    'profile_type', 'social_github', 'social_linkedin', 
+                    'social_twitter', 'social_youtube', 'social_website']
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
