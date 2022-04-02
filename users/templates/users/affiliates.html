@@ -1,0 +1,57 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+ <!-- Main Section -->
+ <main class="home">
+    <section class="hero-section text-center">
+      <div class="container container--narrow">
+        <div class="hero-section__box">
+          <h2>JTC <span>AFFILIATES</span></h2>
+          <h2>TO THE PROGRAM</h2>
+        </div>
+
+        <div class="hero-section__search">
+          <!--send get request to backend -->
+          <form id='searchForm' class="form" action="{% url 'affiliates' %}" method="GET">
+            <div class="form__field">
+              <label for="formInput#search">Search affiliates </label>
+              <!--name value is what GET method uses, name sent to backend-->
+              <input class="input input--text" id="formInput#search" type="text" name="search_query" value="{{search_query}}"
+                placeholder="Search by affiliate name" />
+            </div>
+
+            <input class="btn btn--sub btn--lg" type="submit" value="Search" />
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- Search Result: DevList -->
+    <section class="devlist">
+      <div class="container">
+        <div class="grid grid--three">
+        {% for profile in profiles %}
+        {% if profile.profile_type == 'affiliate' %}
+          <div class="column card">
+            <div class="dev">
+              <a href="{% url 'affiliate-profile' slug=profile.slug pk=profile.id %}" class="card__body">
+                <div class="dev__profile">
+                  <img class="avatar avatar--md" src="{{ profile.profile_image.url }}" alt="image" />
+                  <div class="dev__meta">
+                    <h3>{{profile.name}}</h3>
+                    <h5>{{profile.headline|truncatechars:50}}</h5><!--used truncate instead of slice--> 
+                  </div>
+                </div>
+                <p class="dev__info">{{profile.bio|truncatechars:150}}</p> <!--used truncate instead of slice-->
+              </a>
+            </div>
+          </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+
+    <!--pass in profiles & custom_range from profiles view to pagination page-->
+    {% include 'pagination.html' with queryset=profiles custom_range=custom_range %}
+  </main>
+{% endblock content %}

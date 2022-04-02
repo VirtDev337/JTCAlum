@@ -8,7 +8,7 @@ from django.urls import conf
 from django.db.models import Q
 from .models import Profile, Message
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm, SocialForm
-from .utils import searchProfiles, paginateProfiles
+from .utils import searchProfiles, paginateProfiles, searchAffiliates, paginateAffiliates
 
 
 def loginUser(request):
@@ -90,6 +90,19 @@ def userProfile(request, slug):
     context = {'profile': profile, 'topSkills': topSkills,
                 'otherSkills': otherSkills, 'social': social}
     return render(request, 'users/user-profile.html', context)
+
+def affiliates(request):
+    profiles, search_query = searchAffiliates(request)
+
+    custom_range, profiles = paginateAffiliates(request, profiles, 3)
+
+    context = {'profiles': profiles, 'search_query': search_query, 'custom_range': custom_range}
+    return render(request=request, template_name="users/affiliates.html", context=context)
+
+def affiliateProfile(request, slug, pk):
+    profile = Profile.objects.get(id=pk)
+    context = {'profile': profile};
+    return render(request=request, template_name="users/affiliate-profile.html", context=context)
 
 
 @login_required(login_url = 'login')
