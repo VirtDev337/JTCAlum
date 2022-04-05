@@ -22,6 +22,8 @@ class Profile(models.Model):
                             upload_to = 'profiles/', 
                             default = "profiles/user-default.png")
     
+    profile_type = models.CharField(default='alum', max_length=200)
+    
     organization_name = models.CharField(default = '', max_length = 200, blank = True, null = True)
     
     created = models.DateTimeField(auto_now_add = True)
