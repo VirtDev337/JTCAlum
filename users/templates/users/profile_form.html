@@ -14,10 +14,21 @@
                 {% csrf_token %}
 
                 {% for field in form %}
-                    <div class="form__field">
-                        <label for="formInput#text">{{field.label}}</label>
-                        {{field}}
-                    </div>
+                    {% if form.profile_type == "alum" %}
+                        {% if field != "organization_name" %}
+                            <div class="form__field">
+                                <label for="formInput#text">{{field.label}}</label>
+                                {{field}}
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        {% if field != "short_intro" %}
+                            <div class="form__field">
+                                <label for="formInput#text">{{field.label}}</label>
+                                {{field}}
+                            </div>
+                        {% endif %}
+                    {% endif %}
                 {% endfor %}
 
                 <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
@@ -27,3 +38,29 @@
 </main>
 
 {% endblock content %}
+<script>
+    // function that hides/shows field_four based upon field_three value
+    function check_field_value(new_val) {
+        if(new_val != 'A value') {
+            // #id_field_four should be actually the id of the HTML element
+            // that surrounds everything you want to hide.  Since you did
+            // not post your HTML I can't finish this part for you.
+            $('#field_four').removeClass('hidden');
+        } else {
+            $('#field_four').addClass('hidden');
+        }
+    }
+
+
+
+    // this is executed once when the page loads
+    $(document).ready(function() {
+
+        // set things up so my function will be called when field_three changes
+        $('#field_three').change( function() {
+            check_field_value(this.value);
+        });
+
+    });
+
+</script>
