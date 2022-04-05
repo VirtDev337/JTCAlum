@@ -38,6 +38,7 @@
                 <div class="dev__profile">
                   <img class="avatar avatar--md" src="{{ profile.profile_image.url }}" alt="image" />
                   <div class="dev__meta">
+                    <h4>{{profile.organization_name}}</h4>
                     <h3>{{profile.name}}</h3>
                     <h5>{{profile.headline|truncatechars:50}}</h5><!--used truncate instead of slice--> 
                   </div>

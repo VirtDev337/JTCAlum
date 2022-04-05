@@ -25,10 +25,11 @@ class ProfileForm(ModelForm):
     # radio buttons to choose profile type
     PROFILE_CHOICES = [('alum','JTC Alum'),('affiliate','Affiliate Organization')]
     profile_type = forms.CharField(label='Profile Type', required=True, widget=forms.RadioSelect(choices=PROFILE_CHOICES))
+    
     class Meta:
         model = Profile
         
-        fields = ['name', 'email', 'username', 'location', 'bio', 'short_intro', 'profile_image', 'profile_type',]
+        fields = ['name', 'email', 'username', 'location', 'profile_type', 'bio', 'short_intro', 'organization_name', 'profile_image']
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
