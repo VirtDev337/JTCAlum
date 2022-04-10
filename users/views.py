@@ -1,3 +1,4 @@
+from binascii import rledecode_hqx
 from django.dispatch.dispatcher import receiver
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
@@ -6,9 +7,10 @@ from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.urls import conf
 from django.db.models import Q
-from .models import Profile, Message
-from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm, SocialForm
+from .models import Profile, Message, Opportunity
+from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm, SocialForm, OpportunityForm
 from .utils import searchProfiles, paginateProfiles, searchAffiliates, paginateAffiliates
+from datetime import datetime, timedelta
 
 
 def loginUser(request):
@@ -328,3 +330,79 @@ def deleteMessage(request, pk):
     
     context = {'object': message}
     return render(request, 'delete_template.html', context)
+
+
+#--------Opportunities----------
+
+
+# @login_required(login_url = 'login')
+def opportunityBoard(request):
+    # automatically deletes opportunities more than 90 days old
+    Opportunity.objects.filter(created__lte=datetime.now()-timedelta(days=90)).delete()
+    opportunities = Opportunity.objects.all()
+
+    if request.user.is_authenticated:        
+        profile = request.user.profile
+        read = profile.read.all()
+    else:
+            read = None
+
+    context = {
+                'opportunities': opportunities,
+                'read': read,
+            }
+    
+    return render(request, 'users/opportunity_board.html', context)
+
+# @login_required(login_url = 'login')
+def viewOpportunity(request, pk):
+    opportunity = Opportunity.objects.get(id=pk)
+
+    if request.user.is_authenticated:
+        profile = request.user.profile    
+        if opportunity not in profile.read.all():
+            profile.read.add(opportunity)
+        
+        # opportunity.save()
+    context = {'opportunity': opportunity}
+    return render(request, 'users/opportunity.html', context)
+
+def createOpportunity(request):
+    form = OpportunityForm()
+    
+    try:
+        creator = request.user.profile
+    except:
+        creator = None
+    
+    if request.method == 'POST':
+        form = OpportunityForm(request.POST)
+        if form.is_valid():
+            # opportunity = form.save()
+            opportunity = form.save(commit = False)
+            opportunity.owner = creator
+            
+            if creator:
+                opportunity.poster = creator.name
+            opportunity.save()
+            
+            messages.success(request, 'Your opportunity was successfully posted!')
+            return redirect('opportunity-board')
+    
+    context = {'form': form}
+    return render(request, 'users/opportunity_form.html', context)
+
+# if user is logged in and they are the creator of an opportunity post,
+# allow them to delete it
+@login_required(login_url = 'login')
+def deleteOpportunity(request, pk):
+    profile = request.user.profile
+    opportunity = Opportunity.objects.get(id = pk)
+    if request.method == 'POST':
+        opportunity.delete()
+        messages.success(request, 'Opportunity post was deleted successfully!')
+        return redirect('opportunity-board')
+    
+    context = {'object': opportunity}
+    return render(request, 'delete_template.html', context)
+

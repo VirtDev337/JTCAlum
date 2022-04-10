@@ -1,0 +1,33 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<!-- Main Section -->
+<main class="inbox my-xl">
+  <div class="content-box">
+    <h3 class="inbox__title">Opportunities</h3>
+    
+    <ul class="messages">
+      
+      {% for opportunity in opportunities %}
+        {% if opportunity not in read %}
+          <li class="message message--unread">
+        {% else %}
+          <li class="message">
+        {% endif %} 
+
+          <a href="{% url 'opportunity' opportunity.id %}">
+            <span class="message__subject">{{opportunity.title}}</span>
+            <span class="message__date">{{opportunity.created}}</span>
+          </a>
+          {% comment %} <a href="{% url 'delete-opportunity' opportunity.id %}" class="btn btn--sub btn--sub--msg btn--sm">Delete </a> {% endcomment %}
+        </li>
+
+      {% endfor %}
+
+    </ul>
+    <br>
+    <a href="{% url 'create-opportunity' %}" class="btn btn--sub btn--lg">Post an Opportunity</a>
+  </div>
+</main>
+
+{% endblock content %}

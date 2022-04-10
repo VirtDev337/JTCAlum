@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<!-- Main Section -->
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            
+            <a class="backButton" href="{% url 'opportunity-board' %}"><i class="im im-angle-left"></i></a>
+            <br>
+
+            <form class="form" method="POST">
+                {% csrf_token %}
+
+                {% if request.user.is_authenticated == False %}
+                    <div class="form__field">
+                        <label for="formInput#text">{{form.poster.label}}</label>
+                        {{form.poster}}
+                    </div>
+                {% endif %}
+
+                <div class="form__field">
+                    <label for="formInput#text">{{form.title.label}}</label>
+                    {{form.title}}
+                </div>
+
+                <div class="form__field">
+                    <label for="formInput#text">{{form.weblink.label}}</label>
+                    {{form.weblink}}
+                </div>
+
+                <div class="form__field">
+                    <label for="formInput#text">{{form.body.label}}</label>
+                    {{form.body}}
+                </div>
+
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

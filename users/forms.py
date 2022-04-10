@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms.widgets import RadioSelect
-from .models import Profile, Skill, Message, Social
+from .models import Profile, Skill, Message, Social, Opportunity
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -71,6 +71,17 @@ class SocialForm(ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(SocialForm, self).__init__(*args, **kwargs)
+        
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'input'})
+
+class OpportunityForm(ModelForm):    
+    class Meta:
+        model = Opportunity
+        fields = ['title', 'body', 'weblink', 'poster']
+    
+    def __init__(self, *args, **kwargs):
+        super(OpportunityForm, self).__init__(*args, **kwargs)
         
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'input'})

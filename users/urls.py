@@ -27,4 +27,10 @@ urlpatterns = [
     path('message/create/<str:slug>/', views.createMessage, name = "create-message"),
     path('message/reply/<str:slug>/', views.replyMessage, name = "reply-message"),
     path('message/delete/<str:pk>/', views.deleteMessage, name = "delete-message"),
+
+    path('opportunity-board/', views.opportunityBoard, name = "opportunity-board"),
+    path('opportunity/<str:pk>/', views.viewOpportunity, name = "opportunity"),
+    path('create-opportunity/', views.createOpportunity, name = "create-opportunity"),
+    path('delete-opportunity/<str:pk>/', views.deleteOpportunity, name = "delete-opportunity"),
+
 ]
