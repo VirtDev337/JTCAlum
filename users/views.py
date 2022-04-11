@@ -93,6 +93,7 @@ def userProfile(request, slug):
                 'otherSkills': otherSkills, 'social': social}
     return render(request, 'users/user-profile.html', context)
 
+
 def affiliates(request):
     profiles, search_query = searchAffiliates(request)
 
@@ -100,6 +101,7 @@ def affiliates(request):
 
     context = {'profiles': profiles, 'search_query': search_query, 'custom_range': custom_range}
     return render(request=request, template_name="users/affiliates.html", context=context)
+
 
 def affiliateProfile(request, slug, pk):
     profile = Profile.objects.get(id=pk)
@@ -340,13 +342,13 @@ def opportunityBoard(request):
     # automatically deletes opportunities more than 90 days old
     Opportunity.objects.filter(created__lte=datetime.now()-timedelta(days=90)).delete()
     opportunities = Opportunity.objects.all()
-
+    
     if request.user.is_authenticated:        
         profile = request.user.profile
         read = profile.read.all()
     else:
-            read = None
-
+        read = None
+    
     context = {
                 'opportunities': opportunities,
                 'read': read,
@@ -354,10 +356,11 @@ def opportunityBoard(request):
     
     return render(request, 'users/opportunity_board.html', context)
 
+
 # @login_required(login_url = 'login')
 def viewOpportunity(request, pk):
     opportunity = Opportunity.objects.get(id=pk)
-
+    
     if request.user.is_authenticated:
         profile = request.user.profile    
         if opportunity not in profile.read.all():
@@ -365,7 +368,9 @@ def viewOpportunity(request, pk):
         
         # opportunity.save()
     context = {'opportunity': opportunity}
+    
     return render(request, 'users/opportunity.html', context)
+
 
 def createOpportunity(request):
     form = OpportunityForm()
@@ -378,19 +383,50 @@ def createOpportunity(request):
     if request.method == 'POST':
         form = OpportunityForm(request.POST)
         if form.is_valid():
-            # opportunity = form.save()
+            
             opportunity = form.save(commit = False)
             opportunity.owner = creator
             
             if creator:
                 opportunity.poster = creator.name
+                profile = Profile.objects.get(name = opportunity.poster)
             opportunity.save()
             
             messages.success(request, 'Your opportunity was successfully posted!')
             return redirect('opportunity-board')
     
+    context = {'form': form, 'profile': profile}
+    return render(request, 'users/opportunity_form.html', context)
+
+
+def updateOpportunity(request, pk):
+    post = Opportunity.objects.get(pk = pk)
+    form = OpportunityForm(instance = post)
+    
+    try:
+        creator = request.user.profile
+    except:
+        creator = None
+    
+    if request.method == 'POST':
+        form = OpportunityForm(request.POST, instance = post)
+        if form.is_valid():
+            
+            opportunity = form.save(commit = False)
+            opportunity.owner = creator
+            
+            if creator:
+                opportunity.poster = creator.name
+            
+            opportunity.save()
+            
+            messages.success(request, 'Your opportunity was successfully posted!')
+            context = {'opportunity': post}
+            return redirect('opportunity-board')
+    
     context = {'form': form}
     return render(request, 'users/opportunity_form.html', context)
+
 
 # if user is logged in and they are the creator of an opportunity post,
 # allow them to delete it
@@ -405,4 +441,3 @@ def deleteOpportunity(request, pk):
     
     context = {'object': opportunity}
     return render(request, 'delete_template.html', context)
-

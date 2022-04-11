@@ -7,25 +7,29 @@
   <div class="content-box">
     <div class="message">
       <a class="backButton" href="{% url 'opportunity-board' %}"><i class="im im-angle-left"></i></a>
-      <h2 class="message__subject">{{opportunity.title}}</h4>
-        
-        {% comment %} {% if opportunity.poster %}
-          <a href="{% url 'user-profile' opportunity.poster.slug  %}" class="message__author">{{opportunity.poster}}</a>
-
-        {% else %} {% endcomment %}
-          <p class="message__author">{{opportunity.poster}}</p>
-        {% comment %} {% endif %} {% endcomment %}
-
-        <p class="message__date">{{opportunity.created}}</p>
-        <a title="Weblink" href="{{opportunity.weblink}}" target="_blank">{{opportunity.weblink}}</a>
-        <br>
-        <div class="message__body">{{opportunity.body|linebreaksbr}}</div>
-        
-      </div>
-      {% comment %} <div>{{request.user.profile.id}}</div><br> {% endcomment %}
-      {% if request.user.profile.id == opportunity.owner.id %}
-      <a href="{% url 'delete-opportunity' opportunity.id %}" class="btn btn--sub btn--lg">Delete </a>
+      <h2 class="message__subject">{{opportunity.title}}</h2>
+      
+      {% if opportunity.company != None %}
+        <h3 class="message__subject">{{opportunity.company}}</h3>
       {% endif %}
+      
+      {% if opportunity.owner != None %}
+        <a href="{% url 'user-profile' slug=opportunity.owner.slug  %}" class="message__author">{{opportunity.poster}}</a>
+      {% else %}
+        <p class="message__author">{{opportunity.poster}}</p>
+      {% endif %}
+
+      <p class="message__date">{{opportunity.created}}</p>
+      <a title="Weblink" href="{{opportunity.weblink}}" target="_blank">{{opportunity.weblink}}</a>
+      <br>
+      <div class="message__body">{{opportunity.body|linebreaksbr}}</div>
+      
+    </div>
+    {% comment %} <div>{{request.user.profile.id}}</div><br> {% endcomment %}
+    {% if request.user.profile.id == opportunity.owner.id %}
+      <a href="{% url 'update-opportunity' opportunity.id %}" class="btn btn--sub btn--lg">Update </a>
+      <a href="{% url 'delete-opportunity' opportunity.id %}" class="btn btn--sub btn--lg">Delete </a>
+    {% endif %}
   </div>
 </main>
 {% endblock content %}

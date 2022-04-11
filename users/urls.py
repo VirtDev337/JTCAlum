@@ -30,7 +30,7 @@ urlpatterns = [
 
     path('opportunity-board/', views.opportunityBoard, name = "opportunity-board"),
     path('opportunity/<str:pk>/', views.viewOpportunity, name = "opportunity"),
-    path('create-opportunity/', views.createOpportunity, name = "create-opportunity"),
-    path('delete-opportunity/<str:pk>/', views.deleteOpportunity, name = "delete-opportunity"),
-
+    path('opportunity/create/', views.createOpportunity, name = "create-opportunity"),
+    path('opportunity/update/<str:pk>/', views.updateOpportunity, name = "update-opportunity"),
+    path('opportunity/delete/<str:pk>/', views.deleteOpportunity, name = "delete-opportunity"),
 ]
