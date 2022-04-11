@@ -157,21 +157,26 @@ class Message(models.Model):
 class Opportunity(models.Model):
     owner = models.ForeignKey(Profile, related_name='owner', on_delete = models.SET_NULL, null = True, blank = True)
     read = models.ForeignKey(Profile, related_name='read', on_delete = models.CASCADE, null = True, blank = True)
+    
     poster = models.CharField(max_length = 200, null = True, blank = True)
     title = models.CharField(blank=False, null=True, max_length= 200)
-    body = models.TextField(blank=False, null=True, max_length=200)
+    company = models.CharField(blank=False, null=True, max_length= 200)
+    body = models.TextField(blank=False, null=True, max_length=5000)
     weblink = models.URLField(default = '', max_length = 300, blank = True, null = True)
     created = models.DateTimeField(auto_now_add = True)    
-    # is_read = models.BooleanField(default = False, null = True)
-    # slug = models.SlugField(default = '', editable = False, max_length = 200, null = False)    
-    id = models.UUIDField(default = uuid.uuid4, unique = True, 
-                        primary_key = True, editable = False)
-
-    def __str__(self):
-        return str(self.title)
+    
+    slug = models.SlugField(default = '', editable = False, max_length = 200, null = False)    
+    id = models.UUIDField(default = uuid.uuid4, unique = True, primary_key = True, editable = False)
+    
     class Meta:
         ordering = ['-created']
+        unique_together = [['poster', 'title']]
         # ordering = ['is_read', '-created']
     
-
-
+    def __str__(self):
+        return str(self.title)
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(f"{self.company} {self.title}")
+        super().save(*args, **kwargs)
+    

@@ -78,7 +78,7 @@ class SocialForm(ModelForm):
 class OpportunityForm(ModelForm):    
     class Meta:
         model = Opportunity
-        fields = ['title', 'body', 'weblink', 'poster']
+        fields = ['title', 'company', 'body', 'weblink', 'poster']
     
     def __init__(self, *args, **kwargs):
         super(OpportunityForm, self).__init__(*args, **kwargs)
