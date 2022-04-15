@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from projects.models import Project, Tag, Review
-from users.models import Profile
+from users.models import Profile, Opportunity
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -13,6 +13,13 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
+
+
+class OpportunitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Opportunity
+        fields = '__all__'
+
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -34,3 +41,9 @@ class ProjectSerializer(serializers.ModelSerializer):
         reviews = obj.review_set.all()
         serializer = ReviewSerializer(reviews, many = True)
         return serializer.data
+
+
+class AffiliateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'

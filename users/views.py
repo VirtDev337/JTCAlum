@@ -103,8 +103,8 @@ def affiliates(request):
     return render(request=request, template_name="users/affiliates.html", context=context)
 
 
-def affiliateProfile(request, slug, pk):
-    profile = Profile.objects.get(id=pk)
+def affiliateProfile(request, slug):
+    profile = Profile.objects.get(slug = slug)
     context = {'profile': profile};
     return render(request=request, template_name="users/affiliate-profile.html", context=context)
 
@@ -340,7 +340,7 @@ def deleteMessage(request, pk):
 # @login_required(login_url = 'login')
 def opportunityBoard(request):
     # automatically deletes opportunities more than 90 days old
-    Opportunity.objects.filter(created__lte=datetime.now()-timedelta(days=90)).delete()
+    Opportunity.objects.filter(created__lte = datetime.now()-timedelta(days=90)).delete()
     opportunities = Opportunity.objects.all()
     
     if request.user.is_authenticated:        
@@ -389,13 +389,13 @@ def createOpportunity(request):
             
             if creator:
                 opportunity.poster = creator.name
-                profile = Profile.objects.get(name = opportunity.poster)
+            
             opportunity.save()
             
             messages.success(request, 'Your opportunity was successfully posted!')
             return redirect('opportunity-board')
     
-    context = {'form': form, 'profile': profile}
+    context = {'form': form} 
     return render(request, 'users/opportunity_form.html', context)
 
 

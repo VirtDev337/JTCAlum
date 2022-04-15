@@ -2,15 +2,15 @@
 
 {% block content %}
 
- <!-- Main Section -->
- <main class="home">
+  <!-- Main Section -->
+  <main class="home">
     <section class="hero-section text-center">
       <div class="container container--narrow">
         <div class="hero-section__box">
           <h2>JTC <span>AFFILIATES</span></h2>
           <h2>TO THE PROGRAM</h2>
         </div>
-
+        
         <div class="hero-section__search">
           <!--send get request to backend -->
           <form id='searchForm' class="form" action="{% url 'affiliates' %}" method="GET">
@@ -20,7 +20,7 @@
               <input class="input input--text" id="formInput#search" type="text" name="search_query" value="{{search_query}}"
                 placeholder="Search by affiliate name" />
             </div>
-
+            
             <input class="btn btn--sub btn--lg" type="submit" value="Search" />
           </form>
         </div>
@@ -34,7 +34,7 @@
         {% if profile.profile_type == 'affiliate' %}
           <div class="column card">
             <div class="dev">
-              <a href="{% url 'affiliate-profile' slug=profile.slug pk=profile.id %}" class="card__body">
+              <a href="{% url 'affiliate-profile' slug=profile.slug %}" class="card__body">
                 <div class="dev__profile">
                   <img class="avatar avatar--md" src="{{ profile.profile_image.url }}" alt="image" />
                   <div class="dev__meta">
@@ -51,8 +51,9 @@
         {% endfor %}
       </div>
     </section>
-
+    
     <!--pass in profiles & custom_range from profiles view to pagination page-->
     {% include 'pagination.html' with queryset=profiles custom_range=custom_range %}
   </main>
+  
 {% endblock content %}
