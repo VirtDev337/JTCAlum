@@ -9,7 +9,7 @@ from django.urls import conf
 from django.db.models import Q
 from .models import Profile, Message, Opportunity
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm, SocialForm, OpportunityForm
-from .utils import searchProfiles, paginateProfiles, searchAffiliates, paginateAffiliates
+from .utils import searchProfiles, paginateProfiles, searchAffiliates, paginateAffiliates, searchOpportunities
 from datetime import datetime, timedelta
 
 
@@ -341,7 +341,8 @@ def deleteMessage(request, pk):
 def opportunityBoard(request):
     # automatically deletes opportunities more than 90 days old
     Opportunity.objects.filter(created__lte = datetime.now()-timedelta(days=90)).delete()
-    opportunities = Opportunity.objects.all()
+    
+    opportunities, search_query = searchOpportunities(request)
     
     if request.user.is_authenticated:        
         profile = request.user.profile
@@ -351,6 +352,7 @@ def opportunityBoard(request):
     
     context = {
                 'opportunities': opportunities,
+                'search_query': search_query, 
                 'read': read,
             }
     

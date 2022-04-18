@@ -16,6 +16,7 @@ class Project(models.Model):
     
     demo_link = models.CharField(max_length = 2000, null = True, blank = True)
     source_link = models.CharField(max_length = 2000, null = True, blank = True)
+    demo = models.BooleanField(default = False, null = True, blank = True)
     
     tags = models.ManyToManyField('Tag', blank = True)
     

@@ -20,7 +20,9 @@
 
             {% for field in form %}
                 <div class="form__field">
-                    <label for="formInput#text">{{field.label}}</label>
+                    {% comment %} {% if 'Password' in field.label  or field.label == 'Profile image'%}
+                        <label for="formInput#text">{{field.label}}</label>
+                    {% endif %} {% endcomment %}
                     {{field}}
 
                     <!-- {% if field.help_text %}
