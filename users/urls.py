@@ -10,17 +10,17 @@ urlpatterns = [
     path('profile/<str:slug>/', views.userProfile, name = "user-profile"),
     path('account/', views.userAccount, name = "account"),
     path('affiliates/', views.affiliates, name='affiliates'),
-    path('affiliate-profile/<str:slug>/<str:pk>/', views.affiliateProfile, name='affiliate-profile'),
+    path('affiliate/profile/<str:slug>/', views.affiliateProfile, name='affiliate-profile'),
 
     path('account/update', views.editAccount, name = "edit-account"),
 
-    path('create-skill/', views.createSkill, name = "create-skill"),
-    path('update-skill/<str:pk>/', views.updateSkill, name = "update-skill"),
-    path('delete-skill/<str:pk>/', views.deleteSkill, name = "delete-skill"),
+    path('skill/create/', views.createSkill, name = "create-skill"),
+    path('skill/update/<str:pk>/', views.updateSkill, name = "update-skill"),
+    path('skill/delete/<str:pk>/', views.deleteSkill, name = "delete-skill"),
     
-    path('create-site/', views.createSocial, name = "create-site"),
-    path('update-site/<str:pk>/', views.updateSocial, name = "update-site"),
-    path('delete-site/<str:pk>/', views.deleteSocial, name = "delete-site"),
+    path('site/create/', views.createSocial, name = "create-site"),
+    path('site/update/<str:pk>/', views.updateSocial, name = "update-site"),
+    path('site/delete/<str:pk>/', views.deleteSocial, name = "delete-site"),
     
     path('<str:slug>/inbox/', views.inbox, name = "inbox"),
     path('message/<str:pk>/', views.viewMessage, name = "message"),
@@ -28,9 +28,9 @@ urlpatterns = [
     path('message/reply/<str:slug>/', views.replyMessage, name = "reply-message"),
     path('message/delete/<str:pk>/', views.deleteMessage, name = "delete-message"),
 
-    path('opportunity-board/', views.opportunityBoard, name = "opportunity-board"),
-    path('opportunity/<str:pk>/', views.viewOpportunity, name = "opportunity"),
+    path('opportunities/', views.opportunityBoard, name = "opportunity-board"),
     path('opportunity/create/', views.createOpportunity, name = "create-opportunity"),
+    path('opportunity/<str:pk>/', views.viewOpportunity, name = "opportunity"),
     path('opportunity/update/<str:pk>/', views.updateOpportunity, name = "update-opportunity"),
     path('opportunity/delete/<str:pk>/', views.deleteOpportunity, name = "delete-opportunity"),
 ]

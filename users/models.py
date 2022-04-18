@@ -28,13 +28,16 @@ class Profile(models.Model):
 
     created = models.DateTimeField(auto_now_add = True)
     
-    slug = models.SlugField(default = '', editable = False, max_length = 200, null = False)
+    slug = models.SlugField(default = '', editable = True, max_length = 200, null = False)
     
     id = models.UUIDField(default = uuid.uuid4, unique = True, 
                         primary_key = True, editable = False)
     
     def __str__(self):
-        return str(self.name)
+        if self.profile_type == 'alum':
+            return str(self.name)
+        else:
+            return str(self.organization_name)
     
     class Meta:
         ordering = ['created']
@@ -48,7 +51,8 @@ class Profile(models.Model):
         return url
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        slug = self.name if self.profile_type == 'alum' else self.organization_name
+        self.slug = slugify(slug)
         super().save(*args, **kwargs)
 
 
@@ -170,7 +174,7 @@ class Opportunity(models.Model):
     
     class Meta:
         ordering = ['-created']
-        unique_together = [['poster', 'title']]
+        unique_together = [['company', 'title']]
         # ordering = ['is_read', '-created']
     
     def __str__(self):
@@ -179,4 +183,3 @@ class Opportunity(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(f"{self.company} {self.title}")
         super().save(*args, **kwargs)
-    

@@ -1,4 +1,7 @@
 :root {
+  --college-gold: #fcd450;
+  --college-warm-gray: #5e514e;
+  --college-warm-light-gray: #cdc9c5;
   --color-main: #5aa5b9;
   --color-main-light: #e6faff;
   --color-sub: #3f4156;
@@ -15,7 +18,11 @@
   --color-success-bg: #def8e8;
   --color-error: #fc4b0b;
   --color-error-bg: #fff2ee;
-  --font-base: 'Poppins', arial, helvetica, 'Segoe UI', roboto, ubuntu, sans-serif;
+  --columbia-blue: #003373;
+  --columbia-dark-blue: #002855;
+  --columbia-college-blue: #66aee6;
+  --columbia-alumni-blue: #418fde;
+  --font-base: 'Adobe Garamond', 'Merriweather', georgia, 'Brioni', roboto, arial;
   --font-monospace: 'Fira Code', 'Courier New', courier, monospace;
   --font-regular: 300;
   --font-medium: 500;

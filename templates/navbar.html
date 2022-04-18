@@ -4,21 +4,22 @@
 <header class="header">
     <div class="container container--narrow">
         <a href="{% url 'profiles' %}" class="header__logo">
-            <img src="{% static 'images/JTC Long Logo.jpeg' %} " alt="JTCAlumn Logo" />
+        <img src="{% static 'images/jtc-long-logo.jpeg' %} " alt="JTCAlumn Logo" />
         </a>
-
         <nav class="header__nav">
             <input type="checkbox" id="responsive-menu" />
+            
             <label for="responsive-menu" class="toggle-menu">
                 <span>Menu</span>
                 <div class="toggle-menu__lines"></div>
             </label>
+            
             <ul class="header__menu">
                 <li class="header__menuItem"><a href="{% url 'profiles' %}">Developers</a></li>
-                <li class="header__menuItem"><a href="{% url 'affiliates' %}">Affiliates</a></li>
                 <li class="header__menuItem"><a href="{% url 'projects' %}">Projects</a></li>
+                <li class="header__menuItem"><a href="{% url 'affiliates' %}">Affiliates</a></li>
                 <li class="header__menuItem"><a href="{% url 'opportunity-board' %}">Opportunities</a></li>
-
+                
                 {% if request.user.is_authenticated %}
                     {% comment %} <li class="header__menuItem"><a href="{% url 'inbox' request.user.profile.slug %}">Inbox</a></li> {% endcomment %}
                     <li class="header__menuItem"><a href="{% url 'account' %}">Account</a></li>
@@ -28,5 +29,13 @@
                 {% endif %}
             </ul>
         </nav>
+        <a href="{{ request.GET.next }}" class="header">
+            <div id="theme-options-wrapper">
+                <div data-mode="light" id="light-mode" class="theme-dot"></div>
+                <div data-mode="dark" id="dark-mode" class="theme-dot"></div>
+            </div>
+        </a>
     </div>
 </header>
+
+<script src="{% static 'js/theme.js' %}"></script>

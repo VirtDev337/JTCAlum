@@ -2,10 +2,31 @@
 
 {% block content %}
 <!-- Main Section -->
+<main class="home">
+  <section class="hero-section text-center">
+    <div class="container container--narrow">
+      <div class="hero-section__box">
+        <h2>OPPORTUNITIES FOR <span>DEVELOPERS</span></h2>
+      </div>
+
+      <div class="hero-section__search">
+
+        <form id="searchForm" class="form" action="{% url 'opportunity-board' %}" method="get">
+          <div class="form__field">
+            <label for="formInput#search">Search Opportunities </label>
+            <input class="input input--text" id="formInput#search" type="text" name="search_query"
+                value="{{search_query}}" placeholder="Search by Opportunity Title" />
+          </div>
+
+          <input class="btn btn--sub btn--lg" type="submit" value="Search" />
+        </form>
+
+      </div>
+    </div>
+  </section>
+</main>
 <main class="inbox my-xl">
-  <div class="content-box">
-    <h3 class="inbox__title">Opportunities</h3>
-    
+  <div class="content-box">    
     <ul class="messages">
       
       {% for opportunity in opportunities %}
