@@ -4,6 +4,8 @@ from .models import Profile, Skill, Opportunity
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
+#--------Pagination----------
+
 def paginateProfiles(request, profiles, results):
     page = request.GET.get('page')
     alums = profiles.filter(profile_type='alum')
@@ -33,23 +35,6 @@ def paginateProfiles(request, profiles, results):
     return custom_range, alums
 
 
-def searchProfiles(request):
-    search_query = ''
-    
-    if request.GET.get('search_query'):
-        search_query = request.GET.get('search_query')
-    
-    skills = Skill.objects.filter(name__icontains = search_query)
-    
-    profiles = Profile.objects.distinct().filter(
-        (Q(name__icontains = search_query) |
-        Q(short_intro__icontains = search_query) |
-        Q(skill__in = skills)) 
-        & Q(profile_type = 'alum')
-    )
-    
-    return profiles, search_query
-
 def paginateAffiliates(request, profiles, results):
     page = request.GET.get('page')
     affiliates = profiles.filter(profile_type='affiliate')
@@ -77,6 +62,28 @@ def paginateAffiliates(request, profiles, results):
     custom_range = range(leftIndex, rightIndex)
     
     return custom_range, affiliates
+
+
+#--------Searches----------
+
+def searchProfiles(request):
+    search_query = ''
+    
+    if request.GET.get('search_query'):
+        search_query = request.GET.get('search_query')
+    
+    skills = Skill.objects.filter(name__icontains = search_query)
+    
+    profiles = Profile.objects.distinct().filter(
+        (Q(name__icontains = search_query) |
+        Q(short_intro__icontains = search_query) |
+        Q(skill__in = skills)) 
+        & Q(profile_type = 'alum')
+    )
+    
+    return profiles, search_query
+
+
 
 def searchAffiliates(request):
     search_query = ''

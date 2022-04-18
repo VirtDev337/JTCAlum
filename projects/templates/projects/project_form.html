@@ -16,8 +16,13 @@
                 {% for field in form %}
                 <!-- Input:Text -->
                 <div class="form__field">
-                    <label for="formInput#text">{{field.label}}</label>
+                    {% if field.label == "Featured image" or field.label == "Demo" %}
+                        <label for="formInput#text">{{field.label}}</label>
+                    {% endif %}
                     {{field}}
+                    {% if field.label == "Demo" %}
+                        <label for="formInput#hint"><span id="demo-option"><i>This allows you to display your project as a subdomain of this site.</i></span></label>
+                    {% endif %}
                 </div>
                 {% endfor %}
                 
@@ -29,7 +34,7 @@
                 </  div>
                     
                 <div class="form__field">
-                    <label for="formInput#text">Tags</label>
+                    {% comment %} <label for="formInput#text">Tags</label> {% endcomment %}
                     <textarea class="input" name="newtags" placeholder="Add tags here..."></textarea>
                 </div>
                 <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />

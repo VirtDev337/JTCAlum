@@ -14,7 +14,7 @@ class Profile(models.Model):
     name = models.CharField(max_length = 200, blank = True, null = True)
     email = models.EmailField(max_length = 500, blank = True, null = True)
     username = models.CharField(max_length = 200, blank = True, null = True)
-    location = models.CharField(max_length = 200, blank = True, null = True)
+    location = models.CharField(default = 'USA', max_length = 200, blank = True, null = True)
     
     short_intro = models.CharField(max_length = 200, blank = True, null = True)
     bio = models.TextField(blank = True, null = True)
@@ -165,8 +165,8 @@ class Opportunity(models.Model):
     poster = models.CharField(max_length = 200, null = True, blank = True)
     title = models.CharField(blank=False, null=True, max_length= 200)
     company = models.CharField(blank=False, null=True, max_length= 200)
-    body = models.TextField(blank=False, null=True, max_length=5000)
-    weblink = models.URLField(default = '', max_length = 300, blank = True, null = True)
+    body = models.TextField(blank=False, null=True, max_length=7000)
+    weblink = models.URLField(default = '', max_length = 400, blank = True, null = True)
     created = models.DateTimeField(auto_now_add = True)    
     
     slug = models.SlugField(default = '', editable = False, max_length = 200, null = False)    

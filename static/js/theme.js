@@ -5,8 +5,12 @@ if(theme == null){
 }else{
 	setTheme(theme)
 }
-
-let themeDots = document.getElementsByClassName('theme-dot')
+// Activate the current theme (using class)
+// body.classList = theme;
+body.setAttribut('theme-style', theme);
+// Available Themes
+let available_themes = document.querySelectorAll('[theme-style]');
+// let themeDots = document.getElementsByClassName('theme-dot')
 
 
 for (var i=0; themeDots.length > i; i++){
@@ -18,14 +22,20 @@ for (var i=0; themeDots.length > i; i++){
 }
 
 function setTheme(mode){
-	if(mode == 'light'){
-		document.getElementById('theme-style').href = 'default.css'
-	}
+	// if(mode == 'light'){
+	// 	document.getElementById('theme-style').href = 'app.css'
+	// }
 
-	if(mode == 'dark'){
-		document.getElementById('theme-style').href = 'blue.css'
-	}
+	// if(mode == 'dark'){
+	// 	document.getElementById('theme-style').href = 'dark-app.css'
+	// }
+	
+	// Toggle light / dark theme
+    ( theme == 'light' ? theme = 'dark' : theme = 'light');
+    // Apply class to body
+    body.classList = theme;
+    // Store theme var to localStorage
+    
 
-
-	localStorage.setItem('theme', mode)
+	window.localStorage.setItem('theme', mode)
 }

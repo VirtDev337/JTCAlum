@@ -1,9 +1,11 @@
 :root {
-  --color-sub: #2d2d39;
+  --color-sub: var(--columbia-blue);
+  --themeDotBorder:#24292e;
+  --transition: all .5s;
 }
 
 .btn--sub {
-  background-color: var(--color-sub-light);
+  background-color: var(--columbia-college-blue);
 }
 
 .card {
@@ -42,6 +44,7 @@ img {
 }
 
 .header__logo > img {
+  align-items: left;
   height: 3.8rem;
 }
 
@@ -49,7 +52,7 @@ img {
   display: inline-flex;
   align-items: center;
   list-style: none;
-  gap: 6.5rem;
+  gap: 4.5rem;
 }
 
 .header__menuItem > a {
@@ -183,7 +186,7 @@ img {
 .hero-section__box > h2,
 .hero-section__box > h2 > span {
   font-size: 4rem;
-  color: var(--color-light);
+  color: var(--color-white);
   line-height: 1.3;
   text-transform: uppercase;
 }
@@ -527,6 +530,13 @@ img {
   margin: 1rem 0;
   font-size: 1.4rem;
   text-align: justify;
+}
+
+/*========== Project ==========*/
+
+#demo-option{
+    display: inline-flex;
+    color: var(--color-light-gray);
 }
 
 /*========== Comments ==========*/
@@ -875,16 +885,16 @@ img {
 	padding: 10px;
 }
 
-#dot-1{
+#dot-1[theme-style="light"]{
 	background-color:  #FFFFFF;
 }
 
-#dot-2{
+#dot-2[theme-style="dark"]{
 	background-color:  #000000;
 }
 
 .browser-dot{
-	background-color: black;
+	background-color: #000000;
 	height: 15px;
 	width: 15px;
 	border-radius: 50%;
@@ -904,7 +914,7 @@ img {
 .theme-dot{
 	height: 30px;
 	width: 30px;
-	background-color: black;
+	background-color: #000000;
 	border-radius: 50%;
 
 	margin: 5px;
@@ -922,11 +932,30 @@ img {
 	border-width: 5px;
 }
 
-
 #light-mode{
 	background-color: #ffffff;
 }
 
 #dark-mode{
-	background-color: #000000;
+	background-color: #000000 !important;
+}
+
+
+/*=======================
+  Themes
+========================*/
+
+
+.light, body[color-theme="light"] {
+  --bg: var(--color-bg);
+  --bg-light: rgba(255, 255, 255, .8);
+  --clr-shadow: rgba(0, 0, 0, .15);
+}
+
+.dark, body[color-themes="dark"] {
+  --bg: #000;
+  --bg-light: var(--color-sub-light);
+  --clr-text: var(--columbia-alumni-blue);
+  --clr-text-light: var(--columbia-college-blue);
+  --clr-shadow: var(--color-sub-light);
 }

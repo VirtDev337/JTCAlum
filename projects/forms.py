@@ -1,5 +1,4 @@
-from django.db.models.base import Model
-from django.forms import ModelForm, widgets
+from django.forms import ModelForm
 from django import forms
 from .models import Project, Review
 
@@ -8,9 +7,16 @@ class ProjectForm(ModelForm):
     class Meta:
         model = Project
         fields = ['title', 'featured_image', 'description',
-                    'demo_link', 'source_link']
+                    'demo', 'source_link']
         widgets = {
             'tags': forms.CheckboxSelectMultiple(),
+            'demo': forms.CheckboxInput(),
+            'title': forms.TextInput(attrs={
+                'placeholder': 'Title',}),
+            'description': forms.Textarea(attrs={
+                'placeholder': 'Description',}),
+            'source_link': forms.TextInput(attrs={
+                'placeholder': 'Source URL',}),
         }
 
     def __init__(self, *args, **kwargs):
