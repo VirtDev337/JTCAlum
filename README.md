@@ -1,4 +1,4 @@
-# <div align="center"><h1> JTCAlumn </h1></div>
+# <div align="center"><h1> JTCAlum </h1></div>
 This project is the site where **Columbia Business School's** ***Justice Through Code*** students, alumni, teachers, teacher's assistants, partners and affiliates can interact.
 
 Students and Alumni are able to create profiles, sharing their journey, skills and plan for their future.  There is a messaging function built into the site allowing direct communication.  They are also provided the ability to post completed and current projects which can be rated by site members.  The projects are integrated into the site, creating sub-sites of the profile they are linked.  This feature provides JTC students and alumni a place to exhibit their work without requiring the problematic process of deploying individually.
@@ -9,7 +9,7 @@ Partners and affiliates are provided the ability to search past, present and fut
 
 ## Installation
 
-* 1 - clone repo https://github.com/VirtDev337/JTCAlumn
+* 1 - clone repo https://github.com/VirtDev337/JTCAlum
 * 2 - create a virtual environment and activate
 *  - python3 -m venv [envname]
 *  - [envname]\scripts\activate
