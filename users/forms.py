@@ -20,15 +20,6 @@ class CustomUserCreationForm(UserCreationForm):
         labels = {
             'first_name': 'Name',
         }
-        
-        widgets = {
-            'first_name': forms.TextInput(attrs={
-                'placeholder': 'Name',}),
-            'email': forms.EmailInput(attrs={
-                'placeholder': 'Email',}),
-            'username': forms.TextInput(attrs={
-                'placeholder': 'Username',}),
-        }
     
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
@@ -36,7 +27,7 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['password2'].widget = forms.PasswordInput(attrs={'placeholder': 'Confirm Password'})
         
         for name, field in self.fields.items():
-            field.widget.attrs.update({'class': 'input'})
+            field.widget.attrs.update({'placeholder': field.label, 'class': 'input'})
 
 
 class ProfileForm(ModelForm):
@@ -48,33 +39,12 @@ class ProfileForm(ModelForm):
         model = Profile
         
         fields = ['name', 'email', 'username', 'location', 'profile_type', 'bio', 'short_intro', 'organization_name', 'profile_image']
-        widgets = {}
-        
-        for field in fields:
-            if field not in ['email', 'profile_type', 'bio', 'profile_image']:
-                widgets[field] = forms.TextInput(attrs = {'placeholder': field.title})
-            elif field == 'bio':
-                widgets[field] = forms.Textarea(attrs = {'placeholder': 'Biography'})
-            elif field == 'email':
-                widgets[field] = forms.EmailInput(attrs = {'placeholder': field.title})
-        # widgets = {
-        #     'name': forms.TextInput(attrs = {
-        #         'placeholder': 'Name'}),
-        #     'email': forms.EmailInput(attrs = {
-        #         'placeholder': 'Email'}), 
-        #     'username': forms.TextInput(attrs = {
-        #         'placeholder': 'Username'}),
-        #     'location': forms.TextInput(attrs = {
-        #         'placeholder': 'Location'}),
-        #     'bio': forms.Textarea(attrs = {
-        #         'placeholder': 'Biography'}),
-        # }
-
+    
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
         
         for name, field in self.fields.items():
-            field.widget.attrs.update({'class': 'input'})
+            field.widget.attrs.update({'placeholder': field.label, 'class': 'input'})
 
 
 class SkillForm(ModelForm):
@@ -87,7 +57,7 @@ class SkillForm(ModelForm):
         super(SkillForm, self).__init__(*args, **kwargs)
         
         for name, field in self.fields.items():
-            field.widget.attrs.update({'class': 'input'})
+            field.widget.attrs.update({'placeholder': field.label, 'class': 'input'})
 
 
 class MessageForm(ModelForm):
@@ -99,7 +69,7 @@ class MessageForm(ModelForm):
         super(MessageForm, self).__init__(*args, **kwargs)
         
         for name, field in self.fields.items():
-            field.widget.attrs.update({'class': 'input'})
+            field.widget.attrs.update({'placeholder': field.label, 'class': 'input'})
 
 
 class SocialForm(ModelForm):    
@@ -112,7 +82,7 @@ class SocialForm(ModelForm):
         super(SocialForm, self).__init__(*args, **kwargs)
         
         for name, field in self.fields.items():
-            field.widget.attrs.update({'class': 'input'})
+            field.widget.attrs.update({'placeholder': field.label, 'class': 'input'})
 
 class OpportunityForm(ModelForm):    
     class Meta:
@@ -123,4 +93,4 @@ class OpportunityForm(ModelForm):
         super(OpportunityForm, self).__init__(*args, **kwargs)
         
         for name, field in self.fields.items():
-            field.widget.attrs.update({'class': 'input'})
+            field.widget.attrs.update({'placeholder': field.label, 'class': 'input'})

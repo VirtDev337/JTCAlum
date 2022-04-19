@@ -14,23 +14,19 @@
 
                 {% if request.user.is_authenticated == False %}
                     <div class="form__field">
-                        <label for="formInput#text">{{form.name.label}}</label>
                         {{form.name}}
                     </div>
 
                     <div class="form__field">
-                        <label for="formInput#text">{{form.email.label}}</label>
                         {{form.email}}
                     </div>
                 {% endif %}
 
                 <div class="form__field">
-                    <label for="formInput#text">{{form.subject.label}}</label>
                     {{form.subject}}
                 </div>
 
                 <div class="form__field">
-                    <label for="formInput#text">{{form.body.label}}</label>
                     {{form.body}}
                 </div>
 

@@ -126,8 +126,13 @@ def editAccount(request):
     profile = request.user.profile
     form = ProfileForm(instance = profile)
     
+    if profile.profile_type == 'alum':
+        del form.fields['organization_name']
+    else:
+        del form.fields['short_intro']
+    
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance = profile)
+        form = ProfileForm(request.POST, request.FILES, profile)
         if form.is_valid():
             form.save()
             

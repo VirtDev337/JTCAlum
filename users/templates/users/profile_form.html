@@ -14,21 +14,16 @@
                 {% csrf_token %}
 
                 {% for field in form %}
-                    {% if form.profile_type == "alum" %}
-                        {% if field != "organization_name" %}
-                            <div class="form__field">
-                                <label for="formInput#text">{{field.label}}</label>
-                                {{field}}
-                            </div>
-                        {% endif %}
+                    
+                    {% if field.label == "Profile_Image" or field.label == "Profile_Type" %}
+                        <label for="formInput#text">{{field.label}}</label>
+                        {{field}}
                     {% else %}
-                        {% if field != "short_intro" %}
-                            <div class="form__field">
-                                <label for="formInput#text">{{field.label}}</label>
-                                {{field}}
-                            </div>
-                        {% endif %}
+                        <div class="form__field">
+                            {{field}}
+                        </div>
                     {% endif %}
+
                 {% endfor %}
 
                 <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
