@@ -46,6 +46,7 @@ img {
 .header__logo > img {
   align-items: left;
   height: 3.8rem;
+  padding-right: 4.5rem;
 }
 
 .header__nav > ul {
@@ -73,10 +74,14 @@ img {
   pointer-events: all;
 }
 
-.project--thumbnail {
-  height: 250px;
-  object-fit: cover;
+.header__user { 
+  display: inline-flex;
+  color: var(--color-light) !important;
+  align-items: center;
+  padding-left: 1.5rem;
 }
+
+
 
 @media screen and (max-width: 800px) {
   .header__logo {
@@ -343,6 +348,13 @@ img {
   margin-bottom: 0.5rem;
 }
 
+.dev__organization {
+  color: var(--color-sub);
+  font-size: 4rem;
+  font-weight: 800;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
 .dev__title {
   font-size: 1.6rem;
   font-weight: 500;
@@ -491,7 +503,7 @@ img {
   Projects Page
 ========================*/
 .projects > .hero-section {
-  background: var(--color-sub-lighter);
+  background: var(--color-sub);
   height: 30vh;
 }
 
@@ -500,12 +512,12 @@ img {
 }
 
 .projects .hero-section__box > h2 {
-  color: var(--color-sub);
+  color: var(--color-light);
 }
 
 .projects .hero-section__box > h2 > span {
   font-weight: 700;
-  color: var(--color-sub);
+  color: var(--color-light);
 }
 
 .projectsList {
@@ -513,6 +525,10 @@ img {
 }
 
 /*========== Projects ==========*/
+.project--thumbnail {
+  height: 250px;
+  object-fit: cover;
+}
 
 .project__thumbnail {
   height: 25rem;
@@ -536,7 +552,7 @@ img {
 
 #demo-option{
     display: inline-flex;
-    color: var(--color-light-gray);
+    color: var(--color-light);
 }
 
 /*========== Comments ==========*/
@@ -907,7 +923,8 @@ img {
 }
 
 #theme-options-wrapper{
-	display: flex;
+  padding-left: 3rem;
+	display: inline-flex;
 	justify-content: center;
 }
 

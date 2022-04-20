@@ -3,12 +3,6 @@
 <!-- Header Section -->
 <header class="header">
     <div class="container container--narrow">
-        {% if request.user.id != None %}
-            <label class="dot"></label>
-            <span class="user">
-                <h3>Hello, {{ request.user }}</h3>
-            </span>
-        {% endif %}
         <a href="{% url 'profiles' %}" class="header__logo">
         <img src="{% static 'images/jtc-long-logo.jpeg' %} " alt="JTCAlumn Logo" />
         </a>
@@ -27,7 +21,7 @@
                 <li class="header__menuItem"><a href="{% url 'opportunity-board' %}">Opportunities</a></li>
                 
                 {% if request.user.is_authenticated %}
-                    {% comment %} <li class="header__menuItem"><a href="{% url 'inbox' request.user.profile.slug %}">Inbox</a></li> {% endcomment %}
+                    <li class="header__menuItem"><a href="{% url 'inbox' request.user.profile.slug %}">Inbox</a></li>
                     <li class="header__menuItem"><a href="{% url 'account' %}">Account</a></li>
                     <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Logout</a></li>
                 {% else %}
@@ -41,6 +35,11 @@
                 <div data-mode="dark" id="dark-mode" class="theme-dot"></div>
             </div>
         </a>
+        {% if request.user.id != None %}
+            <span class="header__user">
+                <h5>{{ request.user }}</h5>
+            </span>
+        {% endif %}
     </div>
 </header>
 

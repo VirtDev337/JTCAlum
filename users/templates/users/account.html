@@ -14,6 +14,9 @@
             <a class="tag tag--pill tag--main settings__btn" href="{% url 'edit-account' %}"><i class="im im-edit"></i>
               Edit</a>
             <img class="avatar avatar--xl dev__avatar" src="{{profile.imageURL}}" />
+            {% if profile.organization_name %}
+              <h2 class="dev__organization">{{profile.organization_name}}</h2>
+            {% endif %}
             <h2 class="dev__name">{{profile.name}}</h2>
             <p class="dev__title">{{profile.short_into}}</p>
             <p class="dev__location">Based in {{profile.location}}</p>
@@ -29,14 +32,12 @@
               
                 <td class="settings__tableInfo">
                   <a title="{{site.name | title}}" href="{{site.url}}" target="_blank"><i class="{{site.css}}"></i></a>
+                  <div>
+                    <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-site' pk=site.id %}"><i class="im im-edit"></i> Edit</a>
+                    <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-site' pk=site.id %}?next=/account"><i class="im im-x-mark-circle-o"></i> Delete</a>
+                  </div>
                 </td>
-                <td class="settings__tableActions">
-                  <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-site' pk=site.id %}"><i class="im im-edit"></i> Edit</a>
-                  <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-site' pk=site.id %}?next=/account"><i
-                      class="im im-x-mark-circle-o"></i>
-                    Delete</a>
-                </td>
-              
+                
               {% endfor %}
             
             </tr>
@@ -48,7 +49,7 @@
       {% if profile.profile_type == 'affiliate' %}
       <div class="column column--2of3">
         <div class="devInfo">
-          <h3 class="devInfo__title">About Our Organization</h3>
+          <h3 class="devInfo__title">About {{profile.organization_name}}</h3>
           <p class="devInfo__about">{{profile.bio}}
           </p>
         </div>
@@ -123,5 +124,5 @@
     </div>
   </div>
 </main>
-<script src="{% static 'js/replace.js' %}"></script>
+{% comment %} <script src="{% static 'js/replace.js' %}"></script> {% endcomment %}
 {% endblock %}
