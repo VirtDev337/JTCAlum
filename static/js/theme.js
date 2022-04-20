@@ -7,9 +7,9 @@ if(theme == null){
 }
 // Activate the current theme (using class)
 // body.classList = theme;
-body.setAttribut('theme-style', theme);
+body.setAttribut('color-theme', theme);
 // Available Themes
-let available_themes = document.querySelectorAll('[theme-style]');
+let available_themes = document.querySelectorAll('[color-theme]');
 // let themeDots = document.getElementsByClassName('theme-dot')
 
 
