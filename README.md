@@ -56,15 +56,29 @@ Partners and affiliates are provided the ability to search past, present and fut
 <hr>
 
 ### Home Page
-<img src="./resources/images/JTCAlumn Home.jpg">  
+<img src="./static/images/projects/JTCAlum-Home.png">  
 
+### Login Page
+<img src="./static/images/projects/JTCAlum-Login.png"> 
 
-### Projects Page
-<img src="./resources/images/JTCAlumn Projects.jpg">  
+### Account Page
+<img src="./static/images/projects/JTCAlum-Account.png">
 
 ### Profile Page
-<img src="./resources/images/JTCAlumn Profile.jpg">  
+<img src="./static/images/projects/JTCAlum-Profile.png">
 
-### User Inbox
-<img src="./resources/images/JTCAlumn Inbox.jpg">  
+### Projects Page
+<img src="./static/images/projects/JTCAlum-Projects.png">  
+
+### Project Page
+<img src="./static/images/projects/JTCAlum-Project.png"> 
+
+### Affiliates Page
+<img src="./static/images/projects/JTCAlum-Affiliates.png"> 
+
+### Opportunities Page
+<img src="./static/images/projects/JTCAlum-Opportunities.png">  
+
+### Message Page
+<img src="./static/images/projects/JTCAlum-Message.png">
 
