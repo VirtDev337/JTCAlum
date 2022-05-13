@@ -1,5 +1,4 @@
 {% load static %}
-
 <!-- Header Section -->
 <header class="header">
     <div class="container container--narrow">
@@ -29,18 +28,35 @@
                 {% endif %}
             </ul>
         </nav>
-        <a href="{{ request.GET.next }}" class="header">
+        {% comment %} <a href="{{ request.GET.next }}" class="header">
             <div id="theme-options-wrapper">
                 <div data-mode="light" id="light-mode" class="theme-dot"></div>
                 <div data-mode="dark" id="dark-mode" class="theme-dot"></div>
             </div>
-        </a>
-        {% if request.user.id != None %}
+        </a> {% endcomment %}
+
+
+
+        {% comment %} {% if request.user.id != None %}
             <span class="header__user">
                 <h5>{{ request.user }}</h5>
             </span>
-        {% endif %}
-    </div>
+        {% endif %} {% endcomment %}
+
+
+
+{% comment %} **************************** from https://dev.to/mritunjaysaha/theme-switching-using-local-storage-13i {% endcomment %}
+        <div class="toggle-switch">
+            <span>    
+                <i class="fas fa-moon"></i>           
+                <label class="switch">
+                    <input id="theme-switch" type="checkbox"> 
+                    <div class="slider round"></div>
+                </label>
+                <i class="fas fa-sun"></i>
+            </span>
+        </div>
+        <script src="{% static 'js/theme.js' %}"></script>
 </header>
 
-<script src="{% static 'js/theme.js' %}"></script>
+
