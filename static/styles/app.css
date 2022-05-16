@@ -1057,6 +1057,10 @@ body {
     color: var(--main-font);
 }
 
+input {
+  color: #000000 !important;
+}
+
 .toggle-switch {
     display: flex;
     flex-direction: row;
