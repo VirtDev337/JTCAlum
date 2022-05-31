@@ -1038,7 +1038,7 @@ input:checked + .slider:before {
 input:checked + .round::before {
   background-color: hsl(230, 17%, 14%);
 }
-   
+
 /*
   Theme
 */
