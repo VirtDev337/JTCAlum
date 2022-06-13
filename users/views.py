@@ -134,7 +134,24 @@ def editAccount(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, profile)
         if form.is_valid():
-            form.save()
+            name = form.cleaned_data['name']
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            location = form.cleaned_data['location']
+            profile_type = form.cleaned_data['profile_type']
+            bio = form.cleaned_data['bio']
+            
+            if profile.profile_type == 'alum':
+                short_intro = form.cleaned_data['short_intro']
+            else:
+                organization_name = form.cleaned_data['organization_name']
+            profile_set = Profile.objects.filter(id = profile.id)
+            profile_set.update(name = name, username = username, email = email, bio = bio, location = location, profile_type = profile_type)
+            
+            if profile.profile_type == 'alum':
+                profile_set.update(short_intro = short_intro)
+            else:
+                profile_set.update(organization_name = organization_name)
             
             return redirect('account')
     
@@ -292,7 +309,7 @@ def createMessage(request, slug):
             messages.success(request, 'Your message was successfully sent!')
             return redirect('user-profile', slug = recipient.slug)
     
-    context = {'recipient': recipient, 'form': form}
+    context = {'recipient': recipient, 'sender': sender, 'form': form}
     return render(request, 'users/message_form.html', context)
 
 

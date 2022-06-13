@@ -113,6 +113,7 @@ ROOT_HOSTCONF = 'jtcalumn.hosts'
 DEFAULT_HOST = 'index'
 PARENT_HOST = 'jtcalum.org'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

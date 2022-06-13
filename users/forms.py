@@ -33,7 +33,7 @@ class CustomUserCreationForm(UserCreationForm):
 class ProfileForm(ModelForm):
     # radio buttons to choose profile type
     PROFILE_CHOICES = [('alum','JTC Alum'),('affiliate','Affiliate Organization')]
-    profile_type = forms.CharField(label='Profile Type', required=True, widget=forms.RadioSelect(choices=PROFILE_CHOICES))
+    profile_type = forms.CharField(label = 'Profile Type', required = True, widget = forms.RadioSelect(choices = PROFILE_CHOICES))
     
     class Meta:
         model = Profile
@@ -44,7 +44,11 @@ class ProfileForm(ModelForm):
         super(ProfileForm, self).__init__(*args, **kwargs)
         
         for name, field in self.fields.items():
-            field.widget.attrs.update({'placeholder': field.label, 'class': 'input'})
+            if 'profile_type' == field:
+                field.widget.attrs.update({'placeholder': field.label, 'class': 'input radio'})
+            else:
+                field.widget.attrs.update({'placeholder': field.label, 'class': 'input'})
+            
 
 
 class SkillForm(ModelForm):
