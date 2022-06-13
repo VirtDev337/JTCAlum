@@ -5,6 +5,7 @@
 }
 
 .btn--sub {
+  color: var(--columbia-dark-blue);
   background-color: var(--columbia-college-blue);
 }
 
@@ -59,6 +60,10 @@ img {
 .header__menuItem > a {
   color: var(--color-light);
   font-weight: 300;
+}
+
+.header__menuItem__btn {
+  color: var(--columbia-dark-blue);
 }
 
 .toggle-menu > span {
@@ -283,6 +288,12 @@ img {
   gap: 1.5rem;
 }
 
+.devlist .dev .dev__meta h4 {
+  color: var(--college-blue);
+  font-size: 3rem;
+  font-weight: 700;
+}
+
 .devlist .dev .dev__meta h3 {
   color: var(--color-sub);
   font-size: 2rem;
@@ -320,11 +331,11 @@ img {
 }
 
 .pagination .btn {
-  color: var(--color-sub);
+  color: var(--columbia-dark-blue);
 }
 
 .pagination .btn.btn--sub {
-  color: var(--color-light);
+  color: var(--columbia-dark-blue);
 }
 
 /*=======================
@@ -382,7 +393,7 @@ img {
 .devInfo__title,
 .devInfo__subtitle {
   font-size: 2.6rem;
-  color: var(--color-sub);
+  color: var(--college-blue);
   text-transform: uppercase;
   font-weight: 700;
   margin-bottom: 1.5rem;
@@ -448,6 +459,7 @@ img {
   font-weight: 500;
   transition: all 0.3s ease-in-out;
   border-bottom: 2px solid transparent;
+  padding: 0 20px;
 }
 
 .singleProject__liveLink:hover {
@@ -462,7 +474,7 @@ img {
 }
 
 .singleProject__preview {
-  height: 50vh;
+  height: fit-content;
   object-fit: cover;
   object-position: top center;
   margin-bottom: 3rem;
@@ -472,13 +484,14 @@ img {
 .singleProject__developer {
   font-size: 1.8rem;
   font-weight: 500;
+  margin: 0 5rem;
 }
 
 .singleProject__title {
-  font-size: 3.6rem;
+  font-size: 4rem;
   font-weight: 700;
-  color: var(--color-sub);
-  margin-bottom: 3rem;
+  color: var(--college-blue);
+  margin-bottom: 0.3rem;
 }
 
 .project__author{
@@ -495,7 +508,7 @@ img {
   text-transform: uppercase;
   font-size: 2.4rem;
   font-weight: 700;
-  color: var(--color-sub-light);
+  color: var(--college-blue);
   margin-bottom: 1rem;
 }
 
@@ -596,6 +609,13 @@ img {
 .settingsPage .dev > .settings__btn {
   display: inline-block;
   margin-bottom: 3rem;
+  color: var(--columbia-dark-blue);
+}
+
+.settingsPage .settings__btn__site {
+  display: inline-block;
+  margin: 5rem auto;
+  color: var(--college-blue);
 }
 
 .settings {
@@ -608,7 +628,7 @@ img {
   font-size: 2.4rem;
   text-transform: uppercase;
   font-weight: 700;
-  color: var(--color-sub);
+  color: var(--college-blue);
 }
 
 .settings__table {
@@ -761,19 +781,20 @@ img {
 }
 
 .inbox__title span {
-  color: var(--color-main);
+  color: var(--college-blue);
 }
 
 .messages {
   list-style: none;
-  background: var(--color-white);
+  background: var(--columbia-alumni-blue);
   padding: 0.5rem 3rem;
-  border: 2px solid var(--color-light);
+  border: 2px solid var(--columbia-dark-blue);
   border-radius: 0.7rem;
 }
 
 .message {
   padding: 2.5rem 0;
+  word-wrap: break-word;
 }
 
 .message > a span {
@@ -787,25 +808,30 @@ img {
 }
 
 .message:not(:last-child) {
-  border-bottom: 2px solid var(--color-white-light);
+  border-bottom: 2px solid var(--columbia-dark-blue);
 }
 
 .message > a {
-  display: flex;
+  display: block;
+  word-wrap: normal;
   gap: 1rem;
+  color: var(--color-sub);
 }
 
 .message__author,
 .message__date {
   flex-basis: 25%;
+  color: var(--color-sub);
 }
 
 .message__subject {
   flex-basis: 50%;
+  color: var(--color-sub);
 }
 
 .message__date {
   text-align: right;
+  color: var(--color-sub);
 }
 
 
@@ -816,22 +842,24 @@ img {
 
 .messagePage .message {
   list-style: none;
-  background: var(--color-white);
+  background: var(--columbia-alumni-blue);
   padding: 3.5rem 5rem;
-  border: 2px solid var(--color-light);
+  border: 2px solid var(--columbia-dark-blue);
   border-radius: 0.7rem;
+  color:hsl(230, 17%, 14%);
 }
 
 .messagePage .message__subject {
   font-size: 2.8rem;
-  color: var(--color-sub);
   margin-bottom: 1rem;
   margin-top: 2rem;
+  color:hsl(230, 17%, 14%);
 }
 
 .messagePage .message__author {
   font-size: 1.8rem;
   font-weight: 500;
+  color:hsl(230, 17%, 14%);
 }
 
 .messagePage .message__date {
@@ -839,11 +867,16 @@ img {
   font-weight: 400;
   text-align: left;
   margin-bottom: 3rem;
+  color:hsl(230, 17%, 14%);
+}
+
+.messagePage a {
+  color:hsl(230, 17%, 14%);
 }
 
 .backButton {
   background: var(--color-main-light);
-  color: var(--color-main);
+  color: var(--columbia-dark-blue);
   width: 4rem;
   height: 4rem;
   display: flex;
@@ -853,7 +886,8 @@ img {
 }
 
 .backButton i {
-  font-size: 1.8rem;
+  margin-top: 1rem;
+  font-size: 2.5rem;
 }
 
 
@@ -863,20 +897,62 @@ img {
 
 .formPage .formWrapper {
   list-style: none;
-  background: var(--color-white);
+  background: var(--columbia-alumni-blue);
   padding: 3.5rem 5rem;
-  border: 2px solid var(--color-light);
+  border: 2px solid var(--columbia-dark-blue);
   border-radius: 0.7rem;
 }
 
 .formPage .formWrapper__subject {
   font-size: 2.8rem;
-  color: var(--color-sub);
+  color: var(--main-font);
   margin-bottom: 1rem;
   margin-top: 2rem;
 }
 
+.formPage .formWrapper .form__field {
+  color: hsl(230, 17%, 14%);
+}
 
+.formPage .formWrapper .form__field input {
+  font-size: 1.8rem;
+  background: var(--color-light-gray);
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+.formPage .formWrapper .form__field textarea {
+  font-size: 1.8rem;
+  background: var(--color-light-gray);
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+.formPage .formWrapper .form__field a {
+  color: var(--columbia-dark-blue);
+}
+
+.formPage .formWrapper form .input .radio {
+  width: 40px;
+  height: 40px;
+}
+
+.formPage .formWrapper form label {
+  display: inline-flex;
+  color: var(--columbia-dark-blue);
+}
+
+.formPage .formWrapper form label i {
+  display: inline-flex;
+  color: var(--columbia-dark-blue);
+}
+
+.formPage .formWrapper .form__field input #profile_image-clear_id {
+  font-size: 2rem;
+  background: var(--color-light-gray);
+  width: 20px!important;
+  height: 20px!important;
+}
 
 /*=======================
   Fixed Position Alerts Wrapper
@@ -1045,11 +1121,13 @@ input:checked + .round::before {
 .dark {
     --main-background: hsl(230, 17%, 14%);
     --main-font: white;
+    --college-blue: var(--columbia-alumni-blue);
 }
 
 .light {
     --main-background: white;
     --main-font: hsl(230, 17%, 14%);
+    --college-blue: var(--columbia-dark-blue);
 }
 
 body {

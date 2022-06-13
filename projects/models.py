@@ -16,7 +16,11 @@ class Project(models.Model):
     
     demo_link = models.CharField(max_length = 2000, null = True, blank = True)
     source_link = models.CharField(max_length = 2000, null = True, blank = True)
+    
     demo = models.BooleanField(default = False, null = True, blank = True)
+    project_name = models.CharField(max_length = 200, default = "", blank = True, null = True)
+    site_name = models.CharField(max_length = 200, default = "", blank = True, null = True)
+    app_name = models.CharField(max_length = 200, default = "", blank = True, null = True)
     
     tags = models.ManyToManyField('Tag', blank = True)
     
@@ -71,6 +75,7 @@ class Project(models.Model):
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
+        self.project_name = slugify(self.title) if not self.project_name else slugify(self.project_name)
         super().save(*args, **kwargs)
 
 

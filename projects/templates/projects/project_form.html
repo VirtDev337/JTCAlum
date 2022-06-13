@@ -17,11 +17,11 @@
                 <!-- Input:Text -->
                 <div class="form__field">
                     {% if field.label == "Featured image" or field.label == "Demo" %}
-                        <label for="formInput#text">{{field.label}}</label>
+                        <label for="formInput#text">{{field.label}}&nbsp;</label>
                     {% endif %}
                     {{field}}
                     {% if field.label == "Demo" %}
-                        <label for="formInput#hint"><span id="demo-option"><i>This allows you to display your project as a subdomain of this site.</i></span></label>
+                        <label for="formInput#hint"><span id="demo-option"><i>&nbsp;(This allows you to display your project as a subdomain of this site.)</i></span></label>
                     {% endif %}
                 </div>
                 {% endfor %}

@@ -10,10 +10,11 @@ urlpatterns = [
     path('', views.profiles, name = "profiles"),
     path('profile/<str:slug>/', views.userProfile, name = "user-profile"),
     path('account/', views.userAccount, name = "account"),
+    path('account/update', views.editAccount, name = "edit-account"),
+    
     path('affiliates/', views.affiliates, name='affiliates'),
     path('affiliate/profile/<str:slug>/', views.affiliateProfile, name='affiliate-profile'),
 
-    path('account/update', views.editAccount, name = "edit-account"),
 
     path('skill/create/', views.createSkill, name = "create-skill"),
     path('skill/update/<str:pk>/', views.updateSkill, name = "update-skill"),
