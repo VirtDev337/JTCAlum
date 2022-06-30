@@ -15,21 +15,11 @@
               <p class="dev__title">{{profile.headline}}</p>
               <p class="dev__location">Based in {{profile.location}}</p>
               <ul class="dev__social">
-                {% if profile.social_twitter %}
-                <li>
-                  <a title="Twitter" href="{{profile.social_twitter}}" target="_blank"><i class="im im-twitter"></i></a>
+                <li class="settings__tableInfo">
+                  {% for site in profile.social_set.all %}
+                      <a title="{{site.name | title}}" href="{{site.url}}" target="_blank"><i class="{{site.css}}"></i></a>
+                  {% endfor %}
                 </li>
-                {% endif %}
-                {% if profile.social_linkedin %}
-                <li>
-                  <a title="LinkedIn" href="{{profile.social_linkedin}}" target="_blank"><i class="im im-linkedin"></i></a>
-                </li>
-                {% endif %}
-                {% if profile.social_website %}
-                <li>
-                  <a title="Website" href="{{profile.social_website}}" target="_blank"><i class="im im-globe"></i></a>
-                </li>
-                {% endif %}
               </ul>
               <!--only show button for devs other than signed in user so no one 
               can send themself a message; check if logged in user id matches id 

@@ -78,9 +78,9 @@ class Social(models.Model):
     
     account = models.ForeignKey(Profile, on_delete = models.CASCADE, null = True, blank = True)
     
-    name = models.CharField(default = 'github', max_length = 200, blank = True, null = True)
+    name = models.CharField(default = '', max_length = 200, blank = True, null = True)
     
-    url = models.URLField(default = '', max_length = 300, blank = True, null = True)
+    url = models.URLField(default = '', max_length = 300)
     
     css = models.CharField(default = '', max_length = 50, editable = True, blank = True, null = True)
     
@@ -93,7 +93,7 @@ class Social(models.Model):
     def save(self, *args, **kwargs):
         css = self.name.lower()
         self.name = css
-        if self.name in ['github','linkedin', 'twitter', 'stackoverflow']:
+        if self.name in ['github', 'linkedin', 'twitter', 'stackoverflow', 'facebook', 'google']:
             css = f'im im-{self.name}'
         else:
             css = 'im im-globe' 
