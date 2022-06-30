@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.urls import conf
 from django.db.models import Q
-from .models import Profile, Message, Opportunity
+from .models import Profile, Message, Opportunity, Social, Skill
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm, SocialForm, OpportunityForm
 from .utils import searchProfiles, paginateProfiles, searchAffiliates, paginateAffiliates, searchOpportunities
 from datetime import datetime, timedelta
@@ -145,6 +145,7 @@ def editAccount(request):
                 short_intro = form.cleaned_data['short_intro']
             else:
                 organization_name = form.cleaned_data['organization_name']
+            
             profile_set = Profile.objects.filter(id = profile.id)
             profile_set.update(name = name, username = username, email = email, bio = bio, location = location, profile_type = profile_type)
             
@@ -172,8 +173,16 @@ def createSkill(request):
         if form.is_valid():
             skill = form.save(commit = False)
             skill.owner = profile
-            skill.save()
-            messages.success(request, 'Skill was added successfully!')
+            skills = Skill.objects.filter(owner = skill.owner, name__icontains = skill.name)
+            
+            for ability in skills:
+                if skill.name == ability.name or skill.name.lower() == ability.name.lower():
+                    skill.delete()
+                    messages.success(request, 'Skill already exists!')
+                else:
+                    skill.save()
+                    messages.success(request, 'Skill was added successfully!')
+            
             return redirect('account')
     
     context = {'form': form}
@@ -222,9 +231,18 @@ def createSocial(request):
         form = SocialForm(request.POST)
         if form.is_valid():
             social = form.save(commit = False)
-            social.owner = profile
-            social.save()
-            messages.success(request, 'Site was added successfully!')
+            social.name = social.name.lower()
+            social.account = profile
+            socials = Social.objects.filter(name = social.name)
+            
+            for soc in socials:
+                if social.account == soc.account and social.url == soc.url:
+                    social.delete()
+                    messages.success(request, 'Social account already exists!')
+                else:
+                    social.save()
+                    messages.success(request, 'Social account was added successfully!')
+            
             return redirect('account')
     
     context = {'form': form}

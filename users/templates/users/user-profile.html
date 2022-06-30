@@ -13,7 +13,6 @@
                         <h2 class="dev__name">{{profile.name}}</h2>
                         <p class="dev__title">{{profile.short_intro}}</p>
                         <p class="dev__location">Based in {{profile.location}}</p>
-                        <p class="dev__title">Based in {{profile.profile_type}}</p>
                         <ul class="dev__social">
                             
                             <li class="settings__tableInfo">
@@ -66,7 +65,7 @@
                         {% for project in profile.project_set.all %}
                             <div class="column">
                                 <div class="card project">
-                                    <a href="{% url 'project' slug=project.slug%}" class="project">
+                                    <a href="{% url 'project' project.owner project.slug%}" class="project">
                                         <img class="project__thumbnail" src="{{project.imageURL}}"
                                             alt="project thumbnail" />
                                         <div class="card__body">

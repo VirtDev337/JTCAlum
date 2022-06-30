@@ -44,6 +44,13 @@
                   </div>
                 </div>
                 <p class="dev__info">{{profile.bio|truncatechars:150}}</p> <!--used truncate instead of slice-->
+                <ul class="dev__social">
+                  <li>
+                    {% for site in profile.social_set.all|slice:"5" %}
+                      <a title="{{site.name | title}}" href="{{site.url}}" target="_blank"><i class="{{site.css}}"></i></a>
+                    {% endfor %}
+                  </li>
+                </ul>
               </a>
             </div>
           </div>
