@@ -21,7 +21,13 @@
                     {% endif %}
                     {{field}}
                     {% if field.label == "Demo" %}
-                        <label for="formInput#hint"><span id="demo-option"><i>&nbsp;(This allows you to display your project as a subdomain of this site.)</i></span></label>
+                        <label for="formInput#hint"><span id="demo-option"><i>&nbsp;(This allows you to display your project as a subdomain of this site.  Please do not choose this if you have already published your site online.  Use the Demo Url.)</i></span></label>
+                        
+                        {% if project.demo and project.demo_set %}
+                            <a href="{% url 'demo-conf' project.owner project.slug %}">
+                                <input class="project btn btn--sub" type="button" value="Configure" />
+                            </a>
+                        {% endif %}
                     {% endif %}
                 </div>
                 {% endfor %}
@@ -34,7 +40,6 @@
                 </  div>
                     
                 <div class="form__field">
-                    {% comment %} <label for="formInput#text">Tags</label> {% endcomment %}
                     <textarea class="input" name="newtags" placeholder="Add tags here..."></textarea>
                 </div>
                 <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
@@ -45,3 +50,28 @@
 
 
 {% endblock %}
+<script>
+    // function that hides/shows field_six based upon field_three value
+    function check_field_value(new_val) {
+        if(new_val != False) {
+            // #id_field_four should be actually the id of the HTML element
+            // that surrounds everything you want to hide.
+            $('#field_four').removeClass('hidden');
+        } else {
+            $('#field_four').addClass('hidden');
+        }
+    }
+
+
+
+    // this is executed once when the page loads
+    $(document).ready(function() {
+
+        // set things up so my function will be called when field_three changes
+        $('#field_three').change( function() {
+            check_field_value(this.value);
+        });
+
+    });
+
+</script>

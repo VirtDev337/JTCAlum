@@ -1,6 +1,8 @@
 from django.db import models
 import uuid
 from django.db.models.deletion import CASCADE
+from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
 from django.template.defaultfilters import slugify
 from users.models import Profile
 from django.urls import reverse
@@ -17,10 +19,15 @@ class Project(models.Model):
     demo_link = models.CharField(max_length = 2000, null = True, blank = True)
     source_link = models.CharField(max_length = 2000, null = True, blank = True)
     
+    # Information for the sub-site implementation
     demo = models.BooleanField(default = False, null = True, blank = True)
+    demo_set = models.BooleanField(default = False, null = True, blank = True)
     project_name = models.CharField(max_length = 200, default = "", blank = True, null = True)
     site_name = models.CharField(max_length = 200, default = "", blank = True, null = True)
     app_name = models.CharField(max_length = 200, default = "", blank = True, null = True)
+    project_directory = models.CharField(max_length = 200, default = "", blank = True, null = True)
+    app_directory = models.CharField(max_length = 200, default = "", blank = True, null = True)
+    site_directory = models.CharField(max_length = 200, default = "", blank = True, null = True)
     
     tags = models.ManyToManyField('Tag', blank = True)
     
@@ -74,8 +81,14 @@ class Project(models.Model):
         return reverse('user-profile', kwargs = kwargs)
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        self.project_name = slugify(self.title) if not self.project_name else slugify(self.project_name)
+        self.slug = slugify( self.title)
+        self.project_name = slugify(self.title) if not self.project_name else self.project_name
+        
+        if self.demo:
+            self.project_directory = self.project_directory if self.project_directory != '' else self.project_name
+            self.site_directory = self.site_directory if self.site_directory != '' else self.site_name
+            self.app_directory = self.app_directory if self.app_directory != '' else self.app_name
+        
         super().save(*args, **kwargs)
 
 
