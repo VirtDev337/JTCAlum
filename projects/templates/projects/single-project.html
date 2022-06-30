@@ -20,25 +20,32 @@
 
                     
                 </div>
-
-                {% if project.source_link %}
+                <div class="singleProject__links">
                     <span class="link">
-                        <a class="singleProject__liveLink" href="{{project.source_link}}" target="_blank"><i
-                                class="im im-external-link"></i>Source
-                            Code
-                        </a>
+                        {% if project.source_link %}
+                            <span class="link">
+                                <a class="singleProject__liveLink" href="{{project.source_link}}" target="_blank">
+                                    <i class="im im-external-link"></i>
+                                    Source Code
+                                </a>
+                            </span>
+                        {% endif %}
+                        
+                        {% if project.demo %}
+                            <span class="link">
+                                {% comment %} <a class="singleProject__liveLink" href="{% host_url 'demo' host '{{project.owner}}/{{project.slug}}/demo' %}" target="_blank">
+                                    <i class="im im-external-link"></i>
+                                    Live Demo
+                                </a> {% endcomment %}
+                            </span>
+                            {% if project.demo_set %}
+                                <a href="{% url 'demo-conf' project.owner project.slug %}">
+                                    <input class="project btn btn--sub" type="button" value="Configure" />
+                                </a>
+                            {% endif %}
+                        {% endif %}
                     </span>
-                {% endif %}
-
-                {% if project.demo %}
-                    <span class="link">
-                        <a class="singleProject__liveLink" href="url('projects/projects/{{project.slug}}/demo')" target="_blank"><i
-                                class="im im-external-link"></i>Live Demo
-
-                        </a>
-                    </span>
-                {% endif %}
-                
+                </div>
                 <div class="comments">
                     <h3 class="singleProject__subtitle">Feedback</h3>
                     <h5 class="project--rating">
@@ -53,7 +60,7 @@
                         <p>You cannot review your own work</p>
 
                     {% elif request.user.is_authenticated %}
-                        <form class="form" action="{% url 'project' slug=project.slug %}" method="POST">
+                        <form class="form" action="{% url 'project' project.owner project.slug %}" method="POST">
                             {% csrf_token %}
                             {% for field in form %}
                                 <div class="form__field">

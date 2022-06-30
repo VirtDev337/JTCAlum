@@ -1,0 +1,54 @@
+{% extends 'main.html' %}
+{% block content %}
+
+
+
+<!-- Main Section -->
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <a class="backButton" href="{% url 'project' project.owner project.slug %}"><i class="im im-angle-left"></i></a>
+            <br>
+            
+            <form class="form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                <!-- Input:Text -->
+                <div class="form__field">
+                    {{field}}
+                </div>
+                {% endfor %}
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</main>
+
+
+{% endblock %}
+<script>
+    // function that hides/shows field_six based upon field_three value
+    function check_field_value(new_val) {
+        if(new_val != False) {
+            // #id_field_four should be actually the id of the HTML element
+            // that surrounds everything you want to hide.
+            $('#field_four').removeClass('hidden');
+        } else {
+            $('#field_four').addClass('hidden');
+        }
+    }
+
+
+
+    // this is executed once when the page loads
+    $(document).ready(function() {
+
+        // set things up so my function will be called when field_three changes
+        $('#field_three').change( function() {
+            check_field_value(this.value);
+        });
+
+    });
+
+</script>
