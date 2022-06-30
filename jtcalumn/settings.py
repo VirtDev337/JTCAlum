@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     
     'projects.apps.ProjectsConfig',
     'users.apps.UsersConfig',
@@ -106,8 +107,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
 ]
-
+SITE_ID = 1
 ROOT_URLCONF = 'jtcalumn.urls'
 ROOT_HOSTCONF = 'jtcalumn.hosts'
 DEFAULT_HOST = 'index'
@@ -232,6 +234,56 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+PROJECTS_DIR = os.path.join(BASE_DIR, '/static/projects/')
+
+# def DirFinder(path, name):
+#     for item in os.listdir(path):
+#         if os.path.isfile(os.path.join(path, item)) and name == item:
+#             return path
+#         elif os.path.isdir(os.path.join(path, item)) and name == item:
+#             return path
+#         else:
+#             DirFinder(os.path.join(path, item), name)
+
+# def AppFinder(path, project_dir, site_dir):
+#     names = [project_dir, site_dir, 'static', 'root', 'staticfiles', 'media', 'templates']
+#     apps = []
+#     for item in os.listdir(path):
+#         if os.path.isdir(os.path.join(path, item)):
+#             if item not in names:
+#                 apps.append(item)
+#     return apps
+
+# for item in os.listdir(PROJECTS_DIR):
+#     site_dir = ''  # site_dir: path for site directory (directory containing settings.py)
+#     project_dir = ''  # project_dir: path for project directory (directory containing manage.py)
+#     project_dir = ''  # project_dir: path for project directory (directory containing manage.py)
+#     app_dirs = []  # app_dirs: names of the application directories in the project
+#     project_name = '' 
+    
+#     if os.path.isdir(os.path.join(PROJECTS_DIR, item)):
+#         path = os.path.join(PROJECTS_DIR, item)
+#         project_dir = DirFinder(path, 'manage.py')
+#         site_dir = DirFinder(path, 'settings.py')
+#         app_dirs = AppFinder(project_dir, project_dir.split('/')[-1], site_dir.split('/')[-1])
+        
+#         project_name = 'static.projects.%s' % item
+
+#     if project_name not in INSTALLED_APPS:
+#         INSTALLED_APPS = INSTALLED_APPS+(project_name,)
+
+#     template_dir = os.path.join(PROJECTS_DIR, '%s/templates/' % item)
+
+#     if os.path.isdir(template_dir):
+#         if template_dir not in TEMPLATE_DIRS:
+#             TEMPLATE_DIRS = TEMPLATE_DIRS+(template_dir,)
+
+#     static_files_dir = os.path.join(PROJECTS_DIR, '%s/static/' % item)
+
+#     if os.path.isdir(static_files_dir):
+#         if static_files_dir not in STATICFILES_DIRS:
+#             STATICFILES_DIRS = STATICFILES_DIRS + (static_files_dir,)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
