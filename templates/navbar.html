@@ -20,7 +20,15 @@
                 <li class="header__menuItem"><a href="{% url 'opportunity-board' %}">Opportunities</a></li>
                 
                 {% if request.user.is_authenticated %}
-                    <li class="header__menuItem"><a href="{% url 'inbox' request.user.profile.slug %}">Inbox</a></li>
+                    {% if unreadCount == None %}
+                        <li class="header__menuItem">
+                            <a href="{% url 'inbox' request.user.profile.slug %}">Inbox</a>
+                        </li>
+                    {% elif unreadCount != None %}
+                        <li class="header__menuItem">
+                            <a href="{% url 'inbox' request.user.profile.slug %}">Inbox&nbsp;<span>({{unreadCount}})</span></a>
+                        </li>
+                    {% endif %}
                     <li class="header__menuItem"><a href="{% url 'account' %}">Account</a></li>
                     <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Logout</a></li>
                 {% else %}

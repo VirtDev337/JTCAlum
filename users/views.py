@@ -11,6 +11,7 @@ from .models import Profile, Message, Opportunity, Social, Skill
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm, SocialForm, OpportunityForm
 from .utils import searchProfiles, paginateProfiles, searchAffiliates, paginateAffiliates, searchOpportunities
 from datetime import datetime, timedelta
+# from jtcalumn.decorators import unread_count
 
 
 def loginUser(request):
@@ -77,7 +78,8 @@ def profiles(request):
     profiles, search_query = searchProfiles(request)
     
     custom_range, profiles = paginateProfiles(request, profiles, 3)
-    context = {'profiles': profiles, 'search_query': search_query,
+    context = {'profiles': profiles, 
+                'search_query': search_query,
                 'custom_range': custom_range}
     return render(request, 'users/profiles.html', context)
 
@@ -89,8 +91,10 @@ def userProfile(request, slug):
     otherSkills = profile.skill_set.filter(description = "")
     social = profile.social_set.all()
     
-    context = {'profile': profile, 'topSkills': topSkills,
-                'otherSkills': otherSkills, 'social': social}
+    context = {'profile': profile, 
+                'topSkills': topSkills,
+                'otherSkills': otherSkills, 
+                'social': social}
     return render(request, 'users/user-profile.html', context)
 
 
@@ -99,13 +103,16 @@ def affiliates(request):
 
     custom_range, profiles = paginateAffiliates(request, profiles, 3)
 
-    context = {'profiles': profiles, 'search_query': search_query, 'custom_range': custom_range}
+    context = {'profiles': profiles, 
+                'search_query': search_query, 
+                'custom_range': custom_range}
     return render(request=request, template_name="users/affiliates.html", context=context)
 
 
 def affiliateProfile(request, slug):
     profile = Profile.objects.get(slug = slug)
-    context = {'profile': profile};
+    
+    context = {'profile': profile}
     return render(request=request, template_name="users/affiliate-profile.html", context=context)
 
 
@@ -117,7 +124,10 @@ def userAccount(request):
     social = profile.social_set.all()
     projects = profile.project_set.all()
     
-    context = {'profile': profile, 'skills': skills, 'projects': projects, 'social': social}
+    context = {'profile': profile, 
+                'skills': skills, 
+                'projects': projects, 
+                'social': social}
     return render(request, 'users/account.html', context)
 
 
@@ -161,7 +171,6 @@ def editAccount(request):
 
 
 #--------Skills--------
-
 
 @login_required(login_url = 'login')
 def createSkill(request):
@@ -220,7 +229,6 @@ def deleteSkill(request, pk):
 
 
 #----------Social----------
-
 
 @login_required(login_url = 'login')
 def createSocial(request):
@@ -334,6 +342,7 @@ def createMessage(request, slug):
 @login_required(login_url = 'login')
 def replyMessage(request, slug):
     recipient = Profile.objects.get(slug = slug)
+    
     form = MessageForm()
     
     try:
@@ -399,7 +408,6 @@ def opportunityBoard(request):
     return render(request, 'users/opportunity_board.html', context)
 
 
-# @login_required(login_url = 'login')
 def viewOpportunity(request, pk):
     opportunity = Opportunity.objects.get(id=pk)
     
@@ -413,25 +421,20 @@ def viewOpportunity(request, pk):
     
     return render(request, 'users/opportunity.html', context)
 
-
+@login_required(login_url = "login")
 def createOpportunity(request):
     form = OpportunityForm()
-    
-    try:
-        creator = request.user.profile
-    except:
-        creator = None
+    creator = request.user.profile
     
     if request.method == 'POST':
         form = OpportunityForm(request.POST)
         if form.is_valid():
             
             opportunity = form.save(commit = False)
+            
             opportunity.owner = creator
-            
-            if creator:
-                opportunity.poster = creator.name
-            
+            opportunity.poster = creator.name
+            print(opportunity)
             opportunity.save()
             
             messages.success(request, 'Your opportunity was successfully posted!')
@@ -440,15 +443,12 @@ def createOpportunity(request):
     context = {'form': form} 
     return render(request, 'users/opportunity_form.html', context)
 
-
+@login_required(login_url = "login")
 def updateOpportunity(request, pk):
     post = Opportunity.objects.get(pk = pk)
     form = OpportunityForm(instance = post)
     
-    try:
-        creator = request.user.profile
-    except:
-        creator = None
+    creator = request.user.profile
     
     if request.method == 'POST':
         form = OpportunityForm(request.POST, instance = post)

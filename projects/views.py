@@ -6,9 +6,10 @@ from django.contrib import messages
 from .models import Project, Tag
 from .forms import ProjectForm, ReviewForm, DemoForm
 from .utils import searchProjects, paginateProjects
-from .sites import InstallApp
+# from jtcalumn.decorators import unread_count
 
 
+# @unread_count()
 def projects(request):
     projects, search_query = searchProjects(request)
     custom_range, projects = paginateProjects(request, projects, 6)
@@ -17,6 +18,7 @@ def projects(request):
     return render(request, 'projects/projects.html', context)
 
 
+# @unread_count()
 def project(request, owner, slug):
     projectObj = Project.objects.get(slug = slug)
     form = ReviewForm()
@@ -37,6 +39,7 @@ def project(request, owner, slug):
 
 
 @login_required(login_url = "login")
+# @unread_count()
 def createProject(request):
     profile = request.user.profile
     form = ProjectForm()
@@ -59,6 +62,7 @@ def createProject(request):
 
 
 @login_required(login_url = "login")
+# @unread_count()
 def updateProject(request, owner, slug):
     profile = request.user.profile
     project = profile.project_set.get(slug = slug)
@@ -113,7 +117,8 @@ def updateProject(request, owner, slug):
 
 
 @login_required(login_url = "login")
-def projectDemoConf(request,owner, slug):
+# @unread_count()
+def projectDemoConf(request, owner, slug):
     profile = request.user.profile
     project = profile.project_set.get(slug = slug)
     form = DemoForm(instance = project)
@@ -141,9 +146,9 @@ def projectDemoConf(request,owner, slug):
             except:
                 project_set.update(demo_set = demo_set)
             
-            if project.demo and project.demo_set:
-                InstallApp(project.title)
-                messages.success(request, 'Your site was successfully installed!')
+            # if project.demo and project.demo_set:
+            #     InstallApp(project.title)
+            #     messages.success(request, 'Your site was successfully installed!')
             return redirect('project', project.owner, project.slug)
         
     context = {'form': form, 'project': project, 'profile': profile}
@@ -151,6 +156,7 @@ def projectDemoConf(request,owner, slug):
 
 
 @login_required(login_url = "login")
+# @unread_count()
 def deleteProject(request, owner, slug):
     profile = request.user.profile
     project = profile.project_set.get(slug = slug)
