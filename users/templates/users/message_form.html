@@ -6,19 +6,20 @@
     <div class="content-box">
         <div class="formWrapper">
             
-            <a class="backButton" href="{% url 'user-profile' sender.slug  %}"><i class="im im-angle-left"></i></a>
+            
+            <a class="backButton" href="{% url 'user-profile' recipient.slug  %}"><i class="im im-angle-left"></i></a>
             <br>
 
             <form class="form" method="POST">
                 {% csrf_token %}
 
                 {% if request.user.is_authenticated == False %}
-                    {% if {{form.name}} != "None" %}
+                    {% if form.name != "None" %}
                         <div class="form__field">
                             {{form.name}}
                         </div>
                     {% endif %}
-                    {% if {{form.email}} != "None" %}
+                    {% if form.email != "None" %}
                         <div class="form__field">
                             {{form.email}}
                         </div>
