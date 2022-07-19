@@ -1,0 +1,3 @@
+VIRTUAL_HOSTS = {}
+
+INSTALLED_APPS = []

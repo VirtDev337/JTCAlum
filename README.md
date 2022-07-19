@@ -44,7 +44,7 @@ Partners and affiliates are provided the ability to search past, present and fut
     <td> Django </td> 
   </tr>
   <tr style="border: none; box-shadow: none; text-shadow: none">   
-    <td style="border: none; box-shadow: none; text-shadow: none"> Postgres </td> 
+    <td style="border: none; box-shadow: none; text-shadow: none"> SQLite </td> 
   </tr>
   <tr style="border: none; box-shadow: none; text-shadow: none"> 
     <td style="border: none; box-shadow: none; text-shadow: none"> Django REST Framework </td>

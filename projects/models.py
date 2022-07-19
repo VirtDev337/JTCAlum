@@ -2,43 +2,44 @@ from django.db import models
 import uuid
 from django.db.models.deletion import CASCADE
 from django.contrib.sites.models import Site
-from django.contrib.sites.managers import CurrentSiteManager
 from django.template.defaultfilters import slugify
 from users.models import Profile
 from django.urls import reverse
+from django.conf import settings
+import os
 # Create your models here.
 
 
 class Project(models.Model):
+    # Project specific attributes
+    id = models.UUIDField(default = uuid.uuid4, unique = True, primary_key = True, editable = False)
     owner = models.ForeignKey(Profile, null = True, blank = True, on_delete = models.CASCADE)
     title = models.CharField(max_length = 200)
+    slug = models.SlugField(default = '', editable = False, max_length = 200, null = False)
+    created = models.DateTimeField(auto_now_add = True)
     description = models.TextField(null = True, blank = True)
+    tags = models.ManyToManyField('Tag', blank = True)
     featured_image = models.ImageField(null = True, blank = True, 
                                         upload_to = 'projects/', default = "projects/default.jpg")
     
+    # Project specific Links
     demo_link = models.CharField(max_length = 2000, null = True, blank = True)
     source_link = models.CharField(max_length = 2000, null = True, blank = True)
     
-    # Information for the sub-site implementation
+    # Demo and sub-site attributes
+    site = models.ForeignKey(Site, default = None, on_delete=models.CASCADE)
     demo = models.BooleanField(default = False, null = True, blank = True)
     demo_set = models.BooleanField(default = False, null = True, blank = True)
+    
+    # Information of the project directory structure if demoed
     project_name = models.CharField(max_length = 200, default = "", blank = True, null = True)
     site_name = models.CharField(max_length = 200, default = "", blank = True, null = True)
-    app_name = models.CharField(max_length = 200, default = "", blank = True, null = True)
     project_directory = models.CharField(max_length = 200, default = "", blank = True, null = True)
-    app_directory = models.CharField(max_length = 200, default = "", blank = True, null = True)
     site_directory = models.CharField(max_length = 200, default = "", blank = True, null = True)
     
-    tags = models.ManyToManyField('Tag', blank = True)
-    
+    # Review
     vote_total = models.IntegerField(default = 0, null = True, blank = True)
     vote_ratio = models.IntegerField(default = 0, null = True, blank = True)
-    
-    created = models.DateTimeField(auto_now_add = True)
-    
-    slug = models.SlugField(default = '', editable = False, max_length = 200, null = False)
-    
-    id = models.UUIDField(default = uuid.uuid4, unique = True, primary_key = True, editable = False)
 
     def __str__(self):
         return self.title
@@ -82,12 +83,15 @@ class Project(models.Model):
     
     def save(self, *args, **kwargs):
         self.slug = slugify( self.title)
-        self.project_name = slugify(self.title) if not self.project_name else self.project_name
+        self.project_name = self.slug if not self.project_name else self.project_name
         
         if self.demo:
-            self.project_directory = self.project_directory if self.project_directory != '' else self.project_name
-            self.site_directory = self.site_directory if self.site_directory != '' else self.site_name
-            self.app_directory = self.app_directory if self.app_directory != '' else self.app_name
+            self.project_directory = os.path.join(settings.DEMOS_ROOT, f'{self.owner.slug}/{self.project_directory}') if self.project_directory != '' and '/' not in self.project_directory  else os.path.join(settings.DEMOS_ROOT, f'{self.owner.slug}/{self.project_name}')
+            
+            self.site_directory = os.path.join(self.project_directory, self.site_directory) if self.site_directory != '' else os.path.join(self.project_directory, self.site_name)
+            
+            self.site.domain = '{settings.PARENT_HOST}/{self.owner.slug}/{self.slug}'
+            self.site.name = '{self.owner.slug}-{self.slug}'
         
         super().save(*args, **kwargs)
 
