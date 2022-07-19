@@ -13,11 +13,23 @@
             <form class="form" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 
-                {% for field in form %}
-                <!-- Input:Text -->
-                <div class="form__field">
-                    {{field}}
-                </div>
+                {% for field in dform %}
+                    <!-- Input:Text -->
+                    <div class="form__field">
+                        {{field}}
+                        {% if field.hint %}
+                            <hint>{{field.hint}}</hint>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                {% for field in sform %}
+                    <!-- Input:Text -->
+                    <div class="form__field">
+                        {{field}}
+                        {% if field.hint %}
+                            <hint>{{field.hint}}</hint>
+                        {% endif %}
+                    </div>
                 {% endfor %}
                 <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
             </form>

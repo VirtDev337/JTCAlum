@@ -30,7 +30,7 @@ class Profile(models.Model):
 
     created = models.DateTimeField(auto_now_add = True)
     
-    slug = models.SlugField(default = '', editable = True, max_length = 200, null = False)
+    slug = models.SlugField(default = '', editable = False, max_length = 200, null = False)
     
     id = models.UUIDField(default = uuid.uuid4, unique = True, 
                         primary_key = True, editable = False)

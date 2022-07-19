@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Project, Tag
-from .forms import ProjectForm, ReviewForm, DemoForm
+from .forms import ProjectForm, ReviewForm, DemoForm, SiteForm
 from .utils import searchProjects, paginateProjects
 # from jtcalumn.decorators import unread_count
 
@@ -94,20 +94,17 @@ def updateProject(request, owner, slug):
             if project.demo and not project.demo_set:
                 return redirect('demo-conf', project.owner, project.slug)
             
-            if not project.demo and project.demo_set or project.site_name != '' or project.app_name != '': 
+            if not project.demo and project.demo_set or project.site_name != '': 
                 project.demo_set = False
-                project.app_name = ""
                 project.site_name = ""
-                project.project_directory = ""
-                project.app_directory = ""
-                project.site_directory = ""
+                project.project_path = ""
+                project.site_path = ""
+                project.site.delete()
                 Project.objects.filter(id = project.id).update(
-                    demo_set = project.demo_set, 
-                    app_name = project.app_name, 
+                    demo_set = project.demo_set,  
                     site_name = project.site_name, 
                     project_directory = project.project_directory, 
-                    app_directory = project.app_directory, 
-                    site_directory = project.site_directory
+                    site_path = project.site_path
                 )
             
             return redirect('account')
@@ -121,25 +118,33 @@ def updateProject(request, owner, slug):
 def projectDemoConf(request, owner, slug):
     profile = request.user.profile
     project = profile.project_set.get(slug = slug)
-    form = DemoForm(instance = project)
+    dform = DemoForm(instance = project)
+    sform = SiteForm(instance = project)
     
     if request.method == 'POST':
-        form = DemoForm(request.POST, request.FILES, instance = project)
+        dform = DemoForm(request.POST['dform'], request.FILES, instance = project)
+        sform = DemoForm(request.POST['sform'], instance = project)
         
-        if form.is_valid():
-            name = form.cleaned_data['project_name']
-            site = form.cleaned_data['site_name']
-            app = form.cleaned_data['app_name']
-            project_dir = form.cleaned_data['project_directory'] if form.cleaned_data['project_directory'] else name
-            app_dir = form.cleaned_data['app_directory'] if form.cleaned_data['app_directory'] else app
-            site_dir = form.cleaned_data['site_directory'] if form.cleaned_data['site_directory'] else site
+        if sform.is_valid():
+            project.site = sform.save()['id']  
+        
+        if dform.is_valid():
+            name = dform.cleaned_data['project_name']
+            site_name = dform.cleaned_data['site_name']
+            project_dir = dform.cleaned_data['project_path'] if dform.cleaned_data['project_path'] else name
+            site_dir = dform.cleaned_data['site_path'] if dform.cleaned_data['site_path'] else site_name
             demo_set = project.demo_set
             
             if not demo_set:
                 demo_set = True
             
             project_set = Project.objects.filter(id = project.id)
-            project_set.update(project_name = name, site_name = site, app_name = app, project_directory = project_dir, app_directory = app_dir, site_directory = site_dir)
+            project_set.update(
+                project_name = name, 
+                site_name = site_name, 
+                project_directory = project_dir, 
+                site_directory = site_dir
+            )
             try:
                 if not project_set.demo_set:
                     project_set.update(demo_set = demo_set)
@@ -151,7 +156,12 @@ def projectDemoConf(request, owner, slug):
             #     messages.success(request, 'Your site was successfully installed!')
             return redirect('project', project.owner, project.slug)
         
-    context = {'form': form, 'project': project, 'profile': profile}
+    context = {
+        'dform': dform, 
+        'sform': sform, 
+        'project': project, 
+        'profile': profile
+    }
     return render(request, "projects/demo_form.html", context)
 
 
