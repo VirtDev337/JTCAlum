@@ -95,11 +95,13 @@ def updateProject(request, owner, slug):
                 return redirect('demo-conf', project.owner, project.slug)
             
             if not project.demo and project.demo_set or project.site_name != '': 
+                project.remove_config()
                 project.demo_set = False
                 project.site_name = ""
                 project.project_path = ""
                 project.site_path = ""
                 project.site.delete()
+                
                 Project.objects.filter(id = project.id).update(
                     demo_set = project.demo_set,  
                     site_name = project.site_name, 
@@ -126,13 +128,14 @@ def projectDemoConf(request, owner, slug):
         sform = DemoForm(request.POST['sform'], instance = project)
         
         if sform.is_valid():
-            project.site = sform.save()['id']  
+            site = sform.save()
+            project.site = site
         
         if dform.is_valid():
             name = dform.cleaned_data['project_name']
             site_name = dform.cleaned_data['site_name']
-            project_dir = dform.cleaned_data['project_path'] if dform.cleaned_data['project_path'] else name
-            site_dir = dform.cleaned_data['site_path'] if dform.cleaned_data['site_path'] else site_name
+            project_dir = dform.cleaned_data['project_directory'] if dform.cleaned_data['project_directory'] else project.getDir()
+            site_dir = dform.cleaned_data['site_directory'] if dform.cleaned_data['site_directory'] else project.getDir(filename = 'settings.py')
             demo_set = project.demo_set
             
             if not demo_set:
@@ -151,9 +154,11 @@ def projectDemoConf(request, owner, slug):
             except:
                 project_set.update(demo_set = demo_set)
             
-            # if project.demo and project.demo_set:
-            #     InstallApp(project.title)
-            #     messages.success(request, 'Your site was successfully installed!')
+            if project.demo and project.demo_set:
+                if not project.demo_exists():
+                    project.clone()
+                    project.write_config()
+                messages.success(request, 'Your site was successfully installed!')
             return redirect('project', project.owner, project.slug)
         
     context = {
@@ -171,6 +176,7 @@ def deleteProject(request, owner, slug):
     profile = request.user.profile
     project = profile.project_set.get(slug = slug)
     if request.method == 'POST':
+        project.remove_config()
         project.delete()
         return redirect('projects')
     context = {'object': project}

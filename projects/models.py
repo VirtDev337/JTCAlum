@@ -1,11 +1,13 @@
 from django.db import models
 import uuid
+from git import Repo
 from django.db.models.deletion import CASCADE
 from django.contrib.sites.models import Site
 from django.template.defaultfilters import slugify
 from users.models import Profile
 from django.urls import reverse
 from django.conf import settings
+from jtcalum.structures import VIRTUAL_HOSTS, INSTALLED_APPS
 import os
 # Create your models here.
 
@@ -40,14 +42,14 @@ class Project(models.Model):
     # Review
     vote_total = models.IntegerField(default = 0, null = True, blank = True)
     vote_ratio = models.IntegerField(default = 0, null = True, blank = True)
-
+    
     def __str__(self):
         return self.title
-
+    
     class Meta:
         ordering = ['-vote_ratio', '-vote_total', 'title']
         unique_together = [['slug', 'owner']]
-
+    
     @property
     def imageURL(self):
         try:
@@ -55,12 +57,12 @@ class Project(models.Model):
         except:
             url = ''
         return url
-
+    
     @property
     def reviewers(self):
         queryset = self.review_set.all().values_list('owner__id', flat = True)
         return queryset
-
+    
     @property
     def getVoteCount(self):
         reviews = self.review_set.all()
@@ -80,6 +82,87 @@ class Project(models.Model):
         }
         
         return reverse('user-profile', kwargs = kwargs)
+    
+    # Publishing methods
+    def getDir(self, filename = 'manage.py'):
+        if self.project.project_dir is '':
+            project_dir = os.path.join(settings.DEMOS_ROOT, self.project.title)
+            dir_list = os.scandir(project_dir)
+            
+            for entry in dir_list:
+                if entry.is_file() and entry == filename:
+                    return project_dir
+                
+                elif entry.is_dir():
+                    if self.project.slug in entry or self.project.title in entry or 'mysite' in entry:
+                        project_dir = os.path.join(project_dir, entry)
+                        self.getDir(project_dir, filename)
+    
+    def getAvailableProjects(self):
+        available_demos = []
+        demo_projects = os.scandir(settings.DEMOS_ROOT)
+        for project in demo_projects:
+            if project.is_dir() and project in settings.INSTALLED_APPS:
+                available_demos.append(project)
+        return available_demos
+    
+    
+    def cloneProject(self, uri = None):
+        fqdn = uri.split('/') if uri else self.site.domain
+        owner_name = None
+        
+        if  fqdn[-1] == self.slug and fqdn[-2] == self.owner.slug:
+            owner_name = self.owner.slug
+        
+        if not owner_name in os.scandir(settings.DEMOS_ROOT):
+            if os.getcwd() != settings.DEMOS_ROOT:
+                os.chdir(settings.DEMOS_ROOT)
+            
+            os.mkdir(owner_name)
+        
+        if self.source_link != '' or self.source_link != None:
+            Repo.clone(self.source_link, os.path.join(settings.DEMOS_ROOT, owner_name))
+        else:
+            print('A source URI must be provided.')
+            return False
+        return True
+    
+    def demo_exists(self):
+        available_projs = self.getAvailableProjects()
+        if self.name not in available_projs or self.slug not in available_projs or self.project_name not in available_projs:
+            return False
+        return True
+    
+    def write_config(self):
+        structures_path = os.path.join(settings.BASE_DIR, 'jtcalum/structures.py')
+        title = self.project.title.title().replace(' ', '')
+        
+        with open(structures_path, 'rw') as f:
+            lines = f.readlines()
+            
+            if self.project.slug not in VIRTUAL_HOSTS:
+                for line in lines:
+                    line = line.strip()
+                    if '}' in line:
+                        line = line.replace('}', f"\n\t'{self.site.domain}': 'demos.{self.owner.slug}.{self.slug}.{self.site_directory}.urls',\n" + '}')
+                    if self.slug not in settings.INSTALLED_APPS and ']' in line:
+                        line = line.replace(']', f"\n\t'demos.{self.owner.slug}.{self.slug}.apps.{title}Config',\n]")
+            f.writelines(lines)
+    
+    def remove_config(self):
+        structures_path = os.path.join(settings.BASE_DIR, 'jtcalum/structures.py')
+        title = self.title.title().replace(' ', '')
+        
+        with open(structures_path, 'rw') as f:
+            lines = f.readlines()
+            
+            for line in lines:
+                line = line.strip()
+                if self.site.domain in line:
+                    line = line.replace(f"\n\t'{self.site.domain}': 'demos.{self.owner.slug}.{self.slug}.{self.site_directory}.urls',\n", '')
+                elif self.project.slug in line:
+                    line = line = line.replace(f"\n\t'demos.{self.owner.slug}.{self.slug}.apps.{title}Config',\n", '')
+            f.writelines(lines)
     
     def save(self, *args, **kwargs):
         self.slug = slugify( self.title)
