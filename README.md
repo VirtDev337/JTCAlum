@@ -61,11 +61,8 @@ Partners and affiliates are provided the ability to search past, present and fut
 ### Login Page
 <img src="./static/images/projects/JTCAlum-Login.png"> 
 
-### Account Page
+### Account/Profile Page
 <img src="./static/images/projects/JTCAlum-Account.png">
-
-### Profile Page
-<img src="./static/images/projects/JTCAlum-Profile.png">
 
 ### Projects Page
 <img src="./static/images/projects/JTCAlum-Projects.png">  
