@@ -29,7 +29,7 @@ class Project(models.Model):
     source_link = models.CharField(max_length = 2000, null = True, blank = True)
     
     # Demo and sub-site attributes
-    site = models.ForeignKey(Site, default = None, on_delete=models.CASCADE)
+    # site = models.ForeignKey(Site, default = None, on_delete=models.CASCADE)
     demo = models.BooleanField(default = False, null = True, blank = True)
     demo_set = models.BooleanField(default = False, null = True, blank = True)
     
