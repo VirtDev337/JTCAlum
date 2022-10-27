@@ -33,10 +33,10 @@
                         
                         {% if project.demo %}
                             <span class="link">
-                                {% comment %} <a class="singleProject__liveLink" href="{% host_url 'demo' host '{{project.owner}}/{{project.slug}}/demo' %}" target="_blank">
+                                <a class="singleProject__liveLink" href="{% host_url 'demo' host '{{project.owner}}/{{project.slug}}/demo' %}" target="_blank">
                                     <i class="im im-external-link"></i>
                                     Live Demo
-                                </a> {% endcomment %}
+                                </a>
                             </span>
                             {% if project.demo_set %}
                                 <a href="{% url 'demo-conf' project.owner project.slug %}">
