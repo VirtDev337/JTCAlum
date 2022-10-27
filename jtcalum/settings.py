@@ -14,6 +14,7 @@ from pathlib import Path
 from django.core.management.utils import get_random_secret_key
 import os
 from .structures import INSTALLED_APPS as I_APPS
+from ..venv import env
 # import sys
 # import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -49,6 +50,11 @@ INSTALLED_APPS = [
     'projects.apps.ProjectsConfig',
     'users.apps.UsersConfig',
     
+    
+    'allauth', 
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
     'rest_framework',
     'corsheaders',
     'storages',
@@ -112,12 +118,11 @@ MIDDLEWARE = [
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
 ]
 
-SITE_ID = 1
 ROOT_URLCONF = 'jtcalum.urls'
 ROOT_HOSTCONF = 'jtcalum.hosts'
 DEFAULT_HOST = 'index'
 PARENT_HOST = 'jtcalum.org'
-CSRF_TRUSTED_ORIGINS=['https://jtcalum.org/', 'http://jtcalum.org/']
+CSRF_TRUSTED_ORIGINS = ['https://jtcalum.org/', 'http://jtcalum.org/']
 
 TEMPLATES = [
     {
@@ -183,6 +188,17 @@ DATABASES = {
 # #     }
 #     }
 
+# CodeLogin_app/settings.py
+
+AUTHENTICATION_BACKENDS = (
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+SITE_ID = 1
+ACCOUNT_EMAIL_VERIFICATION = "none"
+LOGIN_REDIRECT_URL = "home"
+ACCOUNT_LOGOUT_ON_GET = True
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -218,11 +234,12 @@ USE_TZ = False
 CORS_ALLOW_ALL_ORIGINS = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
+EMAIL_HOST =  env.get('EMAIL_HOST')
+EMAIL_PORT =  env.get('EMAIL_PORT')
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'devfolio.virtdev@gmail.com'
-EMAIL_HOST_PASSWORD = 'DevFolio_VirtDev'
+EMAIL_HOST_USER =  env.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env.get('EMAIL_HOST_PASSWORD')
+GITHUB_CLIENT = env.get('GITHUB_CLIENT')
 
 
 # Static files (CSS, JavaScript, Images)
