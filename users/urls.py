@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 # from .forms import CustomAuthForm
 from . import views
 
@@ -8,9 +8,11 @@ urlpatterns = [
     path('register/', views.registerUser, name = "register"),
 
     path('', views.profiles, name = "profiles"),
+    path('home/', views.profiles),
     path('profile/<str:slug>/', views.userProfile, name = "user-profile"),
     path('account/', views.userAccount, name = "account"),
     path('account/update', views.editAccount, name = "edit-account"),
+    path('accounts/', include('allauth.urls')),
     
     path('affiliates/', views.affiliates, name='affiliates'),
     path('affiliate/profile/<str:slug>/', views.affiliateProfile, name='affiliate-profile'),

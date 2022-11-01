@@ -14,18 +14,22 @@ from pathlib import Path
 from django.core.management.utils import get_random_secret_key
 import os
 from .structures import INSTALLED_APPS as I_APPS
-from ..venv import env
+from dotenv import load_dotenv
+
+
+
 # import sys
 # import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 
-
+load_dotenv(dotenv_path)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
+SECRET_KEY = str(os.getenv("DJANGO_SECRET_KEY", get_random_secret_key()))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -55,6 +59,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.linkedin',
     'rest_framework',
     'corsheaders',
     'storages',
@@ -191,10 +197,13 @@ DATABASES = {
 # CodeLogin_app/settings.py
 
 AUTHENTICATION_BACKENDS = (
-    "allauth.account.auth_backends.AuthenticationBackend",
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_VERIFICATION = "none"
 LOGIN_REDIRECT_URL = "home"
 ACCOUNT_LOGOUT_ON_GET = True
@@ -234,13 +243,53 @@ USE_TZ = False
 CORS_ALLOW_ALL_ORIGINS = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST =  env.get('EMAIL_HOST')
-EMAIL_PORT =  env.get('EMAIL_PORT')
+EMAIL_HOST =  str(os.getenv('EMAIL_HOST'))
+EMAIL_PORT =  str(os.getenv('EMAIL_PORT'))
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER =  env.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env.get('EMAIL_HOST_PASSWORD')
-GITHUB_CLIENT = env.get('GITHUB_CLIENT')
+EMAIL_HOST_USER =  str(os.getenv('EMAIL_HOST_USER'))
+EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_HOST_PASSWORD'))
+GITHUB_CLIENT = str(os.getenv('GITHUB_CLIENT'))
+GITHUB_SECRET = str(os.getenv('GITHUB_SECRET'))
 
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': GITHUB_CLIENT,
+            'secret': GITHUB_SECRET,
+        },
+        'SCOPE': [
+            'user',
+            'repo',
+            'read:org',
+        ],
+    },
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    },
+    'linkedin': {
+        'SCOPE': [
+            'r_basicprofile',
+            'r_emailaddress'
+        ],
+        'PROFILE_FIELDS': [
+            'id',
+            'first-name',
+            'last-name',
+            'email-address',
+            'picture-url',
+            'public-profile-url',
+        ]
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
