@@ -1,0 +1,121 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load socialaccount %}
+{% block content %}
+
+
+{% if page == 'register' %}
+
+    <div class="auth">
+        <div class="card">
+            <div class="auth__header text-center">
+                <a href="/">
+                    <img src="{% static 'images/jtcalumlogo.svg' %}" alt="icon" />
+                </a>
+                <h3>Register an Account</h3>
+                <p>Create a new developer account</p>
+            </div>
+
+            <form method="POST" action="{% url 'register' %}" class="form auth__form">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="form__field">
+                        {% comment %} {% if 'Password' in field.label  or field.label == 'Profile image'%}
+                            <label for="formInput#text">{{field.label}}</label>
+                        {% endif %} {% endcomment %}
+                        {{field}}
+
+                        <!-- {% if field.help_text %}
+                        <small>{{field.help_text}}</small>
+                        {% endif %} -->
+
+                        {% for error in field.errors %}
+                            <p style="color: red;">{{error}}</p>
+                        {% endfor %}
+
+                    </div>
+
+                {% endfor %}
+
+                <div class="auth__actions">
+                    <input class="btn btn--sub btn--lg" type="submit" value="Sign  In" />
+                </div>
+            </form>
+            <div class="auth__alternative">
+                <p>Already have an Account?</p>
+                <a href="{% url 'login' %}">Log In</a>
+            </div>
+        </div>
+    </div>
+
+
+
+{% else %}
+
+    <div class="auth">
+
+        <div class="card">
+
+            <div class="auth__header text-center">
+                <a href="/">
+                    <img src="{% static 'images/logo.svg' %}" alt="icon" />
+                </a>
+                <h3>Account Login</h3>
+                <p>Hello Developer, Welcome Back!</p>
+            </div>
+
+            <form action="" method="POST" class="form auth__form">
+                {% csrf_token %}
+                <!-- Input:Username -->
+                <div class="form__field">
+                    <label for="formInput#text">Username: </label>
+                    <input class="input input--text" id="formInput#text" type="text" name="username"
+                        placeholder="Enter your username..." />
+                </div>
+
+                <!-- Input:Password -->
+                <div class="form__field">
+                    <label for="formInput#password">Password: </label>
+                    <input class="input input--password" id="formInput#passowrd" type="password" name="password"
+                        placeholder="••••••••" />
+                </div>
+
+                <div class="auth__actions">
+                    <input class="btn btn--sub btn--lg" type="submit" value="Log In" />
+                    <a href="{% url 'reset_password' %}">Forget Password?</a>
+                </div>
+                
+            </form>
+
+            <div class="auth__alternative">
+                <p>Don’t have an Account?</p>
+                <a href="{% url 'register' %}">Sign Up</a>
+            </div>
+            <div class="alt__auth">
+                <div class="auth__divider">
+                    <hr>
+                </div>
+                <div class="auth__divider">
+                    <span>Or sign in with</span>
+                </div>
+                <div class="auth__divider">
+                    <hr></div>
+                </div>
+                <div class="auth__providers">
+                    <button loading="0" type="auth__actions button" class="auth__button" color="textGrey">
+                        <a href="{% provider_login_url 'github' %}">
+                            <span color="textGrey">
+                                <icon loading="0" color="textGrey" class="im im-github"  style="padding: 0px 5px; margin-top: 8px;">
+                                    <span style="margin-top: 0px;"> GitHub</span>
+                                </icon>
+                            </span>
+                        </a>
+                    </button>
+            </div>
+        </div>
+    </div>
+
+
+{% endif %}
+{% endblock content %} 

@@ -11,6 +11,7 @@ from .models import Profile, Message, Opportunity, Social, Skill
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm, SocialForm, OpportunityForm
 from .utils import searchProfiles, paginateProfiles, searchAffiliates, paginateAffiliates, searchOpportunities
 from datetime import datetime, timedelta
+from django.conf import settings
 # from jtcalumn.decorators import unread_count
 
 

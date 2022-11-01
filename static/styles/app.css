@@ -183,7 +183,7 @@ img {
 ========================*/
 
 .hero-section {
-  height: 40vh;
+  height: 30vh;
   display: flex;
   align-items: center;
   background-color: var(--color-sub);
@@ -686,6 +686,7 @@ img {
   Login/SignUp
 ========================*/
 
+
 .auth {
   width: 100%;
   position: relative;
@@ -695,6 +696,15 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.alt__auth {
+  display: flex;
+  margin: 1rem 0px;
+  box-sizing: inherit;
+  line-height: 1.3;
+  font-size: 16px;
+  font-weight: 300;
 }
 
 .auth::after {
@@ -711,7 +721,7 @@ img {
 }
 
 .auth > .card {
-  padding: 3rem 4rem;
+  padding: 1rem 4rem;
   width: 95%;
   max-width: 65rem;
 }
@@ -727,17 +737,17 @@ img {
 .auth__header h3 {
   color: var(--color-sub);
   font-weight: 700;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .auth__header p {
   font-weight: 400;
   font-size: 1.8rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .auth__form {
-  margin: 3rem 0;
+  margin: 2rem 0;
 }
 
 .auth .auth__form label,
@@ -761,6 +771,31 @@ img {
   font-size: 2rem;
   font-weight: 500;
 }
+
+.auth__button {
+  background: var(--color-main-light);
+  color: var(--columbia-dark-blue);
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.auth__providers {
+  display: flex;
+  height: fit-content;
+  width: inherit;
+}
+
+.auth__divider {
+  display: flex;
+  flex-direction: row;
+  line-height: 1.3;
+  width: 30%;
+}
+
 
 /*=======================
   Inbox
