@@ -1,0 +1,62 @@
+/*=======================
+    Form Page
+========================*/
+
+.formPage .formWrapper {
+    list-style: none;
+    background: var(--columbia-alumni-blue);
+    padding: 3.5rem 5rem;
+    border: 2px solid var(--columbia-dark-blue);
+    border-radius: 0.7rem;
+}
+
+.formPage .formWrapper__subject {
+    font-size: 2.8rem;
+    color: var(--main-font);
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+.formPage .formWrapper .form__field {
+    color: hsl(230, 17%, 14%);
+}
+
+.formPage .formWrapper .form__field input {
+    font-size: 1.8rem;
+    background: var(--color-light-gray);
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+.formPage .formWrapper .form__field textarea {
+    font-size: 1.8rem;
+    background: var(--color-light-gray);
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+.formPage .formWrapper .form__field a {
+    color: var(--columbia-dark-blue);
+}
+
+.formPage .formWrapper form .input .radio {
+    width: 40px;
+    height: 40px;
+}
+
+.formPage .formWrapper form label {
+    display: inline-flex;
+    color: var(--columbia-dark-blue);
+}
+
+.formPage .formWrapper form label i {
+    display: inline-flex;
+    color: var(--columbia-dark-blue);
+}
+
+.formPage .formWrapper .form__field input #profile_image-clear_id {
+    font-size: 2rem;
+    background: var(--color-light-gray);
+    width: 20px!important;
+    height: 20px!important;
+}

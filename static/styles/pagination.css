@@ -1,0 +1,24 @@
+/*=======================
+    Pagination
+========================*/
+.pagination {
+    margin-top: 8rem;
+    margin-bottom: 10rem;
+}
+
+.pagination > ul {
+    flex-wrap: wrap;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.pagination .btn {
+    color: var(--columbia-dark-blue);
+}
+
+.pagination .btn.btn--sub {
+    color: var(--columbia-dark-blue);
+}

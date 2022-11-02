@@ -1,6 +1,6 @@
 {% extends 'main.html' %}
 {% load static %}
-
+{% load socialaccount %}
 {% block content %}
 
 <!-- Main Section -->
@@ -122,6 +122,13 @@
       </div>
       {% endif %}
     </div>
+  </div>
+
+  <div>
+    <p>
+        <a href="{% provider_login_url "github" process="connect" %}">Connect a github account</a>
+    </p>
+    {% comment %} <p><a href="{% provider_login_url "google" process="connect" %}">Connect a Google account</a></p> {% endcomment %}
   </div>
 </main>
 {% comment %} <script src="{% static 'js/replace.js' %}"></script> {% endcomment %}

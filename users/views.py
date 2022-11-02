@@ -14,7 +14,6 @@ from datetime import datetime, timedelta
 from django.conf import settings
 # from jtcalumn.decorators import unread_count
 
-
 def loginUser(request):
     page = 'login'
     
@@ -39,7 +38,7 @@ def loginUser(request):
         else:
             messages.error(request, 'Username OR password is incorrect')
     
-    return render(request, 'users/login_register.html')
+    return render(request, 'account/login_register.html')
 
 
 def logoutUser(request):
@@ -72,7 +71,7 @@ def registerUser(request):
                 request, 'An error has occurred during registration')
     
     context = {'page': page, 'form': form}
-    return render(request, 'users/login_register.html', context)
+    return render(request, 'account/login_register.html', context)
 
 
 def profiles(request):

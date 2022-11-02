@@ -1,0 +1,127 @@
+/*=======================
+    Inbox
+========================*/
+
+.inbox {
+    height: 90vh;
+}
+
+.inbox__title,
+.inbox__title span {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--color-sub);
+    text-transform: uppercase;
+    text-align: left;
+    margin-bottom: 3rem;
+}
+
+.inbox__title span {
+    color: var(--college-blue);
+}
+
+.messages {
+    list-style: none;
+    background: var(--columbia-alumni-blue);
+    padding: 0.5rem 3rem;
+    border: 2px solid var(--columbia-dark-blue);
+    border-radius: 0.7rem;
+}
+
+.message {
+    padding: 2.5rem 0;
+    word-wrap: break-word;
+}
+
+.message > a span {
+    font-size: 1.45rem;
+    font-weight: 500;
+}
+
+.message.message--unread a span {
+    font-weight: 700;
+    color: var(--color-sub);
+}
+
+.message:not(:last-child) {
+    border-bottom: 2px solid var(--columbia-dark-blue);
+}
+
+.message > a {
+    display: block;
+    word-wrap: normal;
+    gap: 1rem;
+    color: var(--color-sub);
+}
+
+.message__author,
+.message__date {
+    flex-basis: 25%;
+    color: var(--color-sub);
+}
+
+.message__subject {
+    flex-basis: 50%;
+    color: var(--color-sub);
+}
+
+.message__date {
+    text-align: right;
+    color: var(--color-sub);
+}
+
+
+/*=======================
+    Single Message
+========================*/
+
+
+.messagePage .message {
+    list-style: none;
+    background: var(--columbia-alumni-blue);
+    padding: 3.5rem 5rem;
+    border: 2px solid var(--columbia-dark-blue);
+    border-radius: 0.7rem;
+    color:hsl(230, 17%, 14%);
+}
+
+.messagePage .message__subject {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+    color:hsl(230, 17%, 14%);
+}
+
+.messagePage .message__author {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color:hsl(230, 17%, 14%);
+}
+
+.messagePage .message__date {
+    font-size: 1.4rem;
+    font-weight: 400;
+    text-align: left;
+    margin-bottom: 3rem;
+    color:hsl(230, 17%, 14%);
+}
+
+.messagePage a {
+    color:hsl(230, 17%, 14%);
+}
+
+.backButton {
+    background: var(--color-main-light);
+    color: var(--columbia-dark-blue);
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.backButton i {
+    margin-top: 1rem;
+    font-size: 2.5rem;
+}

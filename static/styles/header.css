@@ -1,0 +1,313 @@
+
+:root {
+  --color-sub: var(--columbia-blue);
+  --themeDotBorder:#24292e;
+  --transition: all .5s;
+}
+
+.btn--sub {
+color: var(--columbia-dark-blue);
+background-color: var(--columbia-college-blue);
+}
+
+.card {
+border: 2px solid var(--color-light);
+}
+
+img {
+width: 100%;
+}
+
+.tag > i.im {
+font-size: 1.5rem;
+margin-right: 0.5rem;
+}
+
+.content-box {
+width: 95%;
+max-width: 85rem;
+margin: 0 auto;
+}
+
+
+/*=======================
+  Header Section
+========================*/
+
+
+.header {
+  position: sticky;
+  z-index: 111;
+  background-color: var(--color-sub);
+  padding: 1.5rem 0;
+}
+
+.header > .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__logo > img {
+  align-items: left;
+  height: 3.8rem;
+  padding-right: 4.5rem;
+}
+
+.header__nav > ul {
+  display: inline-flex;
+  align-items: center;
+  list-style: none;
+  gap: 4.5rem;
+}
+
+.header__menuItem > a {
+  color: var(--color-light);
+  font-weight: 300;
+}
+
+.header__menuItem__btn {
+  color: var(--columbia-dark-blue);
+}
+
+.toggle-menu > span {
+  display: none;
+}
+
+.header__nav input[type='checkbox'] {
+  display: none;
+}
+
+.header__nav input[type='checkbox']:checked ~ .header__menu {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.header__user { 
+  display: inline-flex;
+  color: var(--color-light) !important;
+  align-items: center;
+  padding-left: 1.5rem;
+}
+
+@media screen and (max-width: 800px) {
+  .header__logo {
+    position: relative;
+    z-index: 999;
+  }
+  .toggle-menu {
+    position: relative;
+  }
+
+  .toggle-menu > span {
+    display: block;
+    position: fixed;
+    top: 1.5rem;
+    right: 2.75rem;
+    cursor: pointer;
+    padding: 1rem;
+    background: var(--color-sub-light);
+    z-index: 999;
+    font-size: 0;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+  }
+
+  .toggle-menu__lines,
+  .toggle-menu__lines::before,
+  .toggle-menu__lines::after {
+    pointer-events: none;
+    content: '';
+    display: block;
+    height: 2px;
+    width: 2.5rem;
+    position: fixed;
+    top: 4rem;
+    right: 4rem;
+    z-index: 999;
+    background: var(--color-light);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .toggle-menu__lines::before {
+    top: 3.4rem;
+    transform-origin: 0 0;
+  }
+  .toggle-menu__lines::after {
+    top: 4.6rem;
+    transform-origin: 0 0;
+  }
+
+  .header__nav input[type='checkbox']:checked + .toggle-menu > .toggle-menu__lines::before {
+    margin-left: 3px;
+    transform: rotate(45deg) scaleX(1.2) translateX(-2px) translateY(-4px);
+    visibility: visible;
+  }
+
+  .header__nav input[type='checkbox']:checked + .toggle-menu > .toggle-menu__lines {
+    visibility: hidden;
+  }
+
+  .header__nav input[type='checkbox']:checked + .toggle-menu > .toggle-menu__lines::after {
+    transform: rotate(-45deg) scaleX(1.2) translateX(-2px) translateY(3px);
+    visibility: visible;
+  }
+
+  .header__nav > ul {
+    opacity: 0;
+    pointer-events: none;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: var(--color-sub);
+    transition: all 0.5s ease-in-out;
+  }
+
+  .header__menuItem a {
+    transition: all 0.5s ease-in-out;
+    padding: 1rem 3rem;
+  }
+
+  .header__menuItem a:hover {
+    padding: 1rem 3rem;
+    border-radius: 3px;
+    background: var(--color-sub-light);
+  }
+}
+
+
+/*=======================
+  Fixed Position Alerts Wrapper
+========================*/
+
+
+.alert {
+  position: fixed;
+  left: 50%;
+  top: 120px;
+  transform: translate(-50%, -50%);
+
+
+  z-index: 99999;
+}
+
+:root {
+  --toggle-light: hsl(230, 22%, 74%);
+  --toggle-dark: linear gradient hsl(210, 78%, 56%) to hsl(146, 68%, 55%);
+}
+
+
+/*=======================
+    Theme Switch
+========================*/
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+}
+
+.switch input {
+  opacity: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--toggle-light);
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 32px;
+  bottom: 5px;
+  background-color: #fff;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background: linear-gradient(90grad, hsl(210, 78%, 56%), hsl(146, 68%, 55%));
+}
+
+input:checked + .slider:before {
+  transform: translateX(-24px);
+}
+
+.slider,
+.round {
+  border-radius: 34px;
+}
+
+.round::before {
+  border-radius: 50%;
+}
+
+input:checked + .round::before {
+  background-color: hsl(230, 17%, 14%);
+}
+
+
+/*=======================
+    Theme
+========================*/
+
+
+.dark {
+    --main-background: hsl(230, 17%, 14%);
+    --main-font: white;
+    --college-blue: var(--columbia-alumni-blue);
+}
+
+.light {
+    --main-background: white;
+    --main-font: hsl(230, 17%, 14%);
+    --college-blue: var(--columbia-dark-blue);
+}
+
+body {
+    background: var(--main-background);
+    color: var(--main-font);
+}
+
+input {
+  color: #000000 !important;
+}
+
+.toggle-switch {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.toggle-switch p {
+    padding: 1em;
+}
+
+
+/*=======================
+    Theme Icons
+========================*/
+
+
+.fa-moon {
+	color: #f1c40f;
+}
+
+.fa-sun {
+	color: #f39c12;
+}
