@@ -35,7 +35,7 @@ SECRET_KEY = str(os.getenv("DJANGO_SECRET_KEY", get_random_secret_key()))
 DEBUG = True
 # DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'jtcalum.org']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'jtcalum.org', 'virtdev337.pythonanywhere.com']
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost,jtcalum.org").split(",")
 
 # DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
@@ -54,13 +54,13 @@ INSTALLED_APPS = [
     'projects.apps.ProjectsConfig',
     'users.apps.UsersConfig',
     
-    
     'allauth', 
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.linkedin',
+    
     'rest_framework',
     'corsheaders',
     'storages',
@@ -128,7 +128,7 @@ ROOT_URLCONF = 'jtcalum.urls'
 ROOT_HOSTCONF = 'jtcalum.hosts'
 DEFAULT_HOST = 'index'
 PARENT_HOST = 'jtcalum.org'
-CSRF_TRUSTED_ORIGINS = ['https://jtcalum.org/', 'http://jtcalum.org/']
+CSRF_TRUSTED_ORIGINS = ['https://jtcalum.org/', 'http://jtcalum.org/', 'https://virtdev337.pythonanywhere.com']
 
 TEMPLATES = [
     {
@@ -202,11 +202,21 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
-ACCOUNT_EMAIL_VERIFICATION = "none"
-LOGIN_REDIRECT_URL = "home"
-ACCOUNT_LOGOUT_ON_GET = True
+
+#django-allauth registraion settings
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS =1
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+
+# 1 day
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 
+
+#or any other page
+ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/' 
+
+# redirects to profile page if not configured.
+LOGIN_REDIRECT_URL = '*/login/callback'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -251,45 +261,45 @@ EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_HOST_PASSWORD'))
 GITHUB_CLIENT = str(os.getenv('GITHUB_CLIENT'))
 GITHUB_SECRET = str(os.getenv('GITHUB_SECRET'))
 
-SOCIALACCOUNT_PROVIDERS = {
-    'github': {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
-        'APP': {
-            'client_id': GITHUB_CLIENT,
-            'secret': GITHUB_SECRET,
-        },
-        'SCOPE': [
-            'user',
-            'repo',
-            'read:org',
-        ],
-    },
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    },
-    'linkedin': {
-        'SCOPE': [
-            'r_basicprofile',
-            'r_emailaddress'
-        ],
-        'PROFILE_FIELDS': [
-            'id',
-            'first-name',
-            'last-name',
-            'email-address',
-            'picture-url',
-            'public-profile-url',
-        ]
-    }
-}
+# SOCIALACCOUNT_PROVIDERS = {
+#     'github': {
+#         # For each OAuth based provider, either add a ``SocialApp``
+#         # (``socialaccount`` app) containing the required client
+#         # credentials, or list them here:
+#         'APP': {
+#             'client_id': GITHUB_CLIENT,
+#             'secret': GITHUB_SECRET,
+#         },
+#         'SCOPE': [
+#             'user',
+#             'repo',
+#             'read:org',
+#         ],
+#     },
+#     'google': {
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         }
+#     },
+#     'linkedin': {
+#         'SCOPE': [
+#             'r_basicprofile',
+#             'r_emailaddress'
+#         ],
+#         'PROFILE_FIELDS': [
+#             'id',
+#             'first-name',
+#             'last-name',
+#             'email-address',
+#             'picture-url',
+#             'public-profile-url',
+#         ]
+#     }
+# }
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -300,7 +310,7 @@ DEMOS_URL = '/demos/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
-    BASE_DIR / 'demos'
+    BASE_DIR / 'demos',
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
@@ -315,14 +325,14 @@ DEMOS_ROOT = os.path.join(BASE_DIR, '/demos')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# DEFAULT_FILE_STORAGE = str(os.getenv('DJANGO_DEFAULT_FILE_STORAGE'))
 
 # AWS_QUERYSTRING_AUTH = False
 # AWS_S3_FILE_OVERWRITE = False
 
-# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-# AWS_STORAGE_BUCKET_NAME = 'jtcalum-bucket'
+# AWS_ACCESS_KEY_ID = str(os.getenv('AWS_ACCESS_KEY_ID'))
+# AWS_SECRET_ACCESS_KEY = str(os.getenv('AWS_SECRET_ACCESS_KEY'))
+# AWS_STORAGE_BUCKET_NAME = str(os.getenv('AWS_BUCKET_NAME'))
 
 
 if os.getcwd() == '/app':
