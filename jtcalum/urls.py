@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
 from django.contrib.auth import views as auth_views
+from django.urls import re_path
 
 
 urlpatterns = [
@@ -26,8 +27,8 @@ urlpatterns = [
 
      path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name = "reset_password_complete.html"), name = "password_reset_complete"),
      
-     path("favicon.ico", RedirectView.as_view(url = staticfiles_storage.url("favicon.ico"))),
-     
+     path("favicon.ico", RedirectView.as_view(url = staticfiles_storage.url("/images/icons/favicon.ico"))),
+
 ]
 
 

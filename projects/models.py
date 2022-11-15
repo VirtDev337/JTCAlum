@@ -21,8 +21,7 @@ class Project(models.Model):
     created = models.DateTimeField(auto_now_add = True)
     description = models.TextField(null = True, blank = True)
     tags = models.ManyToManyField('Tag', blank = True)
-    featured_image = models.ImageField(null = True, blank = True, 
-                                        upload_to = 'projects/', default = "projects/default.jpg")
+    featured_image = models.ImageField(null = True, blank = True, upload_to = 'projects/', default = "projects/default.jpg")
     
     # Project specific Links
     demo_link = models.CharField(max_length = 2000, null = True, blank = True)

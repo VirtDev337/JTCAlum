@@ -42,7 +42,7 @@ class Profile(models.Model):
             return str(self.organization_name)
     
     class Meta:
-        ordering = ['created']
+        ordering = ['name', 'created']
     
     @property
     def imageURL(self):
@@ -96,9 +96,9 @@ class Social(models.Model):
         css = self.name.lower()
         self.name = css
         if self.name in ['github', 'linkedin', 'twitter', 'stackoverflow', 'facebook', 'google']:
-            css = f'im im-{self.name}'
+            css = f'fab fa-{self.name}'
         else:
-            css = 'im im-globe' 
+            css = 'fab fa-globe' 
         
         self.css = css
         super().save(*args, **kwargs)

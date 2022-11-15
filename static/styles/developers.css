@@ -6,6 +6,11 @@
     margin-top: 8rem;
 }
 
+.devlist .card__body {
+    height: 100%;
+    width: 100%;
+}
+
 .devlist .grid {
     align-items: stretch;
 }

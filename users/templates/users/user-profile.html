@@ -1,5 +1,10 @@
 {% extends 'main.html' %}
 {% load socialaccount %}
+
+{% block head_title %}
+    {{profile.name}}
+{% endblock %}
+
 {% block content %}
 
 <!-- Main Section -->
@@ -17,7 +22,7 @@
                             
                             <li class="settings__tableInfo">
                                 {% for site in social %}
-                                    <a title="{{site.name | title}}" href="{{site.url}}" target="_blank"><i class="{{site.css}}"></i></a>
+                                    <a title="{{site.name | title}}" href="{{site.url}}" target="_blank"><i class="fab {{site.css}}"></i></a>
                                 {% endfor %}
                             </li>
 
@@ -28,12 +33,6 @@
                         {% endif %}
                         
                     </div>
-                </div>
-                <div>
-                    <p>
-                        <a href="{% provider_login_url "github" process="connect" %}">Connect a github account</a>
-                    </p>
-                    {% comment %} <p><a href="{% provider_login_url "google" process="connect" %}">Connect a Google account</a></p> {% endcomment %}
                 </div>
             </div>
             <div class="column column--2of3">
@@ -99,7 +98,6 @@
                                 </div>
                             </div>
                         {% endfor %}
-
 
                     </div>
                 </div>

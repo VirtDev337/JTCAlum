@@ -1,135 +1,144 @@
 {% extends 'main.html' %}
 {% load static %}
 {% load socialaccount %}
+
+{% block head_title %}
+  
+  {% if profile.organization_name %}
+    {{profile.organization_name}}
+  {% else %}
+    {{profile.name}}
+  {% endif %}
+
+{% endblock head_title %}
+
 {% block content %}
 
 <!-- Main Section -->
-<main class="settingsPage profile my-md">
-  <div class="container">
-    <div class="layout">
-      <div class="column column--1of3">
-        <div class="card text-center">
-          <div class="card__body dev">
-            
-            <a class="tag tag--pill tag--main settings__btn" href="{% url 'edit-account' %}"><i class="im im-edit"></i>
-              Edit</a>
-            <img class="avatar avatar--xl dev__avatar" src="{{profile.imageURL}}" />
-            {% if profile.organization_name %}
-              <h2 class="dev__organization">{{profile.organization_name}}</h2>
-            {% endif %}
-            <h2 class="dev__name">{{profile.name}}</h2>
-            <p class="dev__title">{{profile.short_into}}</p>
-            <p class="dev__location">Based in {{profile.location}}</p>
+  <main class="settingsPage profile my-md">
+    <div class="container">
+      <div class="layout">
+        <div class="column column--1of3">
+          <div class="card text-center">
+            <div class="card__body dev">
+              
+              <a class="tag tag--pill tag--main settings__btn" href="{% url 'edit-account' %}"><i class="fa fa-edit"></i>
+                Edit</a>
+              <img class="avatar avatar--xl dev__avatar" src="{{profile.imageURL}}" />
+              {% if profile.organization_name %}
+                <h2 class="dev__organization">{{profile.organization_name}}</h2>
+              {% endif %}
+              <h2 class="dev__name">{{profile.name}}</h2>
+              <p class="dev__title">{{profile.short_into}}</p>
+              <p class="dev__location">Based in {{profile.location}}</p>
 
+            </div>
+          </div>
+          
+          <div class="dev__social">
+            
+            <table class="settings__table">
+              <tr>
+                
+                {% for site in social %}
+                
+                  <td class="settings__tableSocInfo">
+                    <a title="{{site.name | title}}" href="{{site.url}}" target="_blank"><i class="{{site.css}} icon"></i></a>
+                    <div class="sites">
+                      <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-site' pk=site.id %}"><i class="fa fa-edit"></i></a>
+                      <a id="tag" class="tag tag--pill tag--main settings__btn" href="{% url 'delete-site' pk=site.id %}?next=/account"><i class="fa fa-window-close"></i></a>
+                    </div>
+                  </td>
+                  
+                {% endfor %}
+              
+              </tr>
+            </table>
+              <a class="settings__btn__site" href="{% url 'create-site' %}"><i class="fa fa-plus"></i> Add Site</a>
+              <div>
+                <p>
+                    <a href="{% provider_login_url 'github' process='connect' %}">Connect a github account</a>
+                </p>
+              </div>
           </div>
         </div>
         
-        <div class="dev__social">
+        {% if profile.profile_type == 'affiliate' %}
+        <div class="column column--2of3">
+          <div class="devInfo">
+            <h3 class="devInfo__title">About {{profile.organization_name}}</h3>
+            <p class="devInfo__about">{{profile.bio}}
+            </p>
+          </div>
+        {% elif profile.profile_type == 'alum' %}  
+        
+        <div class="column column--2of3">
+          <div class="devInfo">
+            <h3 class="devInfo__title">About Me</h3>
+            <p class="devInfo__about">{{profile.bio}}</p>
+          </div>
+          <div class="settings">
+            <h3 class="settings__title">Skills</h3>
+            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create-skill' %}"><i
+                class="fa fa-plus"></i> Add Skill</a>
+          </div>
+          
           <table class="settings__table">
-            <tr>
-              
-              {% for site in social %}
-              
-                <td class="settings__tableInfo">
-                  <a title="{{site.name | title}}" href="{{site.url}}" target="_blank"><i class="{{site.css}}"></i></a>
-                  <div>
-                    <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-site' pk=site.id %}"><i class="im im-edit"></i> Edit</a>
-                    <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-site' pk=site.id %}?next=/account"><i class="im im-x-mark-circle-o"></i> Delete</a>
-                  </div>
-                </td>
-                
-              {% endfor %}
             
-            </tr>
+            {% for skill in skills %}
+            
+              <tr>
+                <td class="settings__tableInfo">
+                  <h4>{{skill.name}}</h4>
+                  <p>
+                    {{skill.description}}
+                  </p>
+                </td>
+                <td class="settings__tableActions">
+                  <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-skill' pk=skill.id %}"><i
+                      class="fa fa-edit"></i><img src="{% static 'images/icons/icons8-edit.svg'}" />Edit</a>
+                  <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-skill' pk=skill.id %}?next=/account"><i
+                      class="fab fa-window-close"></i>
+                    Delete</a>
+                </td>
+              </tr>
+            
+            {% endfor %}
+          
           </table>
-            <a class="settings__btn__site" href="{% url 'create-site' %}"><i class="im im-plus"></i> Add Site</a>
+          
+          <div class="settings">
+            <h3 class="settings__title">Projects</h3>
+            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create-project' %}"><i
+                class="fa fa-plus"></i> Add Project</a>
+          </div>
+          
+          <table class="settings__table">
+            {% for project in projects %}
+            
+              <tr>
+                <td class="settings__thumbnail">
+                  <a href="{% url 'project' project.owner project.slug %}"><img src="{{project.imageURL}}" alt="Project Thumbnail" /></a>
+                </td>
+                <td class="settings__tableInfo">
+                  <a href="{% url 'project' project.owner project.slug %}">{{project.title}}</a>
+                  <p>{{project.description|slice:"150"}}</p>
+                </td>
+                <td class="settings__tableActions">
+                  <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-project' project.owner project.slug %}"><i
+                      class="fa fa-edit"></i> Edit</a>
+                  <a class="tag tag--pill tag--main settings__btn"
+                    href="{% url 'delete-project' project.owner project.slug %}?next=/account"><i class="fa fa-window-close"></i>
+                    Delete</a>
+                </td>
+              </tr>
+            
+            {% endfor %}
+          
+          </table>
         </div>
+        {% endif %}
       </div>
-      
-      {% if profile.profile_type == 'affiliate' %}
-      <div class="column column--2of3">
-        <div class="devInfo">
-          <h3 class="devInfo__title">About {{profile.organization_name}}</h3>
-          <p class="devInfo__about">{{profile.bio}}
-          </p>
-        </div>
-      {% elif profile.profile_type == 'alum' %}  
-        
-      <div class="column column--2of3">
-        <div class="devInfo">
-          <h3 class="devInfo__title">About Me</h3>
-          <p class="devInfo__about">{{profile.bio}}</p>
-        </div>
-        <div class="settings">
-          <h3 class="settings__title">Skills</h3>
-          <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create-skill' %}"><i
-              class="im im-plus"></i> Add Skill</a>
-        </div>
-        
-        <table class="settings__table">
-          
-          {% for skill in skills %}
-          
-            <tr>
-              <td class="settings__tableInfo">
-                <h4>{{skill.name}}</h4>
-                <p>
-                  {{skill.description}}
-                </p>
-              </td>
-              <td class="settings__tableActions">
-                <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-skill' pk=skill.id %}"><i
-                    class="im im-edit"></i> Edit</a>
-                <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-skill' pk=skill.id %}?next=/account"><i
-                    class="im im-x-mark-circle-o"></i>
-                  Delete</a>
-              </td>
-            </tr>
-          
-          {% endfor %}
-        
-        </table>
-        
-        <div class="settings">
-          <h3 class="settings__title">Projects</h3>
-          <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create-project' %}"><i
-              class="im im-plus"></i> Add Project</a>
-        </div>
-        
-        <table class="settings__table">
-          {% for project in projects %}
-          
-            <tr>
-              <td class="settings__thumbnail">
-                <a href="{% url 'project' project.owner project.slug %}"><img src="{{project.imageURL}}" alt="Project Thumbnail" /></a>
-              </td>
-              <td class="settings__tableInfo">
-                <a href="{% url 'project' project.owner project.slug %}">{{project.title}}</a>
-                <p>{{project.description|slice:"150"}}</p>
-              </td>
-              <td class="settings__tableActions">
-                <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-project' project.owner project.slug %}"><i
-                    class="im im-edit"></i> Edit</a>
-                <a class="tag tag--pill tag--main settings__btn"
-                  href="{% url 'delete-project' project.owner project.slug %}?next=/account"><i class="im im-x-mark-circle-o"></i>
-                  Delete</a>
-              </td>
-            </tr>
-          
-          {% endfor %}
-        
-        </table>
-      </div>
-      {% endif %}
     </div>
-  </div>
-
-  <div>
-    <p>
-        <a href="{% provider_login_url "github" process="connect" %}">Connect a github account</a>
-    </p>
-    {% comment %} <p><a href="{% provider_login_url "google" process="connect" %}">Connect a Google account</a></p> {% endcomment %}
-  </div>
-</main>
-{% comment %} <script src="{% static 'js/replace.js' %}"></script> {% endcomment %}
+  </main>
 {% endblock %}

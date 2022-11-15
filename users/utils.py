@@ -110,3 +110,8 @@ def searchOpportunities(request):
         Q(weblink__icontains = search_query))
     
     return affiliates, search_query
+
+
+#--------Download----------
+
+

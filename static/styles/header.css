@@ -18,7 +18,7 @@ img {
 width: 100%;
 }
 
-.tag > i.im {
+.tag > i.fa {
 font-size: 1.5rem;
 margin-right: 0.5rem;
 }
@@ -44,7 +44,7 @@ margin: 0 auto;
 
 .header > .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -68,6 +68,7 @@ margin: 0 auto;
 
 .header__menuItem__btn {
   color: var(--columbia-dark-blue);
+  right: 5em;
 }
 
 .toggle-menu > span {
@@ -86,8 +87,16 @@ margin: 0 auto;
 .header__user { 
   display: inline-flex;
   color: var(--color-light) !important;
+  justify-content: flex-start;
   align-items: center;
   padding-left: 1.5rem;
+  margin-right: 8em;
+}
+
+.header__avatar {
+  display: inline-flex;
+  margin-left: -8em;
+  margin-right: 0.75em;
 }
 
 @media screen and (max-width: 800px) {
@@ -166,6 +175,10 @@ margin: 0 auto;
     right: 0;
     background: var(--color-sub);
     transition: all 0.5s ease-in-out;
+  }
+
+  .header__mailCount {
+    color: black !important;
   }
 
   .header__menuItem a {
@@ -268,7 +281,7 @@ input:checked + .round::before {
 
 
 .dark {
-    --main-background: hsl(230, 17%, 14%);
+    --main-background: hsl(210, 20%, 2%);
     --main-font: white;
     --college-blue: var(--columbia-alumni-blue);
 }
@@ -281,21 +294,27 @@ input:checked + .round::before {
 
 body {
     background: var(--main-background);
-    color: var(--main-font);
+    color: var(--main-font);s
 }
 
 input {
   color: #000000 !important;
 }
 
+.card__body {
+  background: var(--color-bg);
+}
+
 .toggle-switch {
+    margin-left: 2em;
+    margin-right: -9.75em;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
 }
-.toggle-switch p {
-    padding: 1em;
+.toggle-switch i {
+    padding: 0 0.25em;
 }
 
 

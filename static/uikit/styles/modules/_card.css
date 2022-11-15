@@ -19,6 +19,8 @@
 
 .card__body,
 .card__header {
+  height: 100%;
+  width: 100%;
   padding: 2rem 2.5rem;
 }
 
