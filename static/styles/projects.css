@@ -82,11 +82,11 @@
 ========================*/
 .projects > .hero-section {
     background: var(--color-sub);
-    height: 30vh;
+    height: 28vh;
 }
 
 .projects .hero-section__box {
-    margin-bottom: 2.5rem;
+    margin-bottom: 4rem;
 }
 
 .projects .hero-section__box > h2 {
@@ -108,8 +108,14 @@
     object-fit: cover;
 }
 
+.project__thumbnail__container {
+    height: 23rem;
+    width: 100%;
+}
+
 .project__thumbnail {
-    height: 25rem;
+    height: 100%;
+    width: 100%;
     object-fit: cover;
     object-position: top center;
 }

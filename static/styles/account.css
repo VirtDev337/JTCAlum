@@ -77,3 +77,46 @@
 .settings__tableActions {
     text-align: right;
 }
+
+
+/*=======================
+    Account Icons
+========================*/
+
+
+.settings a .plus {
+    height: 20%;
+}
+
+
+
+
+/*=======================
+    Account Connections
+========================*/
+
+
+.acct__header1 {
+    display: flex;
+    margin: 0 auto;
+}
+
+.acct__header2 {
+    
+}
+
+.socialaccount_providers {
+    
+}
+
+.acct__providers {
+    
+}
+
+.acct__field_errors {
+    
+}
+
+.acct__paragraph {
+    
+}

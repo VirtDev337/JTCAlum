@@ -1,0 +1,65 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block head_style %}
+    <link id="style-light" rel="stylesheet" href="{% static 'styles/about.css' %}" />
+{% endblock head_style %}
+
+{% block content %}
+<center>
+    <div class="container">
+        <br>
+        <h1> JTCAlum </h1>
+        <br>
+        <p>This project has grown beyond the original idea for a site where <b class="inflection">Columbia Business School's</b> <b class="inflection ital">Justice Through Code</b> students, alumni, teachers, teacher's assistants, partners and affiliates can interact.  It now has influence from two boot-camps: <b class="inflection ital"><a target="_blank" href="https://centerforjustice.columbia.edu/justicethroughcode">Justice Through Code</a></b> and <b class="inflection ital"><a target="_blank" href="https://emergentworks.org/">Emergent Works</a></b>.
+        Students and Alumni are able to create profiles, sharing their journey, skills and plan for their future.  There is a messaging function built into the site allowing direct communication.  They are also provided the ability to post completed and current projects which can be rated by site members.  
+
+        Partners and affiliates are provided the ability to search past, present and future graduates of <b class="inflection ital">JTC</b>.  Organizations are provided the ability to view and message person's of interest without having to look beyond <b class="inflection ital">Justice Through Code</b> for potential affiliations.
+        </p>
+        <br>
+        <div class="section">
+            <h2>Acknowledgements</h2>
+            <br>
+            <div class="section">
+                <p>I started a course taught by <a target="_blank" href="https://www.linkedin.com/in/dennis-ivanov/">Dennis Ivy</a> building a <a target="_blank" href="https://dennisivy.teachable.com/p/django-beginners-course">DevSearch</a> website.  This is what I used as the base for this site.  Affiliates and opportunities were added, as was the GitHub social account integration.  This would have taken much longer to develop had I started from scratch.</p><br>
+                
+                <p><a target="_blank" href="https://www.linkedin.com/in/christopher-linton1/">Christopher Linton</a> was another developer that worked with me in the Justice Through Code on our capstone project.  He was instrumental in adding the functionality of the affiliates and integrating the themes into the site.</p><br>
+                
+                <p><a target="_blank" href="http://sciphi.me/">Phi</a> was my mentor during my time with <a target="_blank" href="https://emergentworks.org/">Emergent Works</a>.  He was the motivation and clarity in the difficult time that this project encompassed.  There were difficulties in the implementation of the GitHub integration.  Phi's experience helped with the direction and focus of where the issues were.  He is an inspiration, one I aspire to emulate in my future.</p><br>
+                
+                <h3>About Me</h3>
+                <div class="personal_section">
+                    <p>My name is <a target="_blank" href="https://www.linkedin.com/in/lee-harvey-jr/">Lee Harvey</a>.  As a developing software engineer I am constantly learning, both in my dream field (IT) as well as in life. Currently I have been learning Linux by self-study and hands on learning, as well as contributing regularly on the Zorin Forum, both as tech support and moderator. I have had the honor of testing an alpha/beta of the next OS release. Technology is my passion and I strive to help others understand, or at least tolerate it, if not love it the way I do.
+
+                    My focus has expanded to include software development and am a graduate of the Justice Through Code Python course through Columbia Business School. This has interested me because of my love of problem solving and helping others in their use of technology. The course has provided the fundamentals of Python3, Django3, HTML5 and CSS3. It has also provided the opportunity to collaborate on projects and experience a professional environment of development.
+                    
+                    Additionally, I have enrolled in Emergent Works.  This organization endeavors to, similarly to JTC, assist individuals in learning to code, in JavaScript.  This has allowed me to experience learning and understanding of the computer science concepts that underly all languages, as well as explore different techniques to recognize and understand the syntaxtual rules of another language.
+                
+                    I hope you enjoyed the experience this site provides.  Of course I am open to suggestions and feedback.  You can reach me at my <a href="mailto:com.virtdev@gmail.com">email</a>.</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <footer class="container__about footer">
+        Icons &nbsp
+        <img src="{% static 'images/icons/icons8-cancel.svg' %}" alt="icon" />
+        <a target="_blank" href="https://icons8.com/icon/43980/cancel">Cancel,</a>
+        <img src="{% static 'images/icons/icons8-linkedin.svg' %}" alt="icon" />
+        <a target="_blank" href="https://icons8.com/icon/44019/linkedin">LinkedIn,</a>
+        <img src="{% static 'images/icons/icons8-twitter.svg' %}" alt="icon" />
+        <a target="_blank" href="https://icons8.com/icon/bYzsf9Bmocst/twitter">Twitter,</a> 
+        <img src="{% static 'images/icons/icons8-edit.svg' %}" alt="icon" />
+        <a target="_blank" href="https://icons8.com/icon/56304/edit">Edit</a>&nbsp;&nbsp;&nbsp;and
+        <img src="{% static 'images/icons/icons8-plus.svg' %}" alt="icon" />
+        <a target="_blank" href="https://icons8.com/icon/44037/plus">Plus</a>&nbsp;&nbsp;icons&nbsp;&nbsp;by <a target="_blank" href="https://icons8.com">&nbsp;&nbsp;Icons8</a>
+    </footer>
+    {% comment %} <div class="container__about">
+        <a target="_blank" href="https://icons8.com/icon/43623/image-file">Image File</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+    </div> {% endcomment %}
+</center>
+{% endblock content %}
+
+<!--(to be returned to the first paragraph once the capability is built in) The projects are integrated into the site, creating sub-sites of the profile they are linked.  This feature provides <b class="inflection ital">JTC</b> students and alumni a place to exhibit their work without requiring the problematic process of deploying individually.-->
+
+<!--color gradient <div data-v-761a6052="" class="gc-item is-active" style="background: linear-gradient(rgb(26, 109, 255) -0.42%, rgb(200, 34, 255) 100.42%); --darkreader-inline-bgcolor: rgba(0, 0, 0, 0); --darkreader-inline-bgimage: linear-gradient(#003aa0 -0.42%, #75009c 100.42%);" data-darkreader-inline-bgcolor="" data-darkreader-inline-bgimage=""></div>-->

@@ -1,36 +1,39 @@
 {% extends 'main.html' %}
 
+{% block head_title %}
+    Profile
+{% endblock %}
+
 {% block content %}
 
-
 <!-- Main Section -->
-<main class="formPage my-xl">
-    <div class="content-box">
-        <div class="formWrapper">
-            <a class="backButton" href="{% url 'account' %}"><i class="im im-angle-left"></i></a>
-            <br>
+    <main class="formPage my-xl">
+        <div class="content-box">
+            <div class="formWrapper">
+                <a class="backButton" href="{% url 'account' %}"><i class="fa fa-angle-left"></i></a>
+                <br>
 
-            <form class="form" method="POST" action="{% url 'edit-account' %}" enctype="multipart/form-data">
-                {% csrf_token %}
+                <form class="form" method="POST" action="{% url 'edit-account' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
 
-                {% for field in form %}
-                    
-                    {% if field.label == "Profile_Image" or field.label == "Profile_Type" %}
-                        <label for="formInput#text">{{field.label}}</label>
-                        {{field}}
-                    {% else %}
-                        <div class="form__field">
+                    {% for field in form %}
+                        
+                        {% if field.label == "Profile_Image" or field.label == "Profile_Type" %}
+                            <label for="formInput#text">{{field.label}}</label>
                             {{field}}
-                        </div>
-                    {% endif %}
+                        {% else %}
+                            <div class="form__field">
+                                {{field}}
+                            </div>
+                        {% endif %}
 
-                {% endfor %}
+                    {% endfor %}
 
-                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
-            </form>
+                    <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+                </form>
+            </div>
         </div>
-    </div>
-</main>
+    </main>
 
 {% endblock content %}
 <script>
@@ -46,15 +49,12 @@
     }
 
 
-
     // this is executed once when the page loads
     $(document).ready(function() {
-
         // set things up so my function will be called when field_three changes
         $('#field_three').change( function() {
             check_field_value(this.value);
         });
-
     });
 
 </script>

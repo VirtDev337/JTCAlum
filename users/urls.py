@@ -6,14 +6,15 @@ urlpatterns = [
     path('login/', views.loginUser, name = "login"),
     path('logout/', views.logoutUser, name = "logout"),
     path('register/', views.registerUser, name = "register"),
+    path('about/', views.about, name = "about"),
     
     path('', views.profiles, name = "profiles"),
     path('profile/<str:slug>/', views.userProfile, name = "user-profile"),
     path('account/', views.userAccount, name = "account"),
     path('account/update', views.editAccount, name = "edit-account"),
     
-    path('affiliates/', views.affiliates, name='affiliates'),
-    path('affiliate/profile/<str:slug>/', views.affiliateProfile, name='affiliate-profile'),
+    path('affiliates/', views.affiliates, name = "affiliates"),
+    path('affiliate/profile/<str:slug>/', views.affiliateProfile, name = "affiliate-profile"),
 
 
     path('skill/create/', views.createSkill, name = "create-skill"),

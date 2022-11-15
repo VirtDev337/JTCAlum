@@ -22,9 +22,9 @@
 
 .messages {
     list-style: none;
-    background: var(--columbia-alumni-blue);
+    background: var(--color-white);
     padding: 0.5rem 3rem;
-    border: 2px solid var(--columbia-dark-blue);
+    border: 2px solid var(--color-white-light);
     border-radius: 0.7rem;
 }
 
@@ -78,9 +78,9 @@
 
 .messagePage .message {
     list-style: none;
-    background: var(--columbia-alumni-blue);
+    background: var(--color-white);
     padding: 3.5rem 5rem;
-    border: 2px solid var(--columbia-dark-blue);
+    border: 2px solid var(--color-white-light);
     border-radius: 0.7rem;
     color:hsl(230, 17%, 14%);
 }
@@ -121,7 +121,12 @@
     border-radius: 50%;
 }
 
-.backButton i {
-    margin-top: 1rem;
-    font-size: 2.5rem;
+.backButton.msgBack i {
+    margin: 4px 12px;
+    font-size: 3.5rem;
+}
+
+.inboxBack {
+    margin: 9px 15px;
+    font-size: 3.5rem;
 }

@@ -1,4 +1,13 @@
 {% extends 'main.html' %}
+{% load static %}
+
+{% block head_style %}
+    <link id="style-light" rel="stylesheet" href="{% static 'styles/projects.css' %}" />
+{% endblock head_style %}
+
+{% block head_title %}
+    {{project.title}}
+{% endblock %}
 
 {% block content %}
 
@@ -25,16 +34,16 @@
                         {% if project.source_link %}
                             <span class="link">
                                 <a class="singleProject__liveLink" href="{{project.source_link}}" target="_blank">
-                                    <i class="im im-external-link"></i>
+                                    <i class="fa fa-external-link"></i>
                                     Source Code
                                 </a>
                             </span>
                         {% endif %}
-                        
+{% comment %}                         
                         {% if project.demo %}
                             <span class="link">
                                 <a class="singleProject__liveLink" href="{% host_url 'demo' host '{{project.owner}}/{{project.slug}}/demo' %}" target="_blank">
-                                    <i class="im im-external-link"></i>
+                                    <i class="fa fa-external-link"></i>
                                     Live Demo
                                 </a>
                             </span>
@@ -43,7 +52,7 @@
                                     <input class="project btn btn--sub" type="button" value="Configure" />
                                 </a>
                             {% endif %}
-                        {% endif %}
+                        {% endif %} {% endcomment %}
                     </span>
                 </div>
                 <div class="comments">

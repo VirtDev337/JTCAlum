@@ -32,7 +32,7 @@ def loginUser(request):
         user = authenticate(request, username = username, password = password)
         
         if user is not None:
-            login(request, user)
+            login(request, user, backend = 'django.contrib.auth.backends.ModelBackend')
             return redirect(request.GET['next'] if 'next' in request.GET else 'account')
         
         else:
@@ -63,7 +63,7 @@ def registerUser(request):
             
             messages.success(request, 'User account was created!')
             
-            login(request, user)
+            login(request, user, backend = 'django.contrib.auth.backends.ModelBackend')
             return redirect('edit-account')
         
         else:
@@ -83,6 +83,9 @@ def profiles(request):
                 'custom_range': custom_range}
     return render(request, 'users/profiles.html', context)
 
+
+def about(request):
+    return render(request, 'users/about.html')
 
 def userProfile(request, slug):
     profile = Profile.objects.get(slug = slug)

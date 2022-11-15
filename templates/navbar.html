@@ -2,9 +2,17 @@
 <!-- Header Section -->
 <header class="header">
     <div class="container container--narrow">
-        <a href="{% url 'profiles' %}" class="header__logo">
-        <img src="{% static 'images/jtc-long-logo.jpeg' %} " alt="JTCAlumn Logo" />
-        </a>
+        {% comment %} <a href="{% url 'profiles' %}" class="header__logo">
+        <img src="{% static 'images/icons/jtc-long-logo.jpeg' %} " alt="JTCAlumn Logo" />
+        </a> {% endcomment %}
+        {% if request.user.id != None %}
+            <span class="header__user">
+                {% if request.user.profile.imageURL %}
+                    <img class="avatar avatar--sm header__avatar" src="{{ request.user.profile.imageURL }}"></img>
+                {% endif %}
+                <h5>{{ request.user.username }}</h5>
+            </span>
+        {% endif %}
         <nav class="header__nav">
             <input type="checkbox" id="responsive-menu" />
             
@@ -14,6 +22,7 @@
             </label>
             
             <ul class="header__menu">
+                <li class="header__menuItem"><a href="{% url 'about' %}">About Us</a></li>
                 <li class="header__menuItem"><a href="{% url 'profiles' %}">Developers</a></li>
                 <li class="header__menuItem"><a href="{% url 'projects' %}">Projects</a></li>
                 <li class="header__menuItem"><a href="{% url 'affiliates' %}">Affiliates</a></li>
@@ -26,7 +35,7 @@
                         </li>
                     {% elif unreadCount != None %}
                         <li class="header__menuItem">
-                            <a href="{% url 'inbox' request.user.profile.slug %}">Inbox&nbsp;<span>({{unreadCount}})</span></a>
+                            <a href="{% url 'inbox' request.user.profile.slug %}">Inbox&nbsp;<span class="header__mailCount">({{ unreadCount }})</span></a>
                         </li>
                     {% endif %}
                     <li class="header__menuItem"><a href="{% url 'account' %}">Account</a></li>
@@ -36,34 +45,20 @@
                 {% endif %}
             </ul>
         </nav>
-        {% comment %} <a href="{{ request.GET.next }}" class="header">
-            <div id="theme-options-wrapper">
-                <div data-mode="light" id="light-mode" class="theme-dot"></div>
-                <div data-mode="dark" id="dark-mode" class="theme-dot"></div>
-            </div>
-        </a> {% endcomment %}
-
-
-
-        {% comment %} {% if request.user.id != None %}
-            <span class="header__user">
-                <h5>{{ request.user }}</h5>
-            </span>
-        {% endif %} {% endcomment %}
-
-
 
 {% comment %} **************************** from https://dev.to/mritunjaysaha/theme-switching-using-local-storage-13i {% endcomment %}
         <div class="toggle-switch">
             <span>    
                 <i class="fas fa-moon"></i>           
                 <label class="switch">
-                    <input id="theme-switch" type="checkbox"> 
-                    <div class="slider round"></div>
+                <input id="theme-switch" type="checkbox"> 
+                <div class="slider round"></div>
                 </label>
                 <i class="fas fa-sun"></i>
             </span>
         </div>
+
+        
         <script src="{% static 'js/theme.js' %}"></script>
 </header>
 
