@@ -92,3 +92,23 @@
         flex-basis: 80%;
     }
 }
+
+#id_profile_type {
+    flex-direction: row;
+    justify-content: start;
+    align-content: top;
+}
+
+#id_profile_type > div { 
+    display: flex;
+}
+
+#id_profile_type > div > label {
+    margin-left: 2em;
+    margin-top: 1.5em;
+}
+
+#id_profile_type > div #id_profile_type_1 {
+    margin-left: 6em;
+    margin-top: -5em;
+}

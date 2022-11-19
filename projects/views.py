@@ -7,6 +7,7 @@ from .models import Project, Tag
 from .forms import ProjectForm, ReviewForm, DemoForm, SiteForm
 from .utils import searchProjects, paginateProjects
 # from jtcalumn.decorators import unread_count
+import json
 
 
 # @unread_count()
@@ -43,7 +44,9 @@ def project(request, owner, slug):
 def createProject(request):
     profile = request.user.profile
     form = ProjectForm()
-
+    if profile.github_repos:
+        repos = json.loads(profile.github_repos)
+    
     if request.method == 'POST':
         newtags = request.POST.get('newtags').replace(',',  " ").split()
         form = ProjectForm(request.POST, request.FILES)
@@ -51,12 +54,12 @@ def createProject(request):
             project = form.save(commit = False)
             project.owner = profile
             project.save()
-
+            
             for tag in newtags:
                 tag, created = Tag.objects.get_or_create(name = tag)
                 project.tags.add(tag)
             return redirect('account')
-
+    
     context = {'form': form}
     return render(request, "projects/project_form.html", context)
 
@@ -91,23 +94,23 @@ def updateProject(request, owner, slug):
                     tag, created = Tag.objects.get_or_create(name = tag)
                     project.tags.add(tag)
             
-            if project.demo and not project.demo_set:
-                return redirect('demo-conf', project.owner, project.slug)
+            # if project.demo and not project.demo_set:
+            #     return redirect('demo-conf', project.owner, project.slug)
             
-            if not project.demo and project.demo_set or project.site_name != '': 
-                project.remove_config()
-                project.demo_set = False
-                project.site_name = ""
-                project.project_path = ""
-                project.site_path = ""
-                project.site.delete()
+            # if not project.demo and project.demo_set or project.site_name != '': 
+                # project.remove_config()
+                # project.demo_set = False
+                # project.site_name = ""
+                # project.project_path = ""
+                # project.site_path = ""
+                # project.site.delete()
                 
-                Project.objects.filter(id = project.id).update(
-                    demo_set = project.demo_set,  
-                    site_name = project.site_name, 
-                    project_directory = project.project_directory, 
-                    site_path = project.site_path
-                )
+                # Project.objects.filter(id = project.id).update(
+                #     demo_set = project.demo_set,  
+                #     site_name = project.site_name, 
+                #     project_directory = project.project_directory, 
+                #     site_path = project.site_path
+                # )
             
             return redirect('account')
 

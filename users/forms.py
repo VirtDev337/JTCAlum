@@ -33,19 +33,25 @@ class CustomUserCreationForm(UserCreationForm):
 class ProfileForm(ModelForm):
     # radio buttons to choose profile type
     PROFILE_CHOICES = [('alum','JTC Alum'),('affiliate','Affiliate Organization')]
+    
     profile_type = forms.CharField(label = 'Profile Type', required = True, widget = forms.RadioSelect(choices = PROFILE_CHOICES))
+    github_update = forms.BooleanField(widget = forms.CheckboxInput())
+    
     
     class Meta:
         model = Profile
         
-        fields = ['name', 'email', 'username', 'location', 'profile_type', 'bio', 'short_intro', 'organization_name', 'profile_image']
+        fields = ['name', 'email', 'username', 'location', 'profile_type', 'github_update', 'bio', 'short_intro', 'organization_name', 'profile_image']
     
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
-        
+        cnt = 0
         for name, field in self.fields.items():
             if 'profile_type' == field:
+                cnt += 1;
                 field.widget.attrs.update({'placeholder': field.label, 'class': 'input radio'})
+            elif 'github_update' == field:
+                field.widget.attrs.update({'class': 'input'})
             else:
                 field.widget.attrs.update({'placeholder': field.label, 'class': 'input'})
             
@@ -87,6 +93,7 @@ class SocialForm(ModelForm):
         
         for name, field in self.fields.items():
             field.widget.attrs.update({'placeholder': field.label, 'class': 'input'})
+
 
 class OpportunityForm(ModelForm):    
     class Meta:

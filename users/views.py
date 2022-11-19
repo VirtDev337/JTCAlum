@@ -12,7 +12,11 @@ from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm, 
 from .utils import searchProfiles, paginateProfiles, searchAffiliates, paginateAffiliates, searchOpportunities
 from datetime import datetime, timedelta
 from django.conf import settings
+from django.http import JsonResponse
 # from jtcalumn.decorators import unread_count
+import requests, ast, json, re
+from django.forms.models import model_to_dict
+
 
 def loginUser(request):
     page = 'login'
@@ -80,7 +84,8 @@ def profiles(request):
     custom_range, profiles = paginateProfiles(request, profiles, 3)
     context = {'profiles': profiles, 
                 'search_query': search_query,
-                'custom_range': custom_range}
+                'custom_range': custom_range
+            }
     return render(request, 'users/profiles.html', context)
 
 
@@ -97,7 +102,8 @@ def userProfile(request, slug):
     context = {'profile': profile, 
                 'topSkills': topSkills,
                 'otherSkills': otherSkills, 
-                'social': social}
+                'social': social
+            }
     return render(request, 'users/user-profile.html', context)
 
 
@@ -108,7 +114,8 @@ def affiliates(request):
 
     context = {'profiles': profiles, 
                 'search_query': search_query, 
-                'custom_range': custom_range}
+                'custom_range': custom_range
+            }
     return render(request=request, template_name="users/affiliates.html", context=context)
 
 
@@ -144,6 +151,9 @@ def editAccount(request):
     else:
         del form.fields['short_intro']
     
+    if profile.user.socialaccount_set and profile.github_update:
+        avatar, extra, repos = getGithubData(profile)
+    
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, profile)
         if form.is_valid():
@@ -153,6 +163,7 @@ def editAccount(request):
             location = form.cleaned_data['location']
             profile_type = form.cleaned_data['profile_type']
             bio = form.cleaned_data['bio']
+            update = form.cleaned_data['github_update']
             
             if profile.profile_type == 'alum':
                 short_intro = form.cleaned_data['short_intro']
@@ -160,7 +171,23 @@ def editAccount(request):
                 organization_name = form.cleaned_data['organization_name']
             
             profile_set = Profile.objects.filter(id = profile.id)
-            profile_set.update(name = name, username = username, email = email, bio = bio, location = location, profile_type = profile_type)
+            profile_set.update(
+                name = name, 
+                username = username, 
+                email = email, 
+                bio = bio, 
+                location = location, 
+                profile_type = profile_type,
+                github_update = update
+            )
+            
+            if profile.github_update:
+                profile_set.update(
+                    github_update = False, 
+                    github_avatar = avatar, 
+                    github_extra = JsonResponse(extra), 
+                    github_repos = JsonResponse(repos)
+                )
             
             if profile.profile_type == 'alum':
                 profile_set.update(short_intro = short_intro)
@@ -169,7 +196,7 @@ def editAccount(request):
             
             return redirect('account')
     
-    context = {'form': form}
+    context = {'form': form, 'profile': profile}
     return render(request, 'users/profile_form.html', context)
 
 
@@ -185,7 +212,10 @@ def createSkill(request):
         if form.is_valid():
             skill = form.save(commit = False)
             skill.owner = profile
-            skills = Skill.objects.filter(owner = skill.owner, name__icontains = skill.name)
+            skills = Skill.objects.filter(
+                        owner = skill.owner, 
+                        name__icontains = skill.name
+                    )
             
             for ability in skills:
                 if skill.name == ability.name or skill.name.lower() == ability.name.lower():
@@ -406,7 +436,7 @@ def opportunityBoard(request):
                 'opportunities': opportunities,
                 'search_query': search_query, 
                 'read': read,
-            }
+    }
     
     return render(request, 'users/opportunity_board.html', context)
 
@@ -486,3 +516,36 @@ def deleteOpportunity(request, pk):
     
     context = {'object': opportunity}
     return render(request, 'delete_template.html', context)
+
+
+def extraObjToDict(obj):
+    array = ['login', 'avatar_url', 'html_url', 'repos_url', 'location', 'bio']
+    tmp_dict = {}
+    for item in array:
+        tmp_dict[item] = obj[item]
+    return tmp_dict
+
+
+def convertData(data): 
+    repos_keys = ['name', 'full_name', 'html_url', 'description', 'clone_url', 'language', ]
+    api_data = (data)
+    array = []
+    repo = {}
+    for item in api_data:
+        print(f'{item}\n')
+        for key in repos_keys:
+            print(f'{key}\n')
+            if key == 'language':
+                repo[key] = item[key]
+                array.append(repo)
+                repo = {}
+            else:
+                repo[key] = item[key]
+    return array
+
+
+def getGithubData(user_profile):
+    image = requests.get(user_profile.user.socialaccount_set.all()[0].get_avatar_url()).content
+    extra = extraObjToDict(user_profile.user.socialaccount_set.all()[0].extra_data)
+    repos = convertData((user_profile.get(extra['repos_url'])).json())
+    return image, extra, repos

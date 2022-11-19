@@ -284,12 +284,16 @@ input:checked + .round::before {
     --main-background: hsl(210, 20%, 2%);
     --main-font: white;
     --college-blue: var(--columbia-alumni-blue);
+    --github-mark: url("../images/icons/GitHub-Mark-Light.png");
+    --github-logo: url("../images/icons/GitHub-Logo-White.svg");
 }
 
 .light {
     --main-background: white;
     --main-font: hsl(230, 17%, 14%);
     --college-blue: var(--columbia-dark-blue);
+    --github-mark: url("../images/icons/GitHub-Mark.png");
+    --github-logo: url("../images/icons/GitHub-Logo.svg");
 }
 
 body {

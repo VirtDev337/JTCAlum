@@ -11,17 +11,31 @@ p {
     font-size: 1.3em;
 }
 
-.container__about img {
-    height: 40px;
-    width: 40px;
-    margin: 0 0.5em;
-    padding: 0;
-}
-
 .container__about > a {
     margin-top: 1.75rem;
 }
 
 .ital {
     font-style: italic;
+}
+
+.section__about {
+    width: 100%;
+    margin: -0.5em auto;
+    margin-bottom: 2em;
+}
+
+.ack_links {
+    margin-top: 0em;
+    font-size: 48px;
+    text-align: center;
+}
+
+.ack_links img {
+    width: 32px !important;
+}
+
+.donation {
+    margin: -1.75em auto;
+    font-size: 1.3em;
 }

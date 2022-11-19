@@ -21,9 +21,10 @@
         <div class="column column--1of3">
           <div class="card text-center">
             <div class="card__body dev">
-              
-              <a class="tag tag--pill tag--main settings__btn" href="{% url 'edit-account' %}"><i class="fa fa-edit"></i>
-                Edit</a>
+              <a class="tag tag--pill tag--main settings__btn" href="{% url 'edit-account' %}">
+                <img src="{% static 'images/icons/icons8-edit.svg' %}" alt="edit" />
+                &nbsp;Edit
+              </a>
               <img class="avatar avatar--xl dev__avatar" src="{{profile.imageURL}}" />
               {% if profile.organization_name %}
                 <h2 class="dev__organization">{{profile.organization_name}}</h2>
@@ -35,6 +36,16 @@
             </div>
           </div>
           
+          {% if not request.user.socialaccount_set %}
+            <div class="settings__soc__connect">
+              <p>
+                  <a href="{% provider_login_url 'github' process='connect' %}">
+                    <img class="github_mark_image" alt="github" />
+                  &nbsp;Connect a github account</a>
+              </p>
+            </div>
+          {% endif %}
+          
           <div class="dev__social">
             
             <table class="settings__table">
@@ -42,11 +53,17 @@
                 
                 {% for site in social %}
                 
-                  <td class="settings__tableSocInfo">
-                    <a title="{{site.name | title}}" href="{{site.url}}" target="_blank"><i class="{{site.css}} icon"></i></a>
+                  <td class="settings__tableInfo settings__soc__sites">
+                    <a title="{{site.name | title}}" href="{{site.url}}" target="_blank">
+                      <i class="{{site.css}} icon"></i>
+                    </a>
                     <div class="sites">
-                      <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-site' pk=site.id %}"><i class="fa fa-edit"></i></a>
-                      <a id="tag" class="tag tag--pill tag--main settings__btn" href="{% url 'delete-site' pk=site.id %}?next=/account"><i class="fa fa-window-close"></i></a>
+                      <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-site' pk=site.id %}">
+                        <img src="{% static 'images/icons/icons8-edit.svg' %}" alt="edit" />
+                      </a>
+                      <a id="tag" class="tag tag--pill tag--main settings__btn" href="{% url 'delete-site' pk=site.id %}?next=/account">
+                        <img src="{% static 'images/icons/icons8-cancel.svg' %}" alt="delete" />
+                      </a>
                     </div>
                   </td>
                   
@@ -54,13 +71,13 @@
               
               </tr>
             </table>
-              <a class="settings__btn__site" href="{% url 'create-site' %}"><i class="fa fa-plus"></i> Add Site</a>
-              <div>
-                <p>
-                    <a href="{% provider_login_url 'github' process='connect' %}">Connect a github account</a>
-                </p>
-              </div>
           </div>
+          <a class="tag tag--pill tag--sub settings__btn tag--md add_img add_social" href="{% url 'create-site' %}">
+            <img src="{% static 'images/icons/icons8-plus.svg' %}" alt="add" />
+            <label>
+              &nbsp;Add Site
+            </label>
+          </a>
         </div>
         
         {% if profile.profile_type == 'affiliate' %}
@@ -79,8 +96,9 @@
           </div>
           <div class="settings">
             <h3 class="settings__title">Skills</h3>
-            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create-skill' %}"><i
-                class="fa fa-plus"></i> Add Skill</a>
+            <a class="tag tag--pill tag--sub settings__btn tag--md add_img" href="{% url 'create-skill' %}">
+              <img src="{% static 'images/icons/icons8-plus.svg' %}" alt="add" />&nbsp;Add Skill
+            </a>
           </div>
           
           <table class="settings__table">
@@ -95,11 +113,12 @@
                   </p>
                 </td>
                 <td class="settings__tableActions">
-                  <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-skill' pk=skill.id %}"><i
-                      class="fa fa-edit"></i><img src="{% static 'images/icons/icons8-edit.svg'}" />Edit</a>
-                  <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-skill' pk=skill.id %}?next=/account"><i
-                      class="fab fa-window-close"></i>
-                    Delete</a>
+                  <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-skill' pk=skill.id %}">
+                    <img src="{% static 'images/icons/icons8-edit.svg' %}" alt="edit" />&nbsp;Edit
+                  </a>
+                  <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-skill' pk=skill.id %}?next=/account">
+                    <img src="{% static 'images/icons/icons8-cancel.svg' %}" alt="delete" />&nbsp;Delete
+                  </a>
                 </td>
               </tr>
             
@@ -109,8 +128,9 @@
           
           <div class="settings">
             <h3 class="settings__title">Projects</h3>
-            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create-project' %}"><i
-                class="fa fa-plus"></i> Add Project</a>
+            <a class="tag tag--pill tag--sub settings__btn tag--lg add_img" href="{% url 'create-project' %}">
+              <img src="{% static 'images/icons/icons8-plus.svg' %}" alt="add" />&nbsp;Add Project
+            </a>
           </div>
           
           <table class="settings__table">
@@ -118,18 +138,22 @@
             
               <tr>
                 <td class="settings__thumbnail">
-                  <a href="{% url 'project' project.owner project.slug %}"><img src="{{project.imageURL}}" alt="Project Thumbnail" /></a>
+                  <a href="{% url 'project' project.owner project.slug %}">
+                    <img src="{{project.imageURL}}" alt="Project Thumbnail" />
+                  </a>
                 </td>
-                <td class="settings__tableInfo">
+                <td class="settings__tableInfo settings__project">
                   <a href="{% url 'project' project.owner project.slug %}">{{project.title}}</a>
                   <p>{{project.description|slice:"150"}}</p>
                 </td>
                 <td class="settings__tableActions">
-                  <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-project' project.owner project.slug %}"><i
-                      class="fa fa-edit"></i> Edit</a>
+                  <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-project' project.owner project.slug %}">
+                    <img src="{% static 'images/icons/icons8-edit.svg' %}" alt="edit" />&nbsp;Edit
+                  </a>
                   <a class="tag tag--pill tag--main settings__btn"
-                    href="{% url 'delete-project' project.owner project.slug %}?next=/account"><i class="fa fa-window-close"></i>
-                    Delete</a>
+                    href="{% url 'delete-project' project.owner project.slug %}?next=/account">
+                    <img src="{% static 'images/icons/icons8-cancel.svg' %}" alt="delete" />&nbsp;Delete
+                  </a>
                 </td>
               </tr>
             

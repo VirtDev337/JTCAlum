@@ -17,22 +17,25 @@
                 {% csrf_token %}
                 
                 {% for field in form %}
+
+                {% if field.label != "Demo" %}
                 <!-- Input:Text -->
                 <div class="form__field">
-                    {% if field.label == "Featured image" or field.label == "Demo" %}
+                    {% if field.label == "Featured image" and field.label == "Demo" %}
                         <label for="formInput#text">{{field.label}}&nbsp;</label>
                     {% endif %}
                     {{field}}
                     {% if field.label == "Demo" %}
-                        <label for="formInput#hint"><span id="demo-option"><i>&nbsp;(This allows you to display your project as a subdomain of this site.  Please do not choose this if you have already published your site online.  Use the Demo Url.)</i></span></label>
+                        <label hidden style="display: none;" for="formInput#hint"><span id="demo-option"><i>&nbsp;(This allows you to display your project as a subdomain of this site.  Please do not choose this if you have already published your site online.  Use the Demo Url.)</i></span></label>
                         
                         {% if project.demo and project.demo_set %}
-                            <a href="{% url 'demo-conf' project.owner project.slug %}">
+                            <a hidden style="display: none;" href="{% url 'demo-conf' project.owner project.slug %}">
                                 <input class="project btn btn--sub" type="button" value="Configure" />
                             </a>
                         {% endif %}
                     {% endif %}
                 </div>
+                {% endif %}
                 {% endfor %}
                 
                 <div class="form__field">
@@ -48,6 +51,11 @@
                 <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
             </form>
         </div>
+        {% if profile.github_repos != None %}
+            <div class="repo-container">
+                
+            </div>
+        {% endif %}
     </div>
 </main>
 
