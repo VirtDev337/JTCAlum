@@ -20,7 +20,7 @@
                         <p class="dev__location">Based in {{profile.location}}</p>
                         <ul class="dev__social">
                             
-                            <li class="settings__tableInfo">
+                            <li class="settings__tableInfo site__link">
                                 {% for site in social %}
                                     <a title="{{site.name | title}}" href="{{site.url}}" target="_blank"><i class="fab {{site.css}}"></i></a>
                                 {% endfor %}

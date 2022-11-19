@@ -3,21 +3,30 @@
 ========================*/
 
 .settingsPage .dev > .settings__btn {
-    display: inline-block;
-    margin-bottom: 3rem;
+    display: flex;
+    margin: 0 auto 3rem;
     color: var(--columbia-dark-blue);
 }
 
-.settingsPage .settings__btn__site {
-    display: inline-block;
-    margin: 5rem auto;
-    color: var(--college-blue);
+.card__body.dev {
+    align-items: center;
+    justify-content: center;
+}
+
+.card__body.dev > a {
+    font-size: 1.1em;
+    margin: 0 1em;
+}
+
+.card__body.dev > a > img {
+    width: 32px;
 }
 
 .settings {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 1.5em auto;
 }
 
 .settings__title {
@@ -27,19 +36,45 @@
     color: var(--college-blue);
 }
 
-.settings__table {
-    margin-top: 3rem;
-    margin-bottom: 5rem;
-    padding: 0 3rem;
-    background: var(--color-white);
-}
-
-.settings__table tr {
+.dev__scocial {
     width: 100%;
 }
 
+.settings__soc__connect {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: inherit;
+    margin: 2em auto;
+}
+
+.settings__table {
+    background: var(--color-white);
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings__table tr {
+    flex-direction: row;
+    width: inherit;
+    margin: 0 auto;
+}
+
 .settings__table tr > td {
-    padding: 2rem 0;
+    padding: 1rem 0.5rem;
+    width: fit-content;
+    /* margin-left: 0.5rem; */
+}
+
+.settings__table tr > td.settings__soc__sites {
+    display: inline-flex;
+    width: auto;
+}
+
+.settings__table tr > td.settings__soc__sites > a {
+    margin: 0 auto;
 }
 
 .settings__table tr:not(:last-child) td {
@@ -58,16 +93,70 @@
 }
 
 .settings__tableInfo{
-    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    flex-gap: 0.5rem;
+    flex-wrap: wrap;
+    width: inherit;
 }
 
-.settings__tableInfo h4,
-.settings__tableInfo a {
+.settings__tableInfo h4 {
     padding-right: 1rem;
     width: auto;
     font-size: 1.6rem;
     font-weight: 500;
     color: var(--color-sub);
+}
+
+.settings__tableInfo a {
+    display: inline-block;
+    margin: 0 auto;
+    padding-right: 1rem;
+    width: auto;
+    font-size: 3rem;
+    font-weight: 500;
+    color: var(--color-sub);
+}
+
+.settings__project p {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.settings__tableInfo .icon {
+    font-size: 5rem;
+}
+
+.settings__soc__sites {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.settings__soc__sites > a {
+    display: inline-flex;
+    width: fit-content;
+}
+
+.settings__tableInfo > a {
+}
+
+.sites {
+    display: inline-flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.sites a > img {
+    width: 16px;
+}
+
+.sites .tag--pill { 
+    padding: 0 10px;
+    margin-top: 0.25rem;
+    margin-left: -0.5rem;
+    margin-right: 0.75rem;
 }
 
 .settings__tableInfo p {
@@ -78,17 +167,35 @@
     text-align: right;
 }
 
+.settings__tableActions img {
+    width: 32px;
+}
+
 
 /*=======================
     Account Icons
 ========================*/
 
-
-.settings a .plus {
-    height: 20%;
+.add_img {
+    font-size: 1em;
+    bottom: 5em;
 }
 
+.add_img.add_social {
+    margin: -2rem auto;
+    font-size: 1.1em;
+    line-height: 2em;
+}
 
+.add_img > img {
+    display: inline-block;
+    width: 40px;
+}
+
+.github_mark_image {
+    content: var(--github-mark);
+    width: 32px;
+}
 
 
 /*=======================

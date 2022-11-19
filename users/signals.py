@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
+import requests
 
 from .models import Profile
 
@@ -18,6 +19,9 @@ def createProfile(sender, instance, created, **kwargs):
             email = user.email,
             name = user.first_name,
         )
+        
+        if user.socialaccount_set:
+            profile.github_update = True
 
         subject = 'Welcome to DevSearch'
         message = 'We are glad you are here!'
@@ -40,6 +44,9 @@ def updateUser(sender, instance, created, **kwargs):
         user.username = profile.username
         user.email = profile.email
         user.save()
+    
+    if user.socialaccount_set:
+        profile.github_update = True
 
 
 def deleteUser(sender, instance, **kwargs):

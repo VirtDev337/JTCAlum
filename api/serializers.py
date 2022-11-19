@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from projects.models import Project, Tag, Review
-from users.models import Profile, Opportunity
+from users.models import Profile, Opportunity # GitAccount
+from django.contrib.auth.models import User
+from allauth.socialaccount.models import SocialAccount
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -19,7 +21,6 @@ class OpportunitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Opportunity
         fields = '__all__'
-
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -47,3 +48,10 @@ class AffiliateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
+
+
+class SocialAccountExtraDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SocialAccount
+        fields = ["extra_data"]
+        depth = 1

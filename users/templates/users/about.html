@@ -4,6 +4,9 @@
 {% block head_style %}
     <link id="style-light" rel="stylesheet" href="{% static 'styles/about.css' %}" />
 {% endblock head_style %}
+{% block head_title %}
+    About
+{% endblock %}
 
 {% block content %}
 <center>
@@ -26,6 +29,37 @@
                 <p><a target="_blank" href="https://www.linkedin.com/in/christopher-linton1/">Christopher Linton</a> was another developer that worked with me in the Justice Through Code on our capstone project.  He was instrumental in adding the functionality of the affiliates and integrating the themes into the site.</p><br>
                 
                 <p><a target="_blank" href="http://sciphi.me/">Phi</a> was my mentor during my time with <a target="_blank" href="https://emergentworks.org/">Emergent Works</a>.  He was the motivation and clarity in the difficult time that this project encompassed.  There were difficulties in the implementation of the GitHub integration.  Phi's experience helped with the direction and focus of where the issues were.  He is an inspiration, one I aspire to emulate in my future.</p><br>
+
+                <div class="section__about">
+                    <div class="ack_links">
+                        <span>Icons &nbsp;</span>
+                        <a target="_blank" href="https://icons8.com/icon/43980/cancel">
+                            <img src="{% static 'images/icons/icons8-cancel.svg' %}" alt="icon" />
+                            <span>Cancel,</span>
+                        </a>
+                        <a target="_blank" href="https://icons8.com/icon/44019/linkedin">
+                            <img src="{% static 'images/icons/icons8-linkedin.svg' %}" alt="icon" />
+                            <span>LinkedIn,</span>
+                        </a>
+                        <a target="_blank" href="https://icons8.com/icon/bYzsf9Bmocst/twitter">
+                            <img src="{% static 'images/icons/icons8-twitter.svg' %}" alt="icon" />
+                            <span>Twitter,</span>
+                        </a> 
+                        <a target="_blank" href="https://icons8.com/icon/56304/edit">
+                            <img src="{% static 'images/icons/icons8-edit.svg' %}" alt="icon" />
+                            <span>Edit</span>
+                        </a>
+                        <span>&nbsp;&nbsp;&nbsp;and</span>
+                        <a target="_blank" href="https://icons8.com/icon/44037/plus">
+                            <img src="{% static 'images/icons/icons8-plus.svg' %}" alt="icon" />
+                            <span>Plus</span>
+                        </a>
+                        <span>&nbsp;&nbsp;icons&nbsp;&nbsp;by</span> 
+                        <a target="_blank" href="https://icons8.com">
+                            <span>&nbsp;&nbsp;Icons8</span>
+                        </a>
+                    </div>
+                </div>
                 
                 <h3>About Me</h3>
                 <div class="personal_section">
@@ -38,26 +72,22 @@
                     I hope you enjoyed the experience this site provides.  Of course I am open to suggestions and feedback.  You can reach me at my <a href="mailto:com.virtdev@gmail.com">email</a>.</p>
                 </div>
             </div>
-            
         </div>
     </div>
-    <footer class="container__about footer">
-        Icons &nbsp
-        <img src="{% static 'images/icons/icons8-cancel.svg' %}" alt="icon" />
-        <a target="_blank" href="https://icons8.com/icon/43980/cancel">Cancel,</a>
-        <img src="{% static 'images/icons/icons8-linkedin.svg' %}" alt="icon" />
-        <a target="_blank" href="https://icons8.com/icon/44019/linkedin">LinkedIn,</a>
-        <img src="{% static 'images/icons/icons8-twitter.svg' %}" alt="icon" />
-        <a target="_blank" href="https://icons8.com/icon/bYzsf9Bmocst/twitter">Twitter,</a> 
-        <img src="{% static 'images/icons/icons8-edit.svg' %}" alt="icon" />
-        <a target="_blank" href="https://icons8.com/icon/56304/edit">Edit</a>&nbsp;&nbsp;&nbsp;and
-        <img src="{% static 'images/icons/icons8-plus.svg' %}" alt="icon" />
-        <a target="_blank" href="https://icons8.com/icon/44037/plus">Plus</a>&nbsp;&nbsp;icons&nbsp;&nbsp;by <a target="_blank" href="https://icons8.com">&nbsp;&nbsp;Icons8</a>
-    </footer>
+</center>
+
+<footer class="container__about footer">
+        <div class="donation">
+            <a target="_blank" href="https://cash.app/$LeeHarveyJr">
+                <button class="btn btn--sub btn--md">
+                    <label>Donations by Ca$hApp</label>
+                </button>
+            </a>
+        </div>
+</footer>
     {% comment %} <div class="container__about">
         <a target="_blank" href="https://icons8.com/icon/43623/image-file">Image File</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
     </div> {% endcomment %}
-</center>
 {% endblock content %}
 
 <!--(to be returned to the first paragraph once the capability is built in) The projects are integrated into the site, creating sub-sites of the profile they are linked.  This feature provides <b class="inflection ital">JTC</b> students and alumni a place to exhibit their work without requiring the problematic process of deploying individually.-->

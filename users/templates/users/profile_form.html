@@ -18,9 +18,21 @@
 
                     {% for field in form %}
                         
-                        {% if field.label == "Profile_Image" or field.label == "Profile_Type" %}
+                        {% if field.label == "Profile_Image" %}
                             <label for="formInput#text">{{field.label}}</label>
                             {{field}}
+                            <div class="avatar-container">
+                                <label  for="github_avatar">Github Avatar
+                                    <input id="github_avatar"class="input avatar image_option" type="checkbox" name="github_avatar"/>
+                                </label>
+                                <img src={{profile.github_avatar}}/>
+                            </div>
+                        {% elif field.label == "Profile_Type" %}
+                            <label id="{{field.auto_id}}_label" for="formInput#text">{{field.label}}</label>
+                            {{field.auto_id}}
+                        {% elif field.label == "Github update" %}
+                            {{field}}
+                            <label for="formInput#text">{{field.label | title}}&nbsp;</label>
                         {% else %}
                             <div class="form__field">
                                 {{field}}

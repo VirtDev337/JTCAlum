@@ -84,7 +84,7 @@ class Project(models.Model):
     
     # Publishing methods
     def getDir(self, filename = 'manage.py'):
-        if self.project.project_dir is '':
+        if self.project.project_dir == '':
             project_dir = os.path.join(settings.DEMOS_ROOT, self.project.title)
             dir_list = os.scandir(project_dir)
             
@@ -152,7 +152,7 @@ class Project(models.Model):
         structures_path = os.path.join(settings.BASE_DIR, 'jtcalum/structures.py')
         title = self.title.title().replace(' ', '')
         
-        with open(structures_path, 'rw') as f:
+        with open(structures_path, '+') as f:
             lines = f.readlines()
             
             for line in lines:
